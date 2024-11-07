@@ -2,23 +2,28 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'styles/styles1.css' %}">
-    <title>SD Games - Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'styles/styles1.css' %}">
+  <title>SD Games - Home</title>
 </head>
+
 <body>
 
-<!--Nav de la web-->
+  <!--Nav de la web-->
   <nav>
     <div class="wrapper">
       <div class="logo"><a href="#">SD Games</a></div>
       <input type="radio" name="slider" id="menu-btn">
       <input type="radio" name="slider" id="close-btn">
       <ul class="nav-links" style="padding-top: 10px;">
-        <label for="close-btn" class="btn close-btn"><i class="fas fa-times" style="background-color: aliceblue;"></i></label>
+        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"
+            style="background-color: aliceblue;"></i></label>
         <li><a href="#">Home</a></li>
         <li>
           <a href="#" class="desktop-item">Productos</a>
@@ -32,119 +37,144 @@
         <li><a href="#">Sobre Nosotros</a></li>
         <li><a href="#">Local</a></li>
       </ul>
-      <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars" style="background-color: aliceblue;"></i></label>
+      <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"
+          style="background-color: aliceblue;"></i></label>
     </div>
   </nav>
 
-<!--Fondo Principal con nombre de la tienda y frase-->
+  <!--Fondo Principal con nombre de la tienda y frase-->
   <div id="fondo">
     <div class="text container">
-        <h1 class="fw-bold fst-italic text-center">SD Games</h1>
-        <p class="fw-bold text-center">
-            Donde cada juego es una nueva aventura...
-        </p> 
-    </div>
-</div>
-
-
-<div class="cont container">
-<h1 class="fw-bold fst-italic text-center">Bienvenido a SD Games</h1>
-<div class="containerparrafo container">
-  <div class="row">
-    <div class="col-md-6">
-        <p class="fs-5 text-center">SD Games es la tienda de videojuegos líder en Valdivia, que ofrece una amplia selección de 
-          títulos para todas las plataformas y edades. Desde los últimos lanzamientos hasta clásicos retro, 
-          SD Games tiene algo para cada tipo de jugador. La tienda se enorgullece de su equipo experto, siempre dispuesto a 
-          recomendar juegos y a brindar un excelente servicio al cliente.</p>
-    </div>
-    <div class="col-md-6">
-        <p class="fs-5 text-center">Ubicada en el corazón de Valdivia, SD Games se ha convertido en un punto de encuentro para la 
-          comunidad gamer local. Con un compromiso hacia 
-          la innovación y las últimas tendencias en tecnología de entretenimiento, SD Games es el destino 
-          ideal para todos los jugadores de la región y el resto del país que buscan calidad, variedad y una experiencia única 
-          en cada visita.</p>
-    </div>
-</div>
-</div>
-</div>
-
-<section class="wrapper">
-<div class="container">
-  <div class="row">
-    <div class="col text-center mb-5">
-        <h1 class="display-4 font-weight-bolder">Bootstrap 4 Cards With Background Image</h1>
-<p class="lead">Lorem ipsum dolor sit amet at enim hac integer volutpat maecenas pulvinar. </p>
+      <h1 class="fw-bold fst-italic text-center">SD Games</h1>
+      <p class="fw-bold text-center">
+        Donde cada juego es una nueva aventura...
+      </p>
     </div>
   </div>
-<div class="row">
-<div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-  
-  <div class="card text-dark card-has-bg click-col" style="background-image:url('https://api.unsplash.com/search/collections?page=1&query=office');">
-        <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-      <div class="card-img-overlay d-flex flex-column">
-        <div class="card-body">
-          <small class="card-meta mb-2">Thought Leadership</small>
-          <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Ubicados en Valdivia</a></h4>
-          <small><i class="far fa-clock"></i> October 15, 2020</small>
-        </div>
-        <div class="card-footer">
-          <div class="media">
-<img class="mr-3 rounded-circle" src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80" alt="Generic placeholder image" style="max-width:50px">
-<div class="media-body">
-  <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
-    <small>Director of UI/UX</small>
-</div>
-</div>
-        </div>
-      </div>
-    </div>
-      
-  
-  
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4 mb-4"><div class="card text-dark card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?tree,nature');">
-        <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-      <div class="card-img-overlay d-flex flex-column">
-        <div class="card-body">
-          <small class="card-meta mb-2">Thought Leadership</small>
-          <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Creative Manner Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-          <small><i class="far fa-clock"></i> October 15, 2020</small>
-        </div>
-        <div class="card-footer">
-          <div class="media">
-<img class="mr-3 rounded-circle" src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80" alt="Generic placeholder image" style="max-width:50px">
-<div class="media-body">
-  <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
-    <small>Director of UI/UX</small>
-</div>
-</div>
-        </div>
-      </div>
-    </div></div>
-<div class="col-sm-12 col-md-6 col-lg-4 mb-4"><div class="card text-dark card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?computer,design');">
-        <img class="card-img d-none" src="https://source.unsplash.com/600x900/?computer,design" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-      <div class="card-img-overlay d-flex flex-column">
-        <div class="card-body">
-          <small class="card-meta mb-2">Thought Leadership</small>
-          <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Design Studio Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-          <small><i class="far fa-clock"></i> October 15, 2020</small>
-        </div>
-        <div class="card-footer">
-          <div class="media">
-<img class="mr-3 rounded-circle" src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80" alt="Generic placeholder image" style="max-width:50px">
-<div class="media-body">
-  <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
-    <small>Director of UI/UX</small>
-</div>
-</div>
-        </div>
-      </div>
-    </div></div>
-</div>
 
-</div>
-</section>
+
+  <div class="cont container">
+    <h1 class="fw-bold fst-italic text-center">Bienvenido a SD Games</h1>
+    <div class="containerparrafo container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="fs-5 text-center">SD Games es la tienda de videojuegos líder en Valdivia, que ofrece una amplia
+            selección de
+            títulos para todas las plataformas y edades. Desde los últimos lanzamientos hasta clásicos retro,
+            SD Games tiene algo para cada tipo de jugador. La tienda se enorgullece de su equipo experto, siempre
+            dispuesto a
+            recomendar juegos y a brindar un excelente servicio al cliente.</p>
+        </div>
+        <div class="col-md-6">
+          <p class="fs-5 text-center">Ubicada en el corazón de Valdivia, SD Games se ha convertido en un punto de
+            encuentro para la
+            comunidad gamer local. Con un compromiso hacia
+            la innovación y las últimas tendencias en tecnología de entretenimiento, SD Games es el destino
+            ideal para todos los jugadores de la región y el resto del país que buscan calidad, variedad y una
+            experiencia única
+            en cada visita.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center mb-5">
+          <h1 class="display-4 font-weight-bolder">Acceso rapido</h1>
+          <p class="lead">Lorem ipsum dolor sit amet at enim hac integer volutpat maecenas pulvinar. </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+
+          <div class="card text-dark card-has-bg click-col"
+            style="background-image:url('https://api.unsplash.com/search/collections?page=1&query=office');">
+            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street"
+              alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
+            <div class="card-img-overlay d-flex flex-column">
+              <div class="card-body">
+                <small class="card-meta mb-2">Thought Leadership</small>
+                <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Ubicados en
+                    Valdivia</a></h4>
+                <small><i class="far fa-clock"></i> October 15, 2020</small>
+              </div>
+              <div class="card-footer">
+                <div class="media">
+                  <img class="mr-3 rounded-circle"
+                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80"
+                    alt="Generic placeholder image" style="max-width:50px">
+                  <div class="media-body">
+                    <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
+                    <small>Director of UI/UX</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+          <div class="card text-dark card-has-bg click-col"
+            style="background-image:url('https://source.unsplash.com/600x900/?tree,nature');">
+            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature"
+              alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
+            <div class="card-img-overlay d-flex flex-column">
+              <div class="card-body">
+                <small class="card-meta mb-2">Thought Leadership</small>
+                <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Creative Manner
+                    Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
+                <small><i class="far fa-clock"></i> October 15, 2020</small>
+              </div>
+              <div class="card-footer">
+                <div class="media">
+                  <img class="mr-3 rounded-circle"
+                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80"
+                    alt="Generic placeholder image" style="max-width:50px">
+                  <div class="media-body">
+                    <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
+                    <small>Director of UI/UX</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+          <div class="card text-dark card-has-bg click-col"
+            style="background-image:url('https://source.unsplash.com/600x900/?computer,design');">
+            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?computer,design"
+              alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
+            <div class="card-img-overlay d-flex flex-column">
+              <div class="card-body">
+                <small class="card-meta mb-2">Thought Leadership</small>
+                <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Design Studio Lorem
+                    Ipsum Sit Amet Consectetur dipisi?</a></h4>
+                <small><i class="far fa-clock"></i> October 15, 2020</small>
+              </div>
+              <div class="card-footer">
+                <div class="media">
+                  <img class="mr-3 rounded-circle"
+                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png?format=auto&version=1688931977&width=80&height=80"
+                    alt="Generic placeholder image" style="max-width:50px">
+                  <div class="media-body">
+                    <h6 class="my-0 text-dark d-block">Oz Coruhlu</h6>
+                    <small>Director of UI/UX</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
 
 </body>
+
 </html>
