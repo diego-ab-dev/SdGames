@@ -383,3 +383,9 @@ h1{
 background: linear-gradient(0deg, rgba(255,186,33,0.3785889355742297) 0%, rgba(255,186,33,1) 100%);
 }
 }
+
+.mapacont{
+  height: 100px;
+  width: 100%;
+  margin: 0 auto;
+}
