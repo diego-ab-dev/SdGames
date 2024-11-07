@@ -294,9 +294,7 @@ nav{
 }
 
 
-h1{
-  color:#fff;
-}
+/*cards*/
 .lead{
   color:#aaa;
 }
@@ -345,8 +343,8 @@ h1{
 
     .card-img-overlay {
       transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-      background: rgb(245, 236, 218);
-      background: linear-gradient(0deg, rgba(255,186,33,0.5) 0%, rgba(255,186,33,1) 100%);
+      background: rgb(196, 189, 177);
+      background: linear-gradient(0deg, rgba(241, 231, 208, 0.5) 0%, rgb(196, 189, 177) 100%);
       }
   }
 }
@@ -379,8 +377,8 @@ h1{
 }
   .card-img-overlay {
   transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-  background: rgb(255,186,33);
-background: linear-gradient(0deg, rgba(255,186,33,0.3785889355742297) 0%, rgba(255,186,33,1) 100%);
+  background: rgb(196, 189, 177);
+background: linear-gradient(0deg, rgba(255,186,33,0.3785889355742297) 0%, rgb(196, 189, 177) 100%);
 }
 }
 
