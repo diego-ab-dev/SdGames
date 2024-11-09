@@ -77,8 +77,15 @@ WSGI_APPLICATION = 'SdGames.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',
+        'NAME':'sd_games_db',
+        'USER': 'admin_sql',
+        'PASSWORD': 'Inacap#29',
+        'HOST': 'servidor-sdgames-sql.database.windows.net',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
     }
 }
 
