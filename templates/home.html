@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{% static 'styles/styles1.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/styles_home.css' %}">
   <title>SD Games - Home</title>
 </head>
 
@@ -24,17 +24,9 @@
         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"
             style="background-color: aliceblue;"></i></label>
         <li><a href="#">Home</a></li>
-        <li>
-          <a href="#" class="desktop-item">Productos</a>
-          <input type="checkbox" id="showDrop">
-          <label for="showDrop" class="mobile-item">Productos</label>
-          <ul class="drop-menu">
-            <li><a href="">Nose que poner</a></li>
-            <li><a href="">Noseee</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Sobre Nosotros</a></li>
-        <li><a href="#">Local</a></li>
+        <li><a href="/menu" class="desktop-item">Productos</a></li>
+        <li><a href="#nosotros">Sobre Nosotros</a></li>
+        <li><a href="#local">Local</a></li>
       </ul>
       <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"
           style="background-color: aliceblue;"></i></label>
@@ -53,6 +45,7 @@
 
   <!--Parrafos-->
   <div class="cont container">
+    <a name="nosotros"></a>
     <h1 class="fw-bold fst-italic text-center">Bienvenido a SD Games</h1>
     <div class="containerparrafo container">
       <div class="row">
@@ -89,19 +82,20 @@
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
 
-          <div class="card text-dark card-has-bg click-col"
-            style="background-image:url('https://chileestuyo.cl/wp-content/uploads/2015/08/Valdivia.jpg');">
-            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street"
-              alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-            <div class="card-img-overlay d-flex flex-column">
-              <div class="card-body">
-                <small class="card-meta mb-2">SD Games</small>
-                <h4 class="card-title mt-0 "><a class="text-dark" herf="https://creativemanner.com">Ubicados en
-                    Valdivia</a></h4>
-                <small><i class="far fa-clock"></i>Av. Simpson 641</small>
+          <a href="#local" class="text-decoration-none">
+            <div class="card text-dark card-has-bg click-col"
+                 style="background-image:url('https://chileestuyo.cl/wp-content/uploads/2015/08/Valdivia.jpg');">
+              <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street"
+                   alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
+              <div class="card-img-overlay d-flex flex-column">
+                <div class="card-body">
+                  <small class="card-meta mb-2">SD Games</small>
+                  <h4 class="card-title mt-0">Ubicados en Valdivia</h4>
+                  <small><i class="far fa-clock"></i> Dirección en: Av. Simpson 641</small>
+                </div>
               </div>
             </div>
-          </div>
+          </a>          
 
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
@@ -138,15 +132,20 @@
   </section>
 
   <!--Mapa del local-->
-  <div class="mapacont container">
-    <div>
-      <h1>Visita Nuestro Local</h1>
-      <p>Ven a nuestro local ubicado en Av. Simpson 641</p>
+  <div class="localcont container">
+    <a name="local"></a>
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <h1>Visita Nuestro Local</h1>
+        <p>Ven a nuestro local ubicado en Av. Simpson 641</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2576.4116103434917!2d-73.23774048775765!3d-39.83195073679427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9615ee6744a5d19d%3A0xac5dbad0a17c5394!2sI%20-%20Simpson%20%2F%20Dr.%20A%20Gunther!5e0!3m2!1ses-419!2scl!4v1730999229159!5m2!1ses-419!2scl" width="600" height="450" style="border:0; border-radius: 50px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2576.4116103434917!2d-73.23774048775765!3d-39.83195073679427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9615ee6744a5d19d%3A0xac5dbad0a17c5394!2sI%20-%20Simpson%20%2F%20Dr.%20A%20Gunther!5e0!3m2!1ses-419!2scl!4v1730999229159!5m2!1ses-419!2scl" width="600" height="450" style="border:0; border-radius: 50px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
-  
-  
+   
+ 
   <!--footer-->
 <footer class="text-center text-lg-start text-light">
   <section class="">
