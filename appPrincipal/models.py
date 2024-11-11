@@ -1,5 +1,8 @@
 from django.db import models
 
+# Todas las tablas se ven en mi azure SQL DataBase, agregue "imagen" en la clase producto
+# para que permita subir imagenes al momento de crear un nuevo producto desde el panel de admin
+
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
