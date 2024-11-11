@@ -18,12 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, menu
+from appPrincipal.views import home, menu, login, register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('menu/', menu),
+    path('login/', login),
+    path('register/', register),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion
