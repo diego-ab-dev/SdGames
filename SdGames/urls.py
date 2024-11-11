@@ -23,6 +23,7 @@ from appPrincipal.views import home, menu, login, register
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
+    path('home/', home),
     path('menu/', menu),
     path('login/', login),
     path('register/', register),

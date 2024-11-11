@@ -9,35 +9,60 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
   <link rel="stylesheet" href="{% static 'styles/styles_home.css' %}">
   <title>SD Games - Home</title>
 </head>
 
 <body>
   <!--Nav de la web-->
-  <nav>
-    <div class="wrapper">
-      <div class="logo"><a href="#">SD Games</a></div>
-      <input type="radio" name="slider" id="menu-btn">
-      <input type="radio" name="slider" id="close-btn">
-      <ul class="nav-links" style="padding-top: 10px;">
-        <label for="close-btn" class="btn close-btn"><i class="fas fa-times" style="background-color: aliceblue;"></i></label>
-        <li><a href="#">Home</a></li>
-        <li><a href="/menu" class="desktop-item">Productos</a></li>
-        <li><a href="#nosotros">Sobre Nosotros</a></li>
-        <li><a href="#local">Local</a></li>
-      </ul>
-      <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars" style="background-color: aliceblue;"></i></label>
-    </div>
-  </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" href="/home">
+            <strong>SD Games</strong>
+        </a>
 
-  <!-- Botón de inicio de sesion -->
-  <button class="login-btn">
-    Iniciar sesión
-    <div class="arrow-wrapper">
-      <div class="arrow"></div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/menu">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#nosotros">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#local">Local</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#redes">Redes</a>
+                </li>
+            </ul>
+
+            <!-- Botones de Iniciar Sesión y Registrarse -->
+            <div class="d-flex" style="gap: 20px;">
+              <button onclick="window.location.href='/login'">
+                Iniciar Sesión
+                <div class="arrow-wrapper">
+                    <div class="arrow"></div>
+                </div>
+            </button>
+                <button onclick="window.location.href='/register'">
+                  Registrarse
+                </button>
+            </div>
+        </div>
     </div>
-  </button>
+</nav>
 
   <!--Fondo Principal con nombre de la tienda y frase-->
   <div id="fondo">
@@ -157,6 +182,26 @@
     </div>
   </section>
   </div>
+
+  <section id="hero" class="paused">
+  <div class="contsociales container">
+    <div class="img-content anim-up">
+      <div class="img"></div>
+      <div class="info">
+        <h2>SD Games</h2>
+        <h4>Visita nuestras redes sociales</h4>
+      </div>
+      <div class="social">
+        <ul>
+          <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="#"><i class="fab fa-x-twitter"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <!--Boton para ir hacia arriba--> 
   <div class="go-top-container">
