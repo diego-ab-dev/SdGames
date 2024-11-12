@@ -11,6 +11,7 @@ body{
     color: rgb(255, 255, 255);
 }
 
+/*botones del nav*/
 button {
   --primary-color: #9c9592;
   --secondary-color: #fff;
@@ -70,11 +71,12 @@ button:hover .arrow {
 button:hover .arrow:before {
   right: 0;
 }
+/*fin botones del nav*/
 
 /*Fondo de principal oscuro*/
 #fondo {
     background-image:url("https://www.ospat.com.ar/wp-content/uploads/2022/10/videojuegos-scaled.jpg");
-    padding: 600px 100px;
+    padding: 50vh 10vw;
     text-align: center;
     background-position: center center;
     background-size: cover;
@@ -108,7 +110,11 @@ button:hover .arrow:before {
     font-size: 100px;
 }
 
-
+@media (max-width: 768px) {
+  #fondo h1 {
+    font-size: 50px;
+  }
+}
 
 
 /*Parrafos de Sdgames*/
@@ -218,15 +224,31 @@ button:hover .arrow:before {
 
 /*Local con mapa*/
 .localcont {
-  padding-bottom: 50px;
+  padding: 100px;
+  margin: 0 auto; 
   margin-bottom: 100px;
+  background-color: #2c2e33;
+  color: white;
+  border-radius: 10px;
 }
+
+.localcont h1, .localcont p {
+  color: white; 
+}
+
+.localcont iframe {
+  max-width: 100%; 
+  border-radius: 50px;
+}
+
 @media (max-width: 768px) {
   .localcont iframe {
     border-radius: 10px;
   }
 }
+/*Fin local con mapa*/
 
+/*Redes seciales*/
 .contsociales{
   display: flex;
   justify-content: center;
@@ -261,7 +283,7 @@ button:hover .arrow:before {
   position: absolute;
   bottom: -90px;
   left: 0;
-  background: #fff;
+  background: #9c9592;
   width: 100%;
   height: 90px;
   padding: 15px 10px;
@@ -275,7 +297,11 @@ button:hover .arrow:before {
 }
 
 .img-content .info h4{
-  color: #2c2e33;
+  color: #ffffff;
+}
+
+.img-content .info h2{
+  color: #ffffff;
 }
 
 .img-content .social{
@@ -316,8 +342,8 @@ button:hover .arrow:before {
 .img-content .social ul li a{
   display: block;
   line-height: 40px;
-  color: #333;
-  background: #fff;
+  color: #000000;
+  background: #d7ccc8;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -368,6 +394,7 @@ button:hover .arrow:before {
   opacity: 1;
   transition-delay: .2s;
 }
+/*Fin Redes seciales*/
 
 
 
@@ -450,8 +477,10 @@ footer{
 .footerli {
   text-decoration: none;
 }
+/*fin del footer*/
 
 
+/*Animaciones para los elementos en home*/
 @keyframes anim-fade-in { from { opacity: 0; } to { opacity: 1 } }
 
 @keyframes anim-up { 
@@ -476,3 +505,4 @@ footer{
 .paused * { 
 	animation-play-state: paused;
 }
+/*Fin de animaciones para los elementos en home*/
