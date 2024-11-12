@@ -18,13 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, menu, login, register
+from appPrincipal.views import home, menu, login, register, productos_menu, producto_detalle
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('home/', home),
-    path('menu/', menu),
+    path('menu/', productos_menu), 
+    path('producto/<int:producto_id>/', producto_detalle, name='producto_detalle'),
     path('login/', login),
     path('register/', register),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
