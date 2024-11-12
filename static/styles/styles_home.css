@@ -219,6 +219,7 @@ button:hover .arrow:before {
 /*Local con mapa*/
 .localcont {
   padding-bottom: 50px;
+  margin-bottom: 100px;
 }
 @media (max-width: 768px) {
   .localcont iframe {
@@ -247,7 +248,7 @@ button:hover .arrow:before {
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('https://www.canva.com/design/DAGWMcr8r5o/nNNVktcbIrpN8OwI2dEw9g/view?utm_content=DAGWMcr8r5o&utm_campaign=designshare&utm_medium=link&utm_source=editor');
+  background-image: url('https://www.inci.gov.co/sites/default/files/styles/imagen_internas_1110x624_/public/2023-07/redes-sociales.jpg?itok=OoLVhkYTs');
   background-size: cover;
   transition: .2s;
 }
@@ -292,12 +293,16 @@ button:hover .arrow:before {
   background: rgba(0, 0, 0, .4);
 }
 
-.img-content .social ul{
+.img-content .social ul {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 0; 
+  margin: 0; 
+  list-style: none; 
 }
+
 
 .img-content .social ul li{
   display: inline-block;
@@ -346,7 +351,23 @@ button:hover .arrow:before {
   transition-delay: .2s;
 }
 
+.img-content:hover .social ul li:nth-child(4){
+  transform: translateY(0px);
+  opacity: 1;
+  transition-delay: .2s;
+}
 
+.img-content:hover .social ul li:nth-child(5){
+  transform: translateY(0px);
+  opacity: 1;
+  transition-delay: .2s;
+}
+
+.img-content:hover .social ul li:nth-child(6){
+  transform: translateY(0px);
+  opacity: 1;
+  transition-delay: .2s;
+}
 
 
 
