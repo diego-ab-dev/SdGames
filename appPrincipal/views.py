@@ -5,7 +5,7 @@ from .models import Producto
 
 
 def productos_menu(request):
-    productos = Producto.objects.all()  # Recupera todos los productos de la base de datos
+    productos = Producto.objects.all() 
     return render(request, 'productosmenu.html', {'productos': productos})
 
 def home(request):
