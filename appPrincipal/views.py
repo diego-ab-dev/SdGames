@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto
+from appPrincipal import forms
+from .models import Usuario
 
 # Create your views here.
 
@@ -15,7 +17,23 @@ def login(request):
     return render(request, 'login.html')
 
 def register(request):
-    return render(request, 'register.html')
+    form=forms.Usuario()
+    if request.method == 'POST':
+        form=forms.Usuario(request.POST)
+        if form.is_valid():
+            registro = Usuario(
+                nombre=form.cleaned_data['nombre'],
+                telefono=form.cleaned_data['telefono'],
+                email = form.cleaned_data['email'],
+                contraseña = form.cleaned_data['contraseña'],
+                direccion =  form.cleaned_data['direccion'],
+            )
+            registro.save()  
+        else:
+            print(form.errors)  
+    data={'form':form}
+    return render(request, 'register.html', data)
+
 
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)

@@ -22,63 +22,43 @@
                 </div>
                 <div class="card-body p-4 p-sm-5">
                 <h5 class="card-title text-center mb-5 fw-light fs-5">Registrarse</h5>
-                <form>
-    
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
-                    <label for="floatingInputUsername">Nombre</label>
+                        <input type="text" class="form-control" id="floatingInputUsername" name="nombre" placeholder="myusername" required autofocus>
+                        <label for="floatingInputUsername">Nombre</label>
                     </div>
-    
+                
                     <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
-                    <label for="floatingInputEmail">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="floatingInputEmail" name="email" placeholder="name@example.com">
+                        <label for="floatingInputEmail">Correo Electrónico</label>
                     </div>
-    
-                    <hr>
-
+                
                     <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInputNumber" placeholder="9 4444 4444">
-                    <label for="floatingInputNumber">Teléfono</label>
+                        <input type="number" class="form-control" id="floatingInputNumber" name="telefono" placeholder="9 4444 4444">
+                        <label for="floatingInputNumber">Teléfono</label>
                     </div>
-
+                
                     <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInputAdress" placeholder="Picarte 344">
-                    <label for="floatingInputAdress">Dirección</label>
+                        <input type="text" class="form-control" id="floatingInputAdress" name="direccion" placeholder="Picarte 344">
+                        <label for="floatingInputAdress">Dirección</label>
                     </div>
-
-                    <hr>
-    
+                
                     <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Contraseña</label>
+                        <input type="password" class="form-control" id="floatingPassword" name="contraseña" placeholder="Password">
+                        <label for="floatingPassword">Contraseña</label>
                     </div>
-    
+                
                     <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
-                    <label for="floatingPasswordConfirm">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="floatingPasswordConfirm" name="confirmar_contraseña" placeholder="Confirm Password">
+                        <label for="floatingPasswordConfirm">Confirmar Contraseña</label>
                     </div>
-    
+                
                     <div class="d-grid mb-2">
-                    <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Registrarse</button>
+                        <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Registrarse</button>
                     </div>
-    
-                    <a class="d-block text-center mt-2 small" href="/login">¿Ya tienes cuenta? Inicia Sesión</a>
-    
-                    <hr class="my-4">
-    
-                    <div class="d-grid mb-2">
-                    <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
-                        <i class="fab fa-google me-2"></i> Iniciar Sesión con Google
-                    </button>
-                    </div>
-    
-                    <div class="d-grid">
-                    <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
-                        <i class="fab fa-facebook-f me-2"></i> Iniciar Sesión con Facebook
-                    </button>
-                    </div>
-    
                 </form>
+                
                 </div>
             </div>
             </div>
