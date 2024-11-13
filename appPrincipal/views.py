@@ -23,3 +23,6 @@ def register(request):
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     return render(request, 'producto_detalle.html', {'producto': producto})
+
+def carrito(request):
+    return render(request, 'carrito.html')

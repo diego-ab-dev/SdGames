@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME':'sd_games_db',
-        'USER': 'admin_sql',
-        'PASSWORD': 'Inacap#29',
+        'USER': 'sebaaguero',
+        'PASSWORD': 'seba.aguero20',
         'HOST': 'servidor-sdgames-sql.database.windows.net',
         'PORT': '',
         'OPTIONS': {
