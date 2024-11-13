@@ -30,3 +30,4 @@ def vista_carrusel(request):
 
 def carrito(request):
     return render(request, 'carrito.html')
+

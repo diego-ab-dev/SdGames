@@ -30,6 +30,7 @@ urlpatterns = [
     path('producto/<int:producto_id>/', producto_detalle, name='producto_detalle'),
     path('login/', login),
     path('register/', register),
+    path('carrito/', carrito)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion
