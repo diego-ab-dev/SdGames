@@ -109,7 +109,7 @@ button:hover .arrow:before {
     width: 100%;
     background-attachment: fixed;
 }
-#myCarousel h4{
+.textcarrousel {
 	font-size:50px;
 	margin-bottom:15px;
 	color:#FFF;
@@ -363,8 +363,8 @@ a:hover {
 
 .section-products .single-product .part-1 {
     position: relative;
-    height: 290px;
-    max-height: 290px;
+    height: 400px;
+    max-height: 400px;
     margin-bottom: 20px;
     overflow: hidden;
 }
@@ -407,7 +407,7 @@ a:hover {
     top: 15px;
     left: 20px;
     color: #ffffff;
-    background-color: #fe302f;
+    background-color: #9c9592;
     padding: 2px 8px;
     text-transform: uppercase;
     font-size: 0.85rem;
@@ -452,7 +452,7 @@ a:hover {
 }
 
 .section-products .single-product .part-1 ul li a:hover {
-    color: #fe302f;
+    color: #9c9592;
 }
 
 .section-products .single-product .part-2 .product-title {
@@ -480,6 +480,17 @@ a:hover {
     height: 1px;
     background-color: #444444;
     transform: translateY(-50%);
+}
+
+.precioprod{
+  color: #110b0b;
+}
+
+.section-products .single-product .part-1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8)); 
 }
 
 footer{

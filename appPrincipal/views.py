@@ -7,8 +7,14 @@ from .models import Usuario
 
 
 def productos_menu(request):
-    productos = Producto.objects.all() 
-    return render(request, 'productosmenu.html', {'productos': productos})
+    query=request.GET.get('buscar')
+    if query:
+        productos=Producto.objects.filter(nombre__icontains=query)
+        return render(request, 'resultado_busqueda.html', {'productos': productos, 'query':query})
+    else:
+        productos = Producto.objects.all() 
+        return render(request, 'productosmenu.html', {'productos': productos})
+    
 
 def home(request):
     return render(request, 'home.html')
