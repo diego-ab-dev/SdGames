@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <title>{{ producto.nombre }} - Detalles</title>
     <link rel="stylesheet" href="{% static 'styles/styles_prod_detalle.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
 </head>
 <body>
     <!--Nav de la web-->
@@ -60,37 +61,35 @@
 <section style="margin-top: 100px;">
     <div class="contdet container flex">
         <div class="left">
-        <div class="main_image">
-            <img src="image/p1.jpg" class="slide">
-        </div>
-        <div class="option flex">
-            <img src="{{ producto.imagen.url }}" onclick="img('{{ producto.imagen.url }}')">
-        </div>
+            <div class="main_image">
+                <img src="{{ producto.imagen_principal.url }}" class="slide">
+            </div>
+            <div class="option flex">
+                <img src="{{ producto.imagen_principal.url }}" onclick="img('{{ producto.imagen_principal.url }}')">
+                {% for imagen in producto.imagenes %}
+                    <img src="{{ imagen.url }}" onclick="img('{{ imagen.url }}')">
+                {% endfor %}
+            </div>
         </div>
         <div class="right">
-        <h3>{{ producto.nombre }}</h3>
-        <h4> <small>$</small>{{ producto.precio }} </h4>
-        <p>{{ producto.descripcion }}</p>
-        <p><strong>Stock:</strong> {{ producto.stock }}</p>
-        <h5>Cantidad:</h5>
-        <div class="add flex1">
-            <span>-</span>
-            <label>1</label>
-            <span>+</span>
-        </div>
-
-        <button class="btncarrito btn">Agregar al carrito</button>
+            <h3>{{ producto.nombre }}</h3>
+            <h4><small>$</small>{{ producto.precio }}</h4>
+            <p>{{ producto.descripcion }}</p>
+            <p><strong>Stock:</strong> {{ producto.stock }}</p>
+            <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+            <h5>Cantidad:</h5>
+            <div class="add flex1">
+                <span>-</span>
+                <label>1</label>
+                <span>+</span>
+            </div>
+            <button class="btncarrito btn">Agregar al carrito</button>
         </div>
     </div>
-    </section>
+</section>
 <script>
 function img(anything) {
     document.querySelector('.slide').src = anything;
-}
-
-function change(change) {
-    const line = document.querySelector('.home');
-    line.style.background = change;
 }
 </script>
 </body>

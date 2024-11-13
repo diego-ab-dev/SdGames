@@ -66,14 +66,36 @@
   
   .contdet {
     max-width: 75%;
-    margin-top: 150px;
-    margin: auto;
-    height: 80vh;
-    margin-top: 5%;
+    margin: 5% auto;
     background: white;
     box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
-  }
+    display: flex;
+    flex-wrap: wrap;
+}
   
+.main_image img {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+.option img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.option img:hover {
+  transform: scale(1.1);
+}
+
   .left, .right {
     width: 50%;
     padding: 30px;
@@ -184,40 +206,30 @@
     border-radius: 30px;
   }
   
-  @media only screen and (max-width:768px) {
+  @media only screen and (max-width: 768px) {
     .contdet {
-      max-width: 90%;
-      margin: auto;
-      height: auto;
+        max-width: 90%;
     }
-  
+
     .left, .right {
-      width: 100%;
+        width: 100%;
+        padding: 10px;
     }
-  
-    .contdet {
-      flex-direction: column;
+
+    .main_image img {
+        width: 100%;
+        height: auto;
     }
-  }
+}
   
-  @media only screen and (max-width:511px) {
-    .contdet {
+@media only screen and (max-width: 511px) {
+  .contdet {
       max-width: 100%;
-      height: auto;
       padding: 10px;
-    }
-  
-    .left, .right {
-      padding: 0;
-    }
-  
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  
-    .option {
-      display: flex;
-      flex-wrap: wrap;
-    }
   }
+
+  .option img {
+      width: 60px;
+      height: 60px;
+  }
+}

@@ -19,8 +19,18 @@ class Producto(models.Model):
     precio = models.PositiveIntegerField(default=0)  
     stock = models.PositiveIntegerField(default=0)  
     descripcion = models.TextField(blank=True, null=True, default='', verbose_name="Descripción")
-    imagen = models.ImageField(upload_to='productos/')
+    imagen_principal = models.ImageField(upload_to='productos/', verbose_name="Imagen Principal", default='') 
+    imagen_2 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 2")
+    imagen_3 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 3")
+    imagen_4 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 4")
+    imagen_5 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 5")
+    imagen_6 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 6")
     categoria = models.CharField(max_length=50, verbose_name="Categoría") 
+
+    def imagenes(self):
+        return [img for img in [
+            self.imagen_principal, self.imagen_2, self.imagen_3, 
+            self.imagen_4, self.imagen_5, self.imagen_6] if img]
 
     def agregar_producto(self):
         pass 

@@ -35,7 +35,7 @@
                     <a class="nav-link" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/productos_menu">Productos</a>
+                    <a class="nav-link active" href="/menu">Productos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/home/#nosotros">Sobre Nosotros</a>
@@ -99,7 +99,7 @@
                         <div id="product-4" class="single-product">
                             {% for producto in productos %}
                             <div class="part-1">
-                                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                                <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
                                 <span class="new">Tendencia</span>
                                 <ul>
                                     <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
