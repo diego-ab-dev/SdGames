@@ -10,13 +10,15 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
   <link rel="stylesheet" href="{% static 'styles/styles_menu.css' %}">
-  <title>SD Games - Home</title>
+  <title>SD Games - Menu</title>
 </head>
 <body>
   <!--Nav de la web-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c2e33;">
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand" href="/home">
@@ -62,6 +64,89 @@
     </div>
 </nav>
 
+<nav class="navbar navbar-light py-2 fixed-top">
+  <div class="container d-flex justify-content-between">
+      <form class="d-flex mx-auto" role="search" style="width: 50%;">
+          <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Search">
+          <button class="btn" type="submit">Buscar</button>
+      </form>
+
+      <div class="icons d-flex gap-3">
+          <a href="/favoritos" style="color: #9c9592;">
+              <i class="fas fa-heart"></i>
+          </a>
+          <a href="/carrito" style="color: #9c9592;">
+              <i class="fas fa-shopping-cart"></i>
+          </a>
+      </div>
+  </div>
+</nav>
+
+<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-7 col-12 order-md-1 order-2">
+              <h4 class="text-dark">Call of Duty <br>
+                Black Ops 6</h4>
+              <p class="text-dark">Prepárate para la adrenalina de Call of Duty: Black Ops 6. Vive 
+                una experiencia de combate que no querrás dejar. ¡Consíguelo ahora!</p>
+              <a href="#">COMPRAR</a> </div>
+            <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/cod6.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-7 col-12 order-md-1 order-2">
+              <h4 class="text-dark">FC25</h4>
+              <p class="text-dark">¡Vive la emoción del fútbol como nunca antes con FC25! Llévate el juego que todos 
+                quieren y domina la cancha desde casa.</p>
+              <a href="#">COMPRAR</a> </div>
+            <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/fc25.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-7 col-12 order-md-1 order-2">
+              <h4 class="text-dark">Silent Hill 2</h4>
+              <p class="text-dark">Sumérgete en el terror psicológico de Silent Hill 2. Atrévete a 
+                enfrentar tus miedos y descubre los oscuros secretos que te esperan.</p>
+              <a href="#">COMPRAR</a> </div>
+            <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/silent.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+<!--slide end--> 
+
+<script>
+  var myCarousel = document.querySelector('#myCarousel');
+  var carousel = new bootstrap.Carousel(myCarousel, {
+     interval: 3000, 
+     ride: 'carousel'
+  });
+</script>
+
+
 
 <section class="section-products">
   <div class="container">
@@ -100,7 +185,6 @@
       </div>
   </div>
 </section>
-
 
   <!--footer-->
   <footer class="text-center text-lg-start text-light">
