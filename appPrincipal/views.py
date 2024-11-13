@@ -19,7 +19,7 @@ def productos_menu(request):
 def home(request):
     return render(request, 'home.html')
 
-def login(request):
+def login(request): 
     return render(request, 'login.html')
 
 def register(request):

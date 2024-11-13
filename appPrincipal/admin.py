@@ -5,7 +5,7 @@ from .models import Usuario, Producto, Venta, Reclamo
 # Las tablas "ItemCarritoProducto" y "Carrito" no aparecen en el panel de admin ya que no tiene mucho sentidon que las pueda ver
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display=("codigo_de_barra", "nombre", "precio", "stock", "imagen_display")
+    list_display=("codigo_de_barra", "nombre", "precio", "stock", "imagen_display", "categoria")
     search_fields=("nombre", "codigo_de_barra")
     list_editable=("stock",)
     list_per_page=20

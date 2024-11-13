@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -81,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME':'sd_games_db',
-        'USER': 'sebaaguero',
-        'PASSWORD': 'seba.aguero20',
+        'USER': 'admin_sql',
+        'PASSWORD': 'Inacap#29',
         'HOST': 'servidor-sdgames-sql.database.windows.net',
         'PORT': '',
         'OPTIONS': {

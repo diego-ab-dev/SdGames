@@ -6,7 +6,7 @@ from django.db import models
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=100)
+    contraseña = models.CharField(max_length=100, default='')
     telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     direccion = models.CharField(max_length=120, verbose_name="Dirección")
 
@@ -20,6 +20,7 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField(default=0)  
     descripcion = models.TextField(blank=True, null=True, default='', verbose_name="Descripción")
     imagen = models.ImageField(upload_to='productos/')
+    categoria = models.CharField(max_length=50, verbose_name="Categoría") 
 
     def agregar_producto(self):
         pass 

@@ -1,9 +1,6 @@
 from django import forms
 from django.core import validators
-
-
 class Usuario(forms.Form):
-
     nombre=forms.CharField(
         validators=[
             validators.MinLengthValidator(5),
