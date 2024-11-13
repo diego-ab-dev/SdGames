@@ -35,7 +35,7 @@
                     <a class="nav-link" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/menu">Productos</a>
+                    <a class="nav-link active" href="/productos_menu">Productos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/home/#nosotros">Sobre Nosotros</a>
@@ -93,8 +93,15 @@
                 Black Ops 6</h4>
               <p class="text-dark">Prepárate para la adrenalina de Call of Duty: Black Ops 6. Vive 
                 una experiencia de combate que no querrás dejar. ¡Consíguelo ahora!</p>
-              <a href="#">COMPRAR</a> </div>
-            <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/cod6.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
+                {% if cod6 %}
+                    <a href="{% url 'producto_detalle' cod6.id %}">COMPRAR</a>
+                {% else %}
+                    <p class="text-muted">Producto no disponible</p>
+                {% endif %}
+            </div>
+            <div class="col-md-5 col-12 order-md-2 order-1">
+              <img src="{% static 'images/cod6.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide">
+            </div>
           </div>
         </div>
       </div>
@@ -107,7 +114,12 @@
               <h4 class="text-dark">FC25</h4>
               <p class="text-dark">¡Vive la emoción del fútbol como nunca antes con FC25! Llévate el juego que todos 
                 quieren y domina la cancha desde casa.</p>
-              <a href="#">COMPRAR</a> </div>
+                {% if fc25 %}
+                    <a href="{% url 'producto_detalle' fc25.id %}">COMPRAR</a>
+                {% else %}
+                    <p class="text-muted">Producto no disponible</p>
+                {% endif %}
+            </div>
             <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/fc25.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
           </div>
         </div>
@@ -121,7 +133,11 @@
               <h4 class="text-dark">Silent Hill 2</h4>
               <p class="text-dark">Sumérgete en el terror psicológico de Silent Hill 2. Atrévete a 
                 enfrentar tus miedos y descubre los oscuros secretos que te esperan.</p>
-              <a href="#">COMPRAR</a> </div>
+                {% if silent %}
+                    <a href="{% url 'producto_detalle' silent.id %}">COMPRAR</a>
+                {% else %}
+                    <p class="text-muted">Producto no disponible</p>
+                {% endif %}
             <div class="col-md-5 col-12 order-md-2 order-1"><img src="{% static 'images/silent.png' %}" class="mx-auto" style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));" alt="slide"></div>
           </div>
         </div>
@@ -146,6 +162,7 @@
   });
 </script>
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 <section class="section-products">

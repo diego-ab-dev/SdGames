@@ -167,7 +167,7 @@ button:hover .arrow:before {
 .carousel-control-next {
     position: absolute;
     top: 50%; 
-    transform: translateY(-1500%); 
+    transform: translateY(-1800%); 
     height: 40px;
     width: 40px;
     padding: 12px;
