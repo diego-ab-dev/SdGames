@@ -18,13 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+<<<<<<< HEAD
 from appPrincipal.views import home, menu, login, register, productos_menu, producto_detalle, carrito
+=======
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito
+>>>>>>> 42f2a43cffa4c7edd77364f8cc10232075441bd5
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('home/', home),
     path('menu/', productos_menu), 
+    path('carrito/', carrito),
     path('producto/<int:producto_id>/', producto_detalle, name='producto_detalle'),
     path('login/', login),
     path('register/', register),

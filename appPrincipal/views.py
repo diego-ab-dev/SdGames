@@ -11,9 +11,6 @@ def productos_menu(request):
 def home(request):
     return render(request, 'home.html')
 
-def menu(request):
-    return render(request, 'productosmenu.html')
-
 def login(request):
     return render(request, 'login.html')
 
@@ -25,4 +22,8 @@ def producto_detalle(request, producto_id):
     return render(request, 'producto_detalle.html', {'producto': producto})
 
 def carrito(request):
+<<<<<<< HEAD
     return render(request, 'carrito.html')
+=======
+    return render(request, 'carrito.html')
+>>>>>>> 42f2a43cffa4c7edd77364f8cc10232075441bd5
