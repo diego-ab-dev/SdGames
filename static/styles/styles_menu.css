@@ -3,6 +3,7 @@ body {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /*color de textos*/
@@ -99,7 +100,157 @@ button:hover .arrow:before {
 }
 /* fin de nav de busqueda */
 
+/* Estilos para el dropdown grande */
+.dropdown-menu-large1 {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  position: absolute;
+  left: 0;
+  width: 1200px;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #2c2e33;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu-large2 {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  position: absolute;
+  left: 0;
+  width: 1000px;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #2c2e33;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu-large3 {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  position: absolute;
+  left: 0;
+  width: 950px;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #2c2e33;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu-large4 {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  position: absolute;
+  left: 0;
+  width: 600px;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #2c2e33;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Muestra el menú al pasar el mouse sobre JUEGOS */
+.nav-item:hover .dropdown-menu-large1 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-item:hover .dropdown-menu-large2 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-item:hover .dropdown-menu-large3 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-item:hover .dropdown-menu-large4 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-submenu {
+  margin-bottom: 15px;
+}
+
+.dropdown-submenu > a {
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.dropdown-submenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dropdown-submenu ul li a {
+  color: #FFF;
+  padding: 5px 0;
+  display: block;
+  text-decoration: none;
+}
+
+.dropdown-submenu span {
+  color: #FFF;
+  font-weight: bold;
+}
+
+.dropdown-submenu ul li a:hover {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.dropdown-image1 {
+  width: 350px;
+  height: 200px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px rgba(255, 252, 252, 0.452);
+}
+.dropdown-image2 {
+  width: 350px;
+  height: 200px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px rgba(255, 252, 252, 0.452);
+}
+.dropdown-image3 {
+  width: 300px;
+  height: 200px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px rgba(255, 252, 252, 0.452);
+}
+.dropdown-image4 {
+  width: 300px;
+  height: 200px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px rgba(255, 252, 252, 0.452);
+}
+
+
+
 #myCarousel .carousel-item .mask {
+<<<<<<< HEAD
   position: relative;
   margin-top: 100px;
   top: 0;
@@ -107,6 +258,15 @@ button:hover .arrow:before {
   height: 100%;
   width: 100%;
   background-attachment: fixed;
+=======
+    position: relative;
+    margin-top: 150px;
+    top: 0;
+	  left:0;
+	  height:100%;
+    width: 100%;
+    background-attachment: fixed;
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 .textcarrousel {
   font-size: 50px;
@@ -131,7 +291,7 @@ button:hover .arrow:before {
   width: 100%;
 }
 
-#myCarousel .carousel-item a {
+#myCarousel .carousel-item .btn-comprar {
   background: #9c9592;
   font-size: 14px;
   color: #fff;
@@ -193,6 +353,7 @@ button:hover .arrow:before {
 
 .carousel-control-prev,
 .carousel-control-next {
+<<<<<<< HEAD
   position: absolute;
   top: 50%;
   transform: translateY(-1800%);
@@ -202,6 +363,17 @@ button:hover .arrow:before {
   background-color: #9c9592;
   opacity: 0.8;
   z-index: 2;
+=======
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-3000%); 
+    height: 40px;
+    width: 40px;
+    padding: 12px;
+    background-color: #9c9592;
+    opacity: 0.8;
+    z-index: 2;
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .carousel-control-prev {
@@ -368,7 +540,12 @@ button:hover .arrow:before {
   animation-name: slideInRight;
 }
 
+<<<<<<< HEAD
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+=======
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 a,
 a:hover {
   text-decoration: none;
@@ -398,6 +575,15 @@ a:hover {
 
 .section-products .single-product {
   margin-bottom: 26px;
+<<<<<<< HEAD
+=======
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-products .single-product:hover {
+  transform: translateY(-10px); 
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .section-products .single-product .part-1 {
@@ -495,7 +681,12 @@ a:hover {
 }
 
 .section-products .single-product .part-2 .product-title {
+<<<<<<< HEAD
   font-size: 1rem;
+=======
+    font-size: 1rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .section-products .single-product .part-2 h4 {
@@ -523,6 +714,8 @@ a:hover {
 
 .precioprod {
   color: #110b0b;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size:medium;
 }
 
 .section-products .single-product .part-1 img {
@@ -532,7 +725,49 @@ a:hover {
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
 }
 
+<<<<<<< HEAD
 footer {
+=======
+.btn-detalles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto; 
+  width: fit-content; 
+  padding: 10px 20px;
+  background-color: #9c9592; 
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-detalles:hover {
+  background-color: #6e6e6e; 
+  color: #fff;
+}
+
+@keyframes anim-fade-in { from { opacity: 0; } to { opacity: 1 } }		
+
+@keyframes anim-down { 
+	from { opacity: 0; transform: translateY(-100px); } 
+	to { opacity: 1; transform: translateY(0px); }  
+}		
+
+.anim-down{
+	animation-duration: 1s; 
+	animation-delay: 0.5s; 		
+	animation-fill-mode: both; 
+}
+
+.anim-down { animation-name: anim-down; }
+
+.paused * { 
+	animation-play-state: paused;
+}
+
+footer{
+>>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
   background-color: #2c2e33;
   color: #ffffff;
   height: auto;

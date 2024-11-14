@@ -96,7 +96,7 @@
                     <!-- Single Product -->
                     {% if productos %}
                     <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div id="product-4" class="single-product">
+                        <div id="product-4" class="single-product" style="background-color: white; border-radius: 20px; padding: 20px;">
                             {% for producto in productos %}
                             <div class="part-1">
                                 <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
@@ -104,15 +104,14 @@
                                 <ul>
                                     <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
                                     <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-plus"></i></a></li>
                                     <li><a href="{% url 'producto_detalle' producto.id %}"><i class="fas fa-expand"></i></a></li>
                                 </ul>
                             </div>
                             <div class="part-2">
-                                <h3 class="product-title">{{ producto.nombre }}</h3>
-                                <h4 class="product-price">${{ producto.precio }}</h4>
+                                <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
+                                <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio }}</h4>
                             </div>
-                            <a href="{% url 'producto_detalle' producto.id %}" class="btn btn-primary">Ver Detalles</a>
+                            <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
                             {% endfor %}
                         </div>
                     </div>
