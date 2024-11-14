@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto
 from appPrincipal import forms
 from .models import Usuario
-
+from django.contrib import messages
+from .models import Usuario
 # Create your views here.
 
 
@@ -19,9 +20,27 @@ def productos_menu(request):
 def home(request):
     return render(request, 'home.html')
 
-def login(request): 
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        contraseña = request.POST.get('contraseña')
+        
+        try:
+            usuario = Usuario.objects.get(email=email, contraseña=contraseña)
+            request.session['usuario_id'] = usuario.id  # Guardar el ID del usuario en la sesión
+            messages.success(request, f"Bienvenido/a {usuario.nombre}")
+            return redirect('home')  # Redirige a la página principal en caso de éxito
+        except Usuario.DoesNotExist:
+            messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
+            return redirect('login')  # Mantiene al usuario en la página de inicio de sesión
+    
     return render(request, 'login.html')
 
+def logout(request):
+    request.session.flush()  # Elimina todos los datos de la sesión
+    messages.success(request, "Sesión cerrada exitosamente.")
+    return redirect('login')
+    
 def register(request):
     form=forms.Usuario()
     if request.method == 'POST':
