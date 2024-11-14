@@ -16,6 +16,9 @@ def productos_menu(request):
         productos = Producto.objects.all() 
         return render(request, 'productosmenu.html', {'productos': productos})
     
+def productos_por_categoria(request, categoria):
+    productos = Producto.objects.filter(categoria__iexact=categoria)
+    return render(request, 'productos_por_categoria.html', {'productos': productos, 'categoria': categoria})
 
 def home(request):
     return render(request, 'home.html')
@@ -27,17 +30,17 @@ def login(request):
         
         try:
             usuario = Usuario.objects.get(email=email, contraseña=contraseña)
-            request.session['usuario_id'] = usuario.id  # Guardar el ID del usuario en la sesión
+            request.session['usuario_id'] = usuario.id 
             messages.success(request, f"Bienvenido/a {usuario.nombre}")
-            return redirect('home')  # Redirige a la página principal en caso de éxito
+            return redirect('home')  
         except Usuario.DoesNotExist:
             messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
-            return redirect('login')  # Mantiene al usuario en la página de inicio de sesión
+            return redirect('login')  
     
     return render(request, 'login.html')
 
 def logout(request):
-    request.session.flush()  # Elimina todos los datos de la sesión
+    request.session.flush()  
     messages.success(request, "Sesión cerrada exitosamente.")
     return redirect('login')
     
