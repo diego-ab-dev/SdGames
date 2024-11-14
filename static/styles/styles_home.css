@@ -1,14 +1,14 @@
-body{
-    background-color: #d7ccc8;
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-  }
+body {
+  background-color: #d7ccc8;
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
 
 /*color de textos*/
-.custom-text-color{
-    color: rgb(255, 255, 255);
+.custom-text-color {
+  color: rgb(255, 255, 255);
 }
 
 /*botones del nav*/
@@ -75,39 +75,39 @@ button:hover .arrow:before {
 
 /*Fondo de principal oscuro*/
 #fondo {
-    background-image:url("https://www.ospat.com.ar/wp-content/uploads/2022/10/videojuegos-scaled.jpg");
-    padding: 50vh 10vw;
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+  background-image: url("https://www.ospat.com.ar/wp-content/uploads/2022/10/videojuegos-scaled.jpg");
+  padding: 50vh 10vw;
+  text-align: center;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
 }
 
 /*opacidad de fondo*/
 #fondo:before {
-    content:'';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.6);
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 /*Parrafo encima del fondo*/
 #fondo p {
-    position: relative;
-    padding: 5px;
-    color: #ffffff;
-    font-size:x-large;
+  position: relative;
+  padding: 5px;
+  color: #ffffff;
+  font-size: x-large;
 }
 
 /*Titulo encima del fondo*/
 #fondo h1 {
-    color: #ffffff;
-    position: relative;
-    font-size: 100px;
+  color: #ffffff;
+  position: relative;
+  font-size: 100px;
 }
 
 @media (max-width: 768px) {
@@ -116,9 +116,8 @@ button:hover .arrow:before {
   }
 }
 
-
 /*Parrafos de Sdgames*/
-.containerparrafo{
+.containerparrafo {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -137,107 +136,117 @@ button:hover .arrow:before {
   padding-top: 150px;
 }
 
-
 /*cards*/
-.lead{
-  color:#aaa;
+.lead {
+  color: #aaa;
 }
-.wrapper{margin:10vh}
+.wrapper {
+  margin: 10vh;
+}
 
-.card{
+.card {
   border: none;
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
-  overflow:hidden;
-  border-radius:20px;
-  min-height:450px;
+  overflow: hidden;
+  border-radius: 20px;
+  min-height: 450px;
   box-shadow: 0 0 15px 0 rgba(44, 46, 51, 0.2);
 
-
   @media (max-width: 768px) {
-  min-height:350px;
-}
+    min-height: 350px;
+  }
 
-@media (max-width: 420px) {
-  min-height:300px;
-}
+  @media (max-width: 420px) {
+    min-height: 300px;
+  }
 
-  &.card-has-bg{
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
-  background-size:120%;
-  background-repeat:no-repeat;
-  background-position: center center;
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: inherit;
-    -webkit-filter: grayscale(1);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(100%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);}
+  &.card-has-bg {
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    background-size: 120%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: inherit;
+      -webkit-filter: grayscale(1);
+      -moz-filter: grayscale(100%);
+      -ms-filter: grayscale(100%);
+      -o-filter: grayscale(100%);
+      filter: grayscale(100%);
+    }
 
-  &:hover {
-    transform: scale(0.98);
-    box-shadow: 0 0 10px 0 rgba(44, 46, 51, 0.3);
-    background-size:130%;
+    &:hover {
+      transform: scale(0.98);
+      box-shadow: 0 0 10px 0 rgba(44, 46, 51, 0.3);
+      background-size: 130%;
       transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
 
-    .card-img-overlay {
-      transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-      background: rgb(196, 189, 177);
-      background: linear-gradient(0deg, rgba(196, 189, 177, 0.6) 0%, rgba(112, 115, 120, 0.5) 100%);
+      .card-img-overlay {
+        transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        background: rgb(196, 189, 177);
+        background: linear-gradient(
+          0deg,
+          rgba(196, 189, 177, 0.6) 0%,
+          rgba(112, 115, 120, 0.5) 100%
+        );
       }
+    }
   }
-}
-  .card-title{font-weight:800; 
+  .card-title {
+    font-weight: 800;
     color: rgba(44, 46, 51, 0.7);
   }
-  .card-meta{color: rgba(0, 0, 0, 0.5);
-  text-transform:uppercase;
-    font-weight:500;
-    letter-spacing:2px;}
-  .card-body{ 
+  .card-meta {
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+  .card-body {
     transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
-  
-
   }
   &:hover {
-    .card-body{
-      margin-top:30px;
+    .card-body {
+      margin-top: 30px;
       transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
     }
-  cursor: pointer;
-  transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-}
+    cursor: pointer;
+    transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
   .card-img-overlay {
-  transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-  background: rgb(255, 162, 0);
-  background: linear-gradient(0deg, rgba(44, 46, 51, 0.6) 0%, rgba(148, 140, 128, 0.5) 100%);
-}
+    transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+    background: rgb(255, 162, 0);
+    background: linear-gradient(
+      0deg,
+      rgba(44, 46, 51, 0.6) 0%,
+      rgba(148, 140, 128, 0.5) 100%
+    );
+  }
 }
 /*Fin de las cards*/
-
 
 /*Local con mapa*/
 .localcont {
   padding: 100px;
-  margin: 0 auto; 
+  margin: 0 auto;
   margin-bottom: 100px;
   background-color: #2c2e33;
   color: white;
   border-radius: 10px;
 }
 
-.localcont h1, .localcont p {
-  color: white; 
+.localcont h1,
+.localcont p {
+  color: white;
 }
 
 .localcont iframe {
-  max-width: 100%; 
+  max-width: 100%;
   border-radius: 50px;
 }
 
@@ -249,37 +258,37 @@ button:hover .arrow:before {
 /*Fin local con mapa*/
 
 /*Redes seciales*/
-.contsociales{
+.contsociales {
   display: flex;
   justify-content: center;
   height: 50vh;
 }
 
-.img-content{
+.img-content {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
   width: 350px;
   height: 450px;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
 }
 
-.img-content .img{
+.img-content .img {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('https://www.inci.gov.co/sites/default/files/styles/imagen_internas_1110x624_/public/2023-07/redes-sociales.jpg?itok=OoLVhkYTs');
+  background-image: url("https://www.inci.gov.co/sites/default/files/styles/imagen_internas_1110x624_/public/2023-07/redes-sociales.jpg?itok=OoLVhkYTs");
   background-size: cover;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-.img-content:hover .img{
+.img-content:hover .img {
   background-position-y: -90px;
 }
 
-.img-content .info{
+.img-content .info {
   position: absolute;
   bottom: -90px;
   left: 0;
@@ -289,22 +298,22 @@ button:hover .arrow:before {
   padding: 15px 10px;
   text-align: center;
   z-index: 10;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-.img-content:hover .info{
+.img-content:hover .info {
   bottom: 0;
 }
 
-.img-content .info h4{
+.img-content .info h4 {
   color: #ffffff;
 }
 
-.img-content .info h2{
+.img-content .info h2 {
   color: #ffffff;
 }
 
-.img-content .social{
+.img-content .social {
   position: absolute;
   top: 0;
   left: 0;
@@ -312,11 +321,11 @@ button:hover .arrow:before {
   width: 100%;
   height: 100%;
   z-index: 9;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.img-content:hover .social{
-  background: rgba(0, 0, 0, .4);
+.img-content:hover .social {
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .img-content .social ul {
@@ -324,22 +333,21 @@ button:hover .arrow:before {
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 0; 
-  margin: 0; 
-  list-style: none; 
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-
-.img-content .social ul li{
+.img-content .social ul li {
   display: inline-block;
   text-align: center;
   margin: 0 6px;
   transform: translateY(300px);
   opacity: 0;
-  transition: .4s;
+  transition: 0.4s;
 }
 
-.img-content .social ul li a{
+.img-content .social ul li a {
   display: block;
   line-height: 40px;
   color: #000000;
@@ -350,53 +358,50 @@ button:hover .arrow:before {
   cursor: pointer;
 }
 
-
-.img-content .social ul li a i{
-  transition: .3s;
+.img-content .social ul li a i {
+  transition: 0.3s;
 }
 
-.img-content .social ul li:hover i{
+.img-content .social ul li:hover i {
   transform: rotate(360deg);
 }
 
-.img-content:hover .social ul li:nth-child(1){
+.img-content:hover .social ul li:nth-child(1) {
   transform: translateY(0px);
   opacity: 1;
   transition-delay: 0s;
 }
 
-.img-content:hover .social ul li:nth-child(2){
+.img-content:hover .social ul li:nth-child(2) {
   transform: translateY(0px);
   opacity: 1;
-  transition-delay: .1s;
+  transition-delay: 0.1s;
 }
 
-.img-content:hover .social ul li:nth-child(3){
+.img-content:hover .social ul li:nth-child(3) {
   transform: translateY(0px);
   opacity: 1;
-  transition-delay: .2s;
+  transition-delay: 0.2s;
 }
 
-.img-content:hover .social ul li:nth-child(4){
+.img-content:hover .social ul li:nth-child(4) {
   transform: translateY(0px);
   opacity: 1;
-  transition-delay: .2s;
+  transition-delay: 0.2s;
 }
 
-.img-content:hover .social ul li:nth-child(5){
+.img-content:hover .social ul li:nth-child(5) {
   transform: translateY(0px);
   opacity: 1;
-  transition-delay: .2s;
+  transition-delay: 0.2s;
 }
 
-.img-content:hover .social ul li:nth-child(6){
+.img-content:hover .social ul li:nth-child(6) {
   transform: translateY(0px);
   opacity: 1;
-  transition-delay: .2s;
+  transition-delay: 0.2s;
 }
 /*Fin Redes seciales*/
-
-
 
 /* Boton de subir */
 .go-top-container {
@@ -449,24 +454,22 @@ button:hover .arrow:before {
 
 @keyframes popup {
   0% {
-      width: 0;
-      height: 0;
+    width: 0;
+    height: 0;
   }
   50% {
-      width: 6rem;
-      height: 6rem;
+    width: 6rem;
+    height: 6rem;
   }
   100% {
-      width: 6.6rem;
-      height: 6.6rem;
+    width: 6.6rem;
+    height: 6.6rem;
   }
 }
 /*fin del boton de subir*/
 
-
-
 /*footer*/
-footer{
+footer {
   background-color: #2c2e33;
   color: #ffffff;
   height: auto;
@@ -479,30 +482,53 @@ footer{
 }
 /*fin del footer*/
 
-
 /*Animaciones para los elementos en home*/
-@keyframes anim-fade-in { from { opacity: 0; } to { opacity: 1 } }
-
-@keyframes anim-up { 
-	from { opacity: 0; transform: translateY(100px); } 
-	to { opacity: 1; transform: translateY(0px); }  
-}		
-
-@keyframes anim-down { 
-	from { opacity: 0; transform: translateY(-100px); } 
-	to { opacity: 1; transform: translateY(0px); }  
-}		
-
-.anim-up, .anim-down{
-	animation-duration: 1s; 
-	animation-delay: 0.5s; 		
-	animation-fill-mode: both; 
+@keyframes anim-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.anim-up { animation-name: anim-up; }
-.anim-down { animation-name: anim-down; }
+@keyframes anim-up {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 
-.paused * { 
-	animation-play-state: paused;
+@keyframes anim-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.anim-up,
+.anim-down {
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
+}
+
+.anim-up {
+  animation-name: anim-up;
+}
+.anim-down {
+  animation-name: anim-down;
+}
+
+.paused * {
+  animation-play-state: paused;
 }
 /*Fin de animaciones para los elementos en home*/
