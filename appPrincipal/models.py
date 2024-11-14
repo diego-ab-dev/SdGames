@@ -46,7 +46,7 @@ class Carrito(models.Model):
         ('E', 'En Proceso'),
         ('C', 'Completado'),
     ]
-    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES, null=True, blank=True, default='E')
+    estado = models.CharField(max_length=1, choices=TIPO_CHOICES, null=True, blank=True, default='E')
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='carritos')
 
     def genera_venta(self):
@@ -64,7 +64,8 @@ class Venta(models.Model):
     carrito = models.OneToOneField(Carrito, on_delete=models.CASCADE)
 
     def calcular_total(self):
-        pass
+        self.total = sum(item.subtotal() for item in self.carrito.items.all())
+        self.save()
 
     def genera_boleta(self):
         pass
