@@ -28,7 +28,7 @@ urlpatterns = [
     path('menu/', vista_carrusel, name='productos_menu'),
     path('carrito/', carrito),
     path('producto/<int:producto_id>/', producto_detalle, name='producto_detalle'),
-    path('productos/categoria/<str:categoria>/', productos_por_categoria, name='productos_por_categoria'),
+    path('productos/<str:categoria>/', productos_por_categoria, name='productos_por_categoria'),
     path('login/', login),
     path('register/', register),
     path('carrito/', carrito),

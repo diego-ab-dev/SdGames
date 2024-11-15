@@ -17,8 +17,13 @@ def productos_menu(request):
         return render(request, 'productosmenu.html', {'productos': productos})
     
 def productos_por_categoria(request, categoria):
-    productos = Producto.objects.filter(categoria__iexact=categoria)
-    return render(request, 'productos_por_categoria.html', {'productos': productos, 'categoria': categoria})
+    productos = Producto.objects.filter(categoria=categoria)
+    context = {
+        'categoria': dict(Producto.CATEGORIAS).get(categoria, categoria),
+        'productos': productos,
+    }
+    return render(request, 'productos_por_categoria.html', context)
+
 
 def home(request):
     return render(request, 'home.html')

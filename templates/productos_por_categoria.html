@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,27 +13,45 @@
     <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
-    <title>Document</title>
+    <title>Productos - {{ categoria }}</title>
+    <link rel="stylesheet" href="{% static 'styles/styles_categoria.css' %}">
 </head>
 <body>
-    {% extends 'base.html' %}
-
-    {% block content %}
-    <h2>Productos en la categoría: {{ categoria }}</h2>
-    <div class="productos">
-        {% for producto in productos %}
-            <div class="producto-item">
-                <h3>{{ producto.nombre }}</h3>
-                <p>Precio: ${{ producto.precio }}</p>
-                <a href="{% url 'producto_detalle' producto.id %}">
-                    <img src="{{ producto.imagen_principal.url }}" alt="{{ producto.nombre }}">
-                </a>
+    <section class="section-products">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="header">
+                        <h2 class="anim-down display-6 fw-bold fst-italic text-center">Productos en {{ categoria }}</h2>
+                    </div>
+                </div>
             </div>
-        {% empty %}
-            <p>No hay productos en esta categoría.</p>
-        {% endfor %}
-    </div>
-    {% endblock %}
-
+            <div class="row">
+                <!-- Single Product -->
+                {% for producto in productos %}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-4" class="single-product" style="background-color: white; border-radius: 20px; padding: 20px;">
+                        <div class="part-1">
+                            <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                            <span class="new">Tendencia</span>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="{% url 'producto_detalle' producto.id %}"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
+                            <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio }}</h4>
+                        </div>
+                        <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>No hay productos en esta categoría.</p>
+                {% endfor %}
+            </div>
+        </div>
+      </section>
 </body>
 </html>

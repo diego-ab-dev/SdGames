@@ -84,149 +84,158 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="margin-top: 110px; background-color: #2c2e33;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: azure;">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: azure;">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-center" id="navbarNav" style="background-color: #2c2e33;">
+  <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
     <ul class="navbar-nav mx-auto d-flex justify-content-center">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle fw-bold" href="#" id="juegosDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
-          VIDEOJUEGOS
-        </a>
-        <div class="dropdown-menu-large1" aria-labelledby="juegosDropdown">
-          <div class="dropdown-submenu">
-            <span>PLAYSTATION</span> 
-            <ul>
-              <li><a href="#">PLAYSTATION 3</a></li>
-              <li><a href="{% url 'productos_por_categoria' 'PLAYSTATION 4' %}">PLAYSTATION 4</a></li>
-              <li><a href="{% url 'productos_por_categoria' 'PS5' %}">PLAYSTATION 5</a></li>
-            </ul>
+        <a class="nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false" >VIDEOJUEGOS</a>
+        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
+          <div class="row">
+            <!-- Columna PlayStation -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">PlayStation</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3' %}">PlayStation 3</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4' %}">PlayStation 4</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5' %}">PlayStation 5</a>
+            </div>
+            <!-- Columna Xbox -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Xbox</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360' %}">XBOX 360</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE' %}">XBOX ONE</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES' %}">XBOX SERIES</a>
+            </div>
+            <!-- Columna Nintendo -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Nintendo</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' '3DS' %}">3DS</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII' %}">WII</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U' %}">WII U</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH' %}">SWITCH</a>
+            </div>
+            <!-- Columna PC -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">PC</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PC' %}">PC</a>
+            </div>
           </div>
-
-          <div class="dropdown-submenu">
-            <span>MICROSOFT</span> 
-            <ul>
-              <li><a href="#">XBOX 360</a></li>
-              <li><a href="#">XBOX ONE</a></li>
-              <li><a href="#">XBOX SERIES</a></li>
-            </ul>
+          <!-- Imagen a la derecha -->
+          <div class="col-md-4">
+            {% if cod6 %}
+              <a href="{% url 'producto_detalle' cod6.id %}">
+                <img src="{% static 'images/cod6promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
+              </a>
+            {% else %}
+              <p class="text-muted">Producto no disponible</p>
+            {% endif %}
           </div>
-
-          <div class="dropdown-submenu">
-            <span>NINTENDO</span> 
-            <ul>
-              <li><a href="#">3DS</a></li>
-              <li><a href="#">WII</a></li>
-              <li><a href="#">WII U</a></li>
-              <li><a href="#">SWITCH</a></li>
-            </ul>
-          </div>
-
-          <div class="dropdown-submenu">
-            <span>JUEGOS DE PC</span> 
-            <ul>
-              <li><a href="#">PC</a></li>
-            </ul>
-          </div>
-          {% if cod6 %}
-            <a href="{% url 'producto_detalle' cod6.id %}">
-              <img src="{% static 'images/cod6promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
-            </a>
-          {% else %}
-            <p class="text-muted">Producto no disponible</p>
-          {% endif %}
-        </div>
+        </ul>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle fw-bold" href="#" id="juegosDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
-          CONSOLAS
-        </a>
-        <div class="dropdown-menu-large2" aria-labelledby="juegosDropdown">
-          <div class="dropdown-submenu">
-            <span>PLAYSTATION</span> 
-            <ul>
-              <li><a href="#">PLAYSTATION 4</a></li>
-              <li><a href="#">PLAYSTATION 5</a></li>
-            </ul>
+        <a class="nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">CONSOLAS</a>
+        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
+          <div class="row">
+            <!-- Columna PlayStation -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">PlayStation</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-CONSOLA' %}">PLAYSTATION 4</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-CONSOLA' %}">PLAYSTATION 5</a>
+            </div>
+            <!-- Columna Xbox -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Xbox</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-CONSOLA' %}">XBOX ONE</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-CONSOLA' %}">XBOX SERIES</a>
+            </div>
+            <!-- Columna Nintendo -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Nintendo</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-CONSOLA' %}">WII U</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-CONSOLA' %}">SWITCH</a>
+            </div>
+            <!-- Columna PC -->
+          <!-- Imagen a la derecha -->
+          <div class="col-md-4">
+            {% if cod6 %}
+              <a href="{% url 'producto_detalle' cod6.id %}">
+                <img src="{% static 'images/ps5promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
+              </a>
+            {% else %}
+              <p class="text-muted">Producto no disponible</p>
+            {% endif %}
           </div>
-
-          <div class="dropdown-submenu">
-            <span>MICROSOFT</span> 
-            <ul>
-              <li><a href="#">XBOX ONE</a></li>
-              <li><a href="#">XBOX SERIES</a></li>
-            </ul>
-          </div>
-
-          <div class="dropdown-submenu">
-            <span>NINTENDO</span> 
-            <ul>
-              <li><a href="#">WII U</a></li>
-              <li><a href="#">SWITCH</a></li>
-            </ul>
-          </div>
-          
-          <img src="{% static 'images/ps5promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image2">
-        </div>
+        </ul>
       </li>
+
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle fw-bold" href="#" id="juegosDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
-          ACCESORIOS
-        </a>
-        <div class="dropdown-menu-large3" aria-labelledby="juegosDropdown">
-          <div class="dropdown-submenu">
-            <span>PLAYSTATION</span> 
-            <ul>
-              <li><a href="#">PSP</a></li>
-              <li><a href="#">VITA</a></li>
-              <li><a href="#">PLAY STATION 1</a></li>
-              <li><a href="#">PLAY STATION 2</a></li>
-              <li><a href="#">PLAY STATION 3</a></li>
-              <li><a href="#">PLAY STATION 4</a></li>
-              <li><a href="#">PLAY STATION 5</a></li>
-            </ul>
+        <a class="nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">ACCESORIOS</a>
+        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
+          <div class="row">
+            <!-- Columna PlayStation -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">PlayStation</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PSP-ACCESORIOS' %}">PSP</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS-VITA-ACCESORIOS' %}">VITA</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS1-ACCESORIOS' %}">PLAY STATION 1</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS2-ACCESORIOS' %}">PLAY STATION 2</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3-ACCESORIOS' %}">PLAY STATION 3</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-ACCESORIOS' %}">PLAY STATION 4</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-ACCESORIOS' %}">PLAY STATION 5</a>
+            </div>
+            <!-- Columna Xbox -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Xbox</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360-ACCESORIOS' %}">XBOX 360</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-ACCESORIOS' %}">XBOX ONE</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-ACCESORIOS' %}">XBOX SERIES</a>
+            </div>
+            <!-- Columna Nintendo -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">Nintendo</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'N3DS-ACCESORIOS' %}">3DS</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-ACCESORIOS' %}">WII U</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-ACCESORIOS' %}">SWITCH</a>
+            </div>
+          <!-- Imagen a la derecha -->
+          <div class="col-md-4">
+            {% if cod6 %}
+              <a href="{% url 'producto_detalle' cod6.id %}">
+                <img src="{% static 'images/mando.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
+              </a>
+            {% else %}
+              <p class="text-muted">Producto no disponible</p>
+            {% endif %}
           </div>
-
-          <div class="dropdown-submenu">
-            <span>MICROSOFT</span> 
-            <ul>
-              <li><a href="#">XBOX 360</a></li>
-              <li><a href="#">XBOX ONE</a></li>
-              <li><a href="#">XBOX SERIES</a></li>
-            </ul>
-          </div>
-
-          <div class="dropdown-submenu">
-            <span>NINTENDO</span> 
-            <ul>
-              <li><a href="#">3DS</a></li>
-              <li><a href="#">WII U</a></li>
-              <li><a href="#">SWITCH</a></li>
-            </ul>
-          </div>
-          
-          <img src="{% static 'images/mando.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image3">
-        </div>
+        </ul>
       </li>
+
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle fw-bold" href="#" id="juegosDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
-          FIGURAS COLECCIONABLES
-        </a>
-        <div class="dropdown-menu-large4" aria-labelledby="juegosDropdown">
-          <div class="dropdown-submenu">
-            <span>FIGURAS</span> 
-            <ul>
-              <li><a href="#">FUNKO POP</a></li>
-              <li><a href="#">AMIIBO</a></li>
-            </ul>
+        <a class="nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">FIGURAS COLECCIONABLES</a>
+        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
+          <div class="row">
+            <!-- Columna PlayStation -->
+            <div class="col-md-3">
+              <span class="dropdown-header text-white">PlayStation</span>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'FUNKO' %}">FUNKO POP</a>
+              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'AMIIBO' %}">AMIIBO</a>
+            </div>
+          <!-- Imagen a la derecha -->
+          <div class="col-md-4">
+            {% if cod6 %}
+              <a href="{% url 'producto_detalle' cod6.id %}">
+                <img src="{% static 'images/header-funko-movil.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
+              </a>
+            {% else %}
+              <p class="text-muted">Producto no disponible</p>
+            {% endif %}
           </div>
-          <img src="{% static 'images/header-funko-movil.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image4">
-        </div>
+        </ul>
       </li>
     </ul>
   </div>
 </nav>
-
 
 
 <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -328,21 +337,6 @@
   var carousel = new bootstrap.Carousel(myCarousel, {
      interval: 3000, 
      ride: 'carousel'
-  });
-
-  document.querySelectorAll('.dropdown-submenu a').forEach(function(element) {
-    element.addEventListener('click', function(e) {
-      e.preventDefault();
-      const submenu = this.nextElementSibling;
-      if (submenu.style.display === 'block') {
-        submenu.style.display = 'none';
-      } else {
-        document.querySelectorAll('.dropdown-submenu ul').forEach(function(ul) {
-          ul.style.display = 'none';
-        });
-        submenu.style.display = 'block';
-      }
-    });
   });
 </script>
 
