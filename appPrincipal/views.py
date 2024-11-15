@@ -60,6 +60,7 @@ def register(request):
                 email = form.cleaned_data['email'],
                 contraseña = form.cleaned_data['contraseña'],
                 direccion =  form.cleaned_data['direccion'],
+                ciudad = form.cleaned_data['ciudad'],
             )
             registro.save()  
         else:
