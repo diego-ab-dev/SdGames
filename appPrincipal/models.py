@@ -14,6 +14,48 @@ class Usuario(models.Model):
         return self.nombre
 
 class Producto(models.Model):
+    CATEGORIAS = [
+        ('VIDEOJUEGOS', [
+            ('PS3', 'PlayStation 3'),
+            ('PS4', 'PlayStation 4'),
+            ('PS5', 'PlayStation 5'),
+            ('XBOX-360', 'Xbox 360'),
+            ('XBOX-ONE', 'Xbox One'),
+            ('XBOX-SERIES', 'Xbox Series'),
+            ('N3DS', 'Nintendo 3DS'),
+            ('WII', 'Nintendo Wii'),
+            ('WII-U', 'Nintendo Wii U'),
+            ('SWITCH', 'Nintendo Switch'),
+            ('PC', 'PC'),
+        ]),
+        ('CONSOLAS', [
+            ('PS4-CONSOLA', 'PlayStation 4'),
+            ('PS5-CONSOLA', 'PlayStation 5'),
+            ('XBOX-ONE-CONSOLA', 'Xbox One'),
+            ('XBOX-SERIES-CONSOLA', 'Xbox Series'),
+            ('WII-U-CONSOLA', 'Wii U'),
+            ('SWITCH-CONSOLA', 'Switch'),
+        ]),
+        ('ACCESORIOS', [
+            ('PSP-ACCESORIOS', 'PSP'),
+            ('PS-VITA-ACCESORIOS', 'PlayStation Vita'),
+            ('PS1-ACCESORIOS', 'PlayStation 1'),
+            ('PS2-ACCESORIOS', 'PlayStation 2'),
+            ('PS3-ACCESORIOS', 'PlayStation 3'),
+            ('PS4-ACCESORIOS', 'PlayStation 4'),
+            ('PS5-ACCESORIOS', 'PlayStation 5'),
+            ('XBOX-360-ACCESORIOS', 'Xbox 360'),
+            ('XBOX-ONE-ACCESORIOS', 'Xbox One'),
+            ('XBOX-SERIES-ACCESORIOS', 'Xbox Series'),
+            ('N3DS-ACCESORIOS', 'Nintendo 3DS'),
+            ('WII-U-ACCESORIOS', 'Wii U'),
+            ('SWITCH-ACCESORIOS', 'Switch'),
+        ]),
+        ('FIGURAS', [
+            ('FUNKO', 'Funko Pop'),
+            ('AMIIBO', 'Amiibo'),
+        ]),
+    ]
     codigo_de_barra = models.CharField(max_length=20, unique=True, verbose_name="Código de Barra") 
     nombre = models.CharField(max_length=100)
     precio = models.PositiveIntegerField(default=0)  
@@ -25,7 +67,7 @@ class Producto(models.Model):
     imagen_4 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 4")
     imagen_5 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 5")
     imagen_6 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 6")
-    categoria = models.CharField(max_length=50, verbose_name="Categoría") 
+    categoria = models.CharField(max_length=40, choices=CATEGORIAS, verbose_name="Categoría") 
 
     def imagenes(self):
         return [img for img in [
