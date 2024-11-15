@@ -12,3 +12,4 @@ class Usuario(forms.Form):
     email = forms.CharField()
     contraseña = forms.CharField()
     direccion =  forms.CharField()
+    ciudad = forms.CharField()
