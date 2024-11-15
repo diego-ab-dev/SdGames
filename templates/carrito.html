@@ -110,23 +110,18 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col" style="padding-left:0;">Productos {{ productos|length }}</div>
-                        <div class="col text-right">&euro; {{ total|floatformat:2 }}</div>
+                        <div class="col" style="padding-left:0;">Productos ({{ productos|length }})</div>
+                        <div class="col text-right">$ {{ total|floatformat:2 }}</div>
                     </div>
                     <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                         <div class="col">Total</div>
-                        <div class="col text-right">&euro; {{ total|floatformat:2 }}</div>
+                        <div class="col text-right">$ {{ total|floatformat:2 }}</div>
                     </div>
                     <button class="btn">Continuar compra</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
 
     <!--footer-->
     <footer class="text-center text-lg-start text-light">

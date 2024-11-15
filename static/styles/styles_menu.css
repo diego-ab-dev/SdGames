@@ -250,15 +250,6 @@ button:hover .arrow:before {
 
 
 #myCarousel .carousel-item .mask {
-<<<<<<< HEAD
-  position: relative;
-  margin-top: 100px;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-attachment: fixed;
-=======
     position: relative;
     margin-top: 150px;
     top: 0;
@@ -266,7 +257,6 @@ button:hover .arrow:before {
 	  height:100%;
     width: 100%;
     background-attachment: fixed;
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 .textcarrousel {
   font-size: 50px;
@@ -353,17 +343,6 @@ button:hover .arrow:before {
 
 .carousel-control-prev,
 .carousel-control-next {
-<<<<<<< HEAD
-  position: absolute;
-  top: 50%;
-  transform: translateY(-1800%);
-  height: 40px;
-  width: 40px;
-  padding: 12px;
-  background-color: #9c9592;
-  opacity: 0.8;
-  z-index: 2;
-=======
     position: absolute;
     top: 50%; 
     transform: translateY(-3000%); 
@@ -373,7 +352,6 @@ button:hover .arrow:before {
     background-color: #9c9592;
     opacity: 0.8;
     z-index: 2;
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .carousel-control-prev {
@@ -540,12 +518,7 @@ button:hover .arrow:before {
   animation-name: slideInRight;
 }
 
-<<<<<<< HEAD
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
-=======
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 a,
 a:hover {
   text-decoration: none;
@@ -575,15 +548,12 @@ a:hover {
 
 .section-products .single-product {
   margin-bottom: 26px;
-<<<<<<< HEAD
-=======
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .section-products .single-product:hover {
   transform: translateY(-10px); 
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .section-products .single-product .part-1 {
@@ -681,12 +651,8 @@ a:hover {
 }
 
 .section-products .single-product .part-2 .product-title {
-<<<<<<< HEAD
-  font-size: 1rem;
-=======
     font-size: 1rem;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
 }
 
 .section-products .single-product .part-2 h4 {
@@ -725,9 +691,6 @@ a:hover {
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
 }
 
-<<<<<<< HEAD
-footer {
-=======
 .btn-detalles {
   display: flex;
   justify-content: center;
@@ -767,7 +730,6 @@ footer {
 }
 
 footer{
->>>>>>> 3d09bfff69ae05a1a1616860674a25d548ddbb2d
   background-color: #2c2e33;
   color: #ffffff;
   height: auto;
