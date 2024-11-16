@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'SdGames.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME':'sd_games_db',
-        'USER': 'admin_sql',
+        'NAME':'sdgamesdb',
+        'USER': 'admin',
         'PASSWORD': 'Inacap#29',
-        'HOST': 'servidor-sdgames-sql.database.windows.net',
-        'PORT': '',
+        'HOST': 'sdgamesdb.cj2uc8iao8nw.sa-east-1.rds.amazonaws.com',
+        'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
