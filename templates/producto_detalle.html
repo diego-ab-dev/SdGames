@@ -77,20 +77,47 @@
             <p>{{ producto.descripcion }}</p>
             <p><strong>Stock:</strong> {{ producto.stock }}</p>
             <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
-            <h5>Cantidad:</h5>
-            <div class="add flex1">
-                <span>-</span>
-                <label>1</label>
-                <span>+</span>
-            </div>
-            <button class="btncarrito btn">Agregar al carrito</button>
+            <h5><strong>Cantidad:</strong></h5>
+            <select id="cantidad" name="cantidad" class="form-select" style="width: 100px;">
+                {% for i in rango_cantidad %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+            {% if producto.stock == 0 %}
+                <button class="btncarrito btn mt-3" disabled>No disponible</button>
+            {% else %}
+                <button class="btncarrito btn mt-3">Agregar al carrito</button>
+            {% endif %}
         </div>
     </div>
 </section>
+
+<h2>Opiniones</h2>
+{% if producto.opiniones.all %}
+    <ul>
+        {% for opinion in producto.opiniones.all %}
+            <li>
+                <strong>{{ opinion.usuario.nombre }}</strong>: 
+                {{ opinion.comentario }} ({{ opinion.puntuacion }} estrellas)
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Promedio de puntuación: {{ producto.promedio_puntuacion }}</p>
+{% else %}
+    <p>No hay opiniones para este producto.</p>
+{% endif %}
+
+
+
 <script>
 function img(anything) {
     document.querySelector('.slide').src = anything;
 }
+
+document.querySelector('#cantidad').addEventListener('change', function() {
+    const cantidadSeleccionada = this.value;
+    console.log('Cantidad seleccionada:', cantidadSeleccionada);
+});
 </script>
 </body>
 </html>

@@ -408,8 +408,8 @@ button:hover .arrow:before {
   position: fixed;
   bottom: 4rem;
   right: 4rem;
-  width: 6.6rem;
-  height: 6.6rem;
+  width: 4.6rem;
+  height: 4.6rem;
   z-index: -1;
 }
 
@@ -429,7 +429,7 @@ button:hover .arrow:before {
 
 .go-top-button img {
   position: absolute;
-  font-size: 1.7rem;
+  font-size: 1rem;
   top: 48%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
@@ -443,8 +443,8 @@ button:hover .arrow:before {
 
 .show .go-top-button {
   animation: popup 0.3s ease-in-out;
-  width: 5.6rem;
-  height: 5.6rem;
+  width: 4.6rem;
+  height: 4.6rem;
   z-index: 11;
 }
 
@@ -458,12 +458,12 @@ button:hover .arrow:before {
     height: 0;
   }
   50% {
-    width: 6rem;
-    height: 6rem;
+    width: 4rem;
+    height: 4rem;
   }
   100% {
-    width: 6.6rem;
-    height: 6.6rem;
+    width: 4.6rem;
+    height: 4.6rem;
   }
 }
 /*fin del boton de subir*/

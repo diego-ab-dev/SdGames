@@ -1,9 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto
+from .models import Producto ,ItemCarritoProducto, Usuario
 from appPrincipal import forms
-from .models import Usuario
 from django.contrib import messages
-from .models import Usuario
 # Create your views here.
 
 
@@ -71,7 +69,16 @@ def register(request):
 
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
-    return render(request, 'producto_detalle.html', {'producto': producto})
+    rango_cantidad = range(1, producto.stock + 1)  
+    return render(request, 'producto_detalle.html', {'producto': producto, 'rango_cantidad': rango_cantidad})
+
+def usuario_compro_producto(usuario, producto):
+    return ItemCarritoProducto.objects.filter(
+        carrito__venta__isnull=False,  
+        carrito__usuario=usuario,
+        producto=producto
+    ).exists()
+
 
 def vista_carrusel(request):
     productos = Producto.objects.all()

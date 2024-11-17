@@ -83,6 +83,12 @@ class Producto(models.Model):
     def eliminar_producto(self):
         pass
 
+    def promedio_puntuacion(self):
+        opiniones = self.opiniones.all()
+        if not opiniones:
+            return 0
+        return round(sum(opinion.puntuacion for opinion in opiniones) / len(opiniones), 1)
+
 class Carrito(models.Model):
     TIPO_CHOICES = [
         ('E', 'En Proceso'),
@@ -111,6 +117,26 @@ class Venta(models.Model):
 
     def genera_boleta(self):
         pass
+
+class Opinion(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name="opiniones")
+    comentario = models.TextField(verbose_name="Comentario")
+    puntuacion = models.PositiveIntegerField(
+        verbose_name="Puntuación",
+        default=1,
+        choices=[(i, str(i)) for i in range(1, 6)] 
+    )
+    fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
+
+    class Meta:
+        unique_together = ('usuario', 'producto')  
+        verbose_name = "Opinión"
+        verbose_name_plural = "Opiniones"
+
+    def __str__(self):
+        return f"{self.usuario.nombre} - {self.producto.nombre} ({self.puntuacion} estrellas)"
+
 
 class Reclamo(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='reclamos')
