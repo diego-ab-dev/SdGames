@@ -12,230 +12,131 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
   <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
   <link rel="stylesheet" href="{% static 'styles/styles_menu.css' %}">
   <title>SD Games - Menu</title>
 </head>
 <body>
-  <!--Nav de la web-->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c2e33;">
-    <div class="container">
-        <!-- Logo -->
-        <a class="navbar-brand" href="/home">
-            <strong>SD Games</strong>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/productos_menu">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#nosotros">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#local">Local</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#redes">Redes</a>
-                </li>
-            </ul>
-
-            <!-- Botones de Iniciar Sesión y Registrarse -->
-            <div class="d-flex" style="gap: 20px;">
-              <button onclick="window.location.href='/login'">
-                Iniciar Sesión
-                <div class="arrow-wrapper">
-                    <div class="arrow"></div>
-                </div>
-            </button>
-                <button onclick="window.location.href='/register'">
-                  Registrarse
-                </button>
-            </div>
+ 
+  <nav>
+    <div class="navbar">
+      <i class='bx bx-menu'></i>
+      <div class="logo"><a href="#">SD Games</a></div>
+      <div class="nav-links">
+        <div class="sidebar-logo">
+          <span class="logo-name">SD Games</span>
+          <i class='bx bx-x' ></i>
         </div>
-    </div>
-</nav>
+        <ul class="links">
+          <li><a href="#">HOME</a></li>
+          <li>
+            <a href="#">VIDEOJUEGOS</a>
+            <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+            <ul class="htmlCss-sub-menu sub-menu">
+              <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3' %}">PlayStation 3</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4' %}">PlayStation 4</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5' %}">PlayStation 5</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360' %}">XBOX 360</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE' %}">XBOX ONE</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES' %}">XBOX SERIES</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' '3DS' %}">3DS</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII' %}">WII</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U' %}">WII U</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH' %}">SWITCH</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">CONSOLAS</a>
+            <i class='bx bxs-chevron-down js-arrow arrow '></i>
+            <ul class="js-sub-menu sub-menu">
+              <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-CONSOLA' %}">PLAYSTATION 4</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-CONSOLA' %}">PLAYSTATION 5</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-CONSOLA' %}">XBOX ONE</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-CONSOLA' %}">XBOX SERIES</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-CONSOLA' %}">WII U</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-CONSOLA' %}">SWITCH</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">ACCESORIOS</a>
+            <i class='bx bxs-chevron-down js-arrow arrow '></i>
+            <ul class="js-sub-menu sub-menu">
+              <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PSP-ACCESORIOS' %}">PSP</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS-VITA-ACCESORIOS' %}">VITA</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS1-ACCESORIOS' %}">PLAY STATION 1</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS2-ACCESORIOS' %}">PLAY STATION 2</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3-ACCESORIOS' %}">PLAY STATION 3</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-ACCESORIOS' %}">PLAY STATION 4</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-ACCESORIOS' %}">PLAY STATION 5</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360-ACCESORIOS' %}">XBOX 360</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-ACCESORIOS' %}">XBOX ONE</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-ACCESORIOS' %}">XBOX SERIES</a></li>
+              <hr>
+              <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'N3DS-ACCESORIOS' %}">3DS</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-ACCESORIOS' %}">WII U</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-ACCESORIOS' %}">SWITCH</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">FIGURAS</a>
+            <i class='bx bxs-chevron-down js-arrow arrow '></i>
+            <ul class="js-sub-menu sub-menu">
+              <li><span class="dropdown-header text-white text-start">Figuras Coleccionables</span></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'FUNKO' %}">FUNKO POP</a></li>
+              <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'AMIIBO' %}">AMIIBO</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sidebar-login">
+          <button onclick="window.location.href='/login'">
+            Iniciar Sesión
+            <div class="arrow-wrapper">
+                <div class="arrow"></div>
+            </div>
+        </button>
+        </div>
 
-<nav class="navbar navbar-light py-2 fixed-top">
-  <div class="container d-flex justify-content-between">
-        <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search" style="width: 50%;">
-          <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search" id="name" name="buscar">
-          <button class="btn" type="submit">Buscar</button>
-        </form>
-
-      <div class="icons d-flex gap-3">
-          <a href="/favoritos" style="color: #9c9592;">
-              <i class="fas fa-heart"></i>
-          </a>
-          <a href="/carrito" style="color: #9c9592;">
-              <i class="fas fa-shopping-cart"></i>
-          </a>
       </div>
-  </div>
-</nav>
+      <div class="d-flex login-desktop">
+        <button onclick="window.location.href='/login'">
+          Iniciar Sesión
+          <div class="arrow-wrapper">
+              <div class="arrow"></div>
+          </div>
+      </button>
+      </div>
+      <div class="icons d-flex gap-3">
+        <a href="/favoritos" style="color: #9c9592;">
+            <i class="fas fa-heart"></i>
+        </a>
+        <a href="/carrito" style="color: #9c9592;">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </div>
+      <div class="search-box">
+        <i class='bx bx-search'></i>
+        <div class="input-box">
+          <input type="text" placeholder="Search...">
+        </div>
+      </div>
+    </div>
+  </nav>
 
-
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="margin-top: 110px; background-color: #2c2e33;">
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: azure;">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-    <ul class="navbar-nav mx-auto d-flex justify-content-center">
-      <li class="nav-item dropdown">
-        <a class="nav-link-categoria nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false" >VIDEOJUEGOS</a>
-        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
-          <div class="row">
-            <!-- Columna PlayStation -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white text-start">PlayStation</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3' %}">PlayStation 3</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4' %}">PlayStation 4</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5' %}">PlayStation 5</a>
-            </div>
-            <!-- Columna Xbox -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Xbox</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360' %}">XBOX 360</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE' %}">XBOX ONE</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES' %}">XBOX SERIES</a>
-            </div>
-            <!-- Columna Nintendo -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Nintendo</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' '3DS' %}">3DS</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII' %}">WII</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U' %}">WII U</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH' %}">SWITCH</a>
-            </div>
-            <!-- Columna PC -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">PC</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PC' %}">PC</a>
-            </div>
-          </div>
-          <!-- Imagen a la derecha -->
-          <div class="col-md-4">
-            {% if cod6 %}
-              <a href="{% url 'producto_detalle' cod6.id %}">
-                <img src="{% static 'images/cod6promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
-              </a>
-            {% else %}
-              <p class="text-muted">Producto no disponible</p>
-            {% endif %}
-          </div>
-        </ul>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link-categoria nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">CONSOLAS</a>
-        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
-          <div class="row">
-            <!-- Columna PlayStation -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">PlayStation</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-CONSOLA' %}">PLAYSTATION 4</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-CONSOLA' %}">PLAYSTATION 5</a>
-            </div>
-            <!-- Columna Xbox -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Xbox</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-CONSOLA' %}">XBOX ONE</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-CONSOLA' %}">XBOX SERIES</a>
-            </div>
-            <!-- Columna Nintendo -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Nintendo</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-CONSOLA' %}">WII U</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-CONSOLA' %}">SWITCH</a>
-            </div>
-            <!-- Columna PC -->
-          <!-- Imagen a la derecha -->
-          <div class="col-md-4">
-            {% if cod6 %}
-              <a href="{% url 'producto_detalle' cod6.id %}">
-                <img src="{% static 'images/ps5promo.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
-              </a>
-            {% else %}
-              <p class="text-muted">Producto no disponible</p>
-            {% endif %}
-          </div>
-        </ul>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link-categoria nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">ACCESORIOS</a>
-        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown">
-          <div class="row">
-            <!-- Columna PlayStation -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">PlayStation</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PSP-ACCESORIOS' %}">PSP</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS-VITA-ACCESORIOS' %}">VITA</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS1-ACCESORIOS' %}">PLAY STATION 1</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS2-ACCESORIOS' %}">PLAY STATION 2</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3-ACCESORIOS' %}">PLAY STATION 3</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-ACCESORIOS' %}">PLAY STATION 4</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-ACCESORIOS' %}">PLAY STATION 5</a>
-            </div>
-            <!-- Columna Xbox -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Xbox</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360-ACCESORIOS' %}">XBOX 360</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-ACCESORIOS' %}">XBOX ONE</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-ACCESORIOS' %}">XBOX SERIES</a>
-            </div>
-            <!-- Columna Nintendo -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">Nintendo</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'N3DS-ACCESORIOS' %}">3DS</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-ACCESORIOS' %}">WII U</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-ACCESORIOS' %}">SWITCH</a>
-            </div>
-          <!-- Imagen a la derecha -->
-          <div class="col-md-4">
-            {% if cod6 %}
-              <a href="{% url 'producto_detalle' cod6.id %}">
-                <img src="{% static 'images/mando.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1"  style="width: 300px;">
-              </a>
-            {% else %}
-              <p class="text-muted">Producto no disponible</p>
-            {% endif %}
-          </div>
-        </ul>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link-categoria nav-link dropdown-toggle" href="#" id="videojuegosDropdown" data-bs-toggle="dropdown" aria-expanded="false">FIGURAS COLECCIONABLES</a>
-        <ul class="dropdown-menu p-3" aria-labelledby="videojuegosDropdown" style="width: 800px;">
-          <div class="row">
-            <!-- Columna PlayStation -->
-            <div class="col-md-3">
-              <span class="dropdown-header text-white">PlayStation</span>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'FUNKO' %}">FUNKO POP</a>
-              <a class="dropdown-item" href="{% url 'productos_por_categoria' 'AMIIBO' %}">AMIIBO</a>
-            </div>
-          <!-- Imagen a la derecha -->
-          <div class="col-md-4">
-            {% if cod6 %}
-              <a href="{% url 'producto_detalle' cod6.id %}">
-                <img src="{% static 'images/header-funko-movil.jpg' %}" alt="Imagen de ejemplo" class="dropdown-image1">
-              </a>
-            {% else %}
-              <p class="text-muted">Producto no disponible</p>
-            {% endif %}
-          </div>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 
 <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -338,6 +239,41 @@
      interval: 3000, 
      ride: 'carousel'
   });
+
+  let navbar = document.querySelector(".navbar");
+  let searchBox = document.querySelector(".search-box .bx-search");
+  // let searchBoxCancel = document.querySelector(".search-box .bx-x");
+  searchBox.addEventListener("click", ()=>{
+    navbar.classList.toggle("showInput");
+    if(navbar.classList.contains("showInput")){
+      searchBox.classList.replace("bx-search" ,"bx-x");
+    }else {
+      searchBox.classList.replace("bx-x" ,"bx-search");
+    }
+  });
+  // sidebar open close js code
+  let navLinks = document.querySelector(".nav-links");
+  let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+  let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+  menuOpenBtn.onclick = function() {
+  navLinks.style.left = "0";
+  }
+  menuCloseBtn.onclick = function() {
+  navLinks.style.left = "-100%";
+  }
+  // sidebar submenu open close js code
+  let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+  htmlcssArrow.onclick = function() {
+  navLinks.classList.toggle("show1");
+  }
+  let moreArrow = document.querySelector(".more-arrow");
+  moreArrow.onclick = function() {
+  navLinks.classList.toggle("show2");
+  }
+  let jsArrow = document.querySelector(".js-arrow");
+  jsArrow.onclick = function() {
+  navLinks.classList.toggle("show3");
+  }
 </script>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
