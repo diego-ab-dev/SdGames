@@ -1,6 +1,7 @@
  body {
     font-family: sans-serif;
     background-color: #d7ccc8;
+    overflow-x: hidden;
   }
   
   
@@ -234,3 +235,28 @@
   }
 }
 
+
+.list-group-item{
+  margin-left: 60px;
+  margin-right: 60px;
+  box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes anim-fade-in { from { opacity: 0; } to { opacity: 1 } }		
+
+@keyframes anim-down { 
+	from { opacity: 0; transform: translateY(-100px); } 
+	to { opacity: 1; transform: translateY(0px); }  
+}		
+
+.anim-down{
+	animation-duration: 1s; 
+	animation-delay: 0.5s; 		
+	animation-fill-mode: both; 
+}
+
+.anim-down { animation-name: anim-down; }
+
+.paused * { 
+	animation-play-state: paused;
+}

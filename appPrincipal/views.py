@@ -3,6 +3,7 @@ from .models import Producto ,ItemCarritoProducto, Usuario
 from appPrincipal import forms
 from django.contrib import messages
 from django.http import JsonResponse
+from django.db.models import Avg
 # Create your views here.
 
 def obtener_ciudades(request):
@@ -90,8 +91,33 @@ def editar_perfil(request):
 
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
-    rango_cantidad = range(1, producto.stock + 1)  
-    return render(request, 'producto_detalle.html', {'producto': producto, 'rango_cantidad': rango_cantidad})
+    rango_cantidad = range(1, producto.stock + 1)
+
+    promedio_puntuacion = producto.opiniones.aggregate(Avg('puntuacion'))['puntuacion__avg']
+    promedio_puntuacion = round(promedio_puntuacion, 1) if promedio_puntuacion else 0
+
+    opiniones = producto.opiniones.all()
+    opiniones_list = [
+        {
+            "usuario": opinion.usuario.nombre,
+            "comentario": opinion.comentario,
+            "fecha": opinion.fecha_creacion,
+            "estrellas_llenas": range(opinion.puntuacion),  
+            "estrellas_vacias": range(5 - opinion.puntuacion),  
+        }
+        for opinion in opiniones
+    ]
+
+    return render(
+        request,
+        'producto_detalle.html',
+        {
+            'producto': producto,
+            'rango_cantidad': rango_cantidad,
+            'promedio_puntuacion': promedio_puntuacion,
+            'opiniones_list': opiniones_list,  
+        },
+    )
 
 def usuario_compro_producto(usuario, producto):
     return ItemCarritoProducto.objects.filter(
