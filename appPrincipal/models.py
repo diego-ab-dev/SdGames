@@ -9,7 +9,9 @@ class Usuario(models.Model):
     contraseña = models.CharField(max_length=100, default='')
     telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     direccion = models.CharField(max_length=120, verbose_name="Dirección")
-    ciudad = models.CharField(max_length=25, default='')
+    region = models.CharField(max_length=100, default='Región no especificada')  
+    ciudad = models.CharField(max_length=100, default='Ciudad no especificada')
+
     def __str__(self):
         return self.nombre
 

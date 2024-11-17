@@ -19,8 +19,8 @@ class ProductoAdmin(admin.ModelAdmin):
     imagen_display.short_description = 'Imagen Principal'
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display=("nombre", "email", "telefono", "direccion", "ciudad")
-    search_fields=("nombre", "email", "telefono")
+    list_display=("nombre", "email", "telefono", "direccion", "ciudad", 'region')
+    search_fields=("nombre", "email", "telefono",)
     list_per_page=20
 
 class VentaAdmin(admin.ModelAdmin):

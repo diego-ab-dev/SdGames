@@ -2,7 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto ,ItemCarritoProducto, Usuario
 from appPrincipal import forms
 from django.contrib import messages
+from django.http import JsonResponse
 # Create your views here.
+
+def obtener_ciudades(request):
+    region = request.GET.get('region')
+    ciudades = regiones_ciudades.get(region, [])
+    return JsonResponse({'ciudades': ciudades})
 
 
 def productos_menu(request):
@@ -48,23 +54,33 @@ def logout(request):
     return redirect('login')
     
 def register(request):
-    form=forms.Usuario()
+    form = forms.Usuario()
     if request.method == 'POST':
-        form=forms.Usuario(request.POST)
+        print(request.POST)
+        form = forms.Usuario(request.POST)
+        region_seleccionada = request.POST.get('region')
+        ciudades = regiones_ciudades.get(region_seleccionada, [])
+        form.fields['ciudad'].choices = [(ciudad, ciudad) for ciudad in ciudades]
+
         if form.is_valid():
             registro = Usuario(
                 nombre=form.cleaned_data['nombre'],
                 telefono=form.cleaned_data['telefono'],
-                email = form.cleaned_data['email'],
-                contraseña = form.cleaned_data['contraseña'],
-                direccion =  form.cleaned_data['direccion'],
-                ciudad = form.cleaned_data['ciudad'],
+                email=form.cleaned_data['email'],
+                contraseña=form.cleaned_data['contraseña'],
+                direccion=form.cleaned_data['direccion'],
+                ciudad=form.cleaned_data['ciudad'],
+                region=form.cleaned_data['region'],
             )
-            registro.save()  
+            registro.save()
+            messages.success(request, "Usuario registrado correctamente.")
+            return redirect('home')
         else:
-            print(form.errors)  
-    data={'form':form}
+            print(form.errors)
+            messages.error(request, "Hubo un error en el formulario.")
+    data = {'form': form, 'regiones_ciudades': regiones_ciudades}
     return render(request, 'register.html', data)
+
 
 def perfil(request):
     return render(request, 'perfil_usuario.html')
@@ -95,3 +111,21 @@ def vista_carrusel(request):
 def carrito(request):
     return render(request, 'carrito.html')
 
+regiones_ciudades = {
+    'ARICA Y PARINACOTA': ['Arica', 'Putre'],
+    'TARAPACA': ['Iquique', 'Alto Hospicio'],
+    'ANTOFAGASTA': ['Antofagasta', 'Calama', 'Tocopilla'],
+    'ATACAMA': ['Copiapó', 'Vallenar', 'Chañaral'],
+    'COQUIMBO': ['La Serena', 'Coquimbo', 'Ovalle'],
+    'VALPARAISO': ['Valparaíso', 'Viña del Mar', 'Quillota', 'San Antonio'],
+    'METROPOLITANA': ['Santiago', 'Puente Alto', 'Maipú', 'La Florida'],
+    'OHIGGINS': ['Rancagua', 'San Fernando', 'Pichilemu'],
+    'MAULE': ['Talca', 'Curicó', 'Linares'],
+    'ÑUBLE': ['Chillán', 'San Carlos'],
+    'BIOBIO': ['Concepción', 'Los Ángeles', 'Coronel'],
+    'ARAUCANIA': ['Temuco', 'Villarrica', 'Angol'],
+    'LOS RIOS': ['Valdivia', 'La Unión'],
+    'LOS LAGOS': ['Puerto Montt', 'Osorno', 'Castro'],
+    'AYSEN': ['Coyhaique', 'Puerto Aysén'],
+    'MAGALLANES': ['Punta Arenas', 'Puerto Natales'],
+}
