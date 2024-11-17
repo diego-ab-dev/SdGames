@@ -66,6 +66,11 @@ def register(request):
     data={'form':form}
     return render(request, 'register.html', data)
 
+def perfil(request):
+    return render(request, 'perfil_usuario.html')
+
+def editar_perfil(request):
+    return render(request, 'editar_datos.html')
 
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)

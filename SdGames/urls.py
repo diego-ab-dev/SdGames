@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,8 +31,10 @@ urlpatterns = [
     path('productos/<str:categoria>/', productos_por_categoria, name='productos_por_categoria'),
     path('login/', login),
     path('register/', register),
-    path('carrito/', carrito),
     path('logout/', logout, name='logout'),
+    path('perfil/', perfil),
+    path('editar/', editar_perfil),
+    path('carrito/', carrito),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion
