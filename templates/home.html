@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
   <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
   <link rel="stylesheet" href="{% static 'styles/styles_home.css' %}">
   <title>SD Games - Home</title>
@@ -19,49 +20,83 @@
 
 <body>
   <!--Nav de la web-->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c2e33;">
-    <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="/home">
-        <strong>SD Games</strong>
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/menu">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#nosotros">Sobre Nosotros</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#local">Local</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#redes">Redes</a>
-          </li>
-
+  <nav>
+    <div class="navbar">
+      <i class='bx bx-menu'></i>
+      <div class="logo"><a href="/home">SD Games</a></div>
+      <div class="nav-links">
+        <div class="sidebar-logo">
+          <span class="logo-name">SD Games</span>
+          <i class='bx bx-x' ></i>
+        </div>
+        <ul class="links">
+          <li><a href="/home">Home</a></li>
+          <li><a href="/menu">Productos</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#local">Local</a></li>
+          <li><a href="#redes">Redes</a></li>
         </ul>
-        <!-- Botones de la barra de navegación -->
-        <div class="d-flex" style="gap: 20px;">
+        <div class="sidebar-login">
+          <button onclick="window.location.href='/login'">
+            Iniciar Sesión
+            <div class="arrow-wrapper">
+                <div class="arrow"></div>
+            </div>
+        </button>
+        </div>
+
+      </div>
+
+        <div class="d-flex login-desktop">
           {% if usuario %}
             <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
-            <a href="/perfil" class="btn btn-primary">Perfil</a>
-            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+            <div class="menu">
+              <div class="item">
+                <a href="/perfil" class="link">
+                  <span> Mi Perfil </span>
+                  <svg viewBox="0 0 360 360" xml:space="preserve">
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        id="XMLID_225_"
+                        d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+                      ></path>
+                    </g>
+                  </svg>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-item">
+                    <a href="/logout" class="submenu-link">Cerrar Sesión</a>
+                  </div>
+                </div>
+              </div>
+            </div>  
           {% else %}
             <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
-            <button onclick="window.location.href='/login'">Iniciar Sesión</button>
-            <button onclick="window.location.href='/register'">Registrarse</button>
+            <button onclick="window.location.href='/login'">
+              Iniciar Sesión
+              <div class="arrow-wrapper">
+                  <div class="arrow"></div>
+              </div>
+            </button>
           {% endif %}
+        </div>    
+      <div class="icons d-flex gap-3">
+        <a href="/favoritos" style="color: #9c9592;">
+            <i class="fas fa-heart"></i>
+        </a>
+        <a href="/carrito" style="color: #9c9592;">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </div>
+      <div class="search-box">
+        <i class='bx bx-search'></i>
+        <div class="input-box">
+          <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search" style="width: 50%;">
+            <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search" id="name" name="buscar">
+          </form>
         </div>
+      </div>
+    </div>
   </nav>
 
   <!--Fondo Principal con nombre de la tienda y frase-->
@@ -254,6 +289,41 @@
         })
       });
     });
+
+  let navbar = document.querySelector(".navbar");
+  let searchBox = document.querySelector(".search-box .bx-search");
+  // let searchBoxCancel = document.querySelector(".search-box .bx-x");
+  searchBox.addEventListener("click", ()=>{
+    navbar.classList.toggle("showInput");
+    if(navbar.classList.contains("showInput")){
+      searchBox.classList.replace("bx-search" ,"bx-x");
+    }else {
+      searchBox.classList.replace("bx-x" ,"bx-search");
+    }
+  });
+  // sidebar open close js code
+  let navLinks = document.querySelector(".nav-links");
+  let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+  let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+  menuOpenBtn.onclick = function() {
+  navLinks.style.left = "0";
+  }
+  menuCloseBtn.onclick = function() {
+  navLinks.style.left = "-100%";
+  }
+  // sidebar submenu open close js code
+  let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+  htmlcssArrow.onclick = function() {
+  navLinks.classList.toggle("show1");
+  }
+  let moreArrow = document.querySelector(".more-arrow");
+  moreArrow.onclick = function() {
+  navLinks.classList.toggle("show2");
+  }
+  let jsArrow = document.querySelector(".js-arrow");
+  jsArrow.onclick = function() {
+  navLinks.classList.toggle("show3");
+  }
   </script>
 
   <!--footer-->

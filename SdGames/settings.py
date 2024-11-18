@@ -80,15 +80,12 @@ WSGI_APPLICATION = 'SdGames.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME':'sdgamesdb',
         'USER': 'admin',
         'PASSWORD': 'Inacap#29',
         'HOST': 'sdgamesdb.cj2uc8iao8nw.sa-east-1.rds.amazonaws.com',
-        'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },
+        'PORT': '3306',
     }
 }
 
