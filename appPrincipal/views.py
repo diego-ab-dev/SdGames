@@ -31,7 +31,15 @@ def productos_por_categoria(request, categoria):
 
 
 def home(request):
-    return render(request, 'home.html')
+    usuario_id = request.session.get('usuario_id')  # Obtener el ID del usuario si está en sesión
+    usuario = None
+    if usuario_id:
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+        except Usuario.DoesNotExist:
+            pass
+    return render(request, 'home.html', {'usuario': usuario})
+
 
 def login(request):
     if request.method == 'POST':
@@ -84,7 +92,13 @@ def register(request):
 
 
 def perfil(request):
-    return render(request, 'perfil_usuario.html')
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
+        return redirect('login')
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    return render(request, 'perfil_usuario.html', {'usuario': usuario})
 
 def editar_perfil(request):
     return render(request, 'editar_datos.html')

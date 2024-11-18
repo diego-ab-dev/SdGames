@@ -48,22 +48,20 @@
           <li class="nav-item">
             <a class="nav-link" href="#redes">Redes</a>
           </li>
-        </ul>
 
-        <!-- Botones de Iniciar Sesión y Registrarse -->
+        </ul>
+        <!-- Botones de la barra de navegación -->
         <div class="d-flex" style="gap: 20px;">
-          <button onclick="window.location.href='/login'">
-            Iniciar Sesión
-            <div class="arrow-wrapper">
-              <div class="arrow"></div>
-            </div>
-          </button>
-          <button onclick="window.location.href='/register'">
-            Registrarse
-          </button>
+          {% if usuario %}
+            <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
+            <a href="/perfil" class="btn btn-primary">Perfil</a>
+            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+          {% else %}
+            <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
+            <button onclick="window.location.href='/login'">Iniciar Sesión</button>
+            <button onclick="window.location.href='/register'">Registrarse</button>
+          {% endif %}
         </div>
-      </div>
-    </div>
   </nav>
 
   <!--Fondo Principal con nombre de la tienda y frase-->
