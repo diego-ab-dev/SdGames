@@ -63,65 +63,83 @@
         </div>
     </nav>
 
-
-
-
-    <div id="carrito" class="container">
-        <div class="card">
-            <div class="row">
-                <div class="col-md-8 cart">
-                    <div class="title">
-                        <div class="row">
-                            <div class="col">
-                                <h4><b>Carro</b></h4>
-                            </div>
-                            <div class="col align-self-center text-right text-muted">{{ productos|length }} Productos</div>
-                        </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                        <div class="col align-self-center text-right text-muted">3 items</div>
                     </div>
-
+                </div>    
+                <div class="row border-top border-bottom">
                     {% for item in productos %}
-                    <div class="row border-top border-bottom">
-                        <div class="row main align-items-center">
-                            <div class="col-2">
-                                <img class="img-fluid" src="{{ item.producto.imagen_url }}"
-                                    alt="{{ item.producto.nombre }}">
-                            </div>
-                            <div class="col">
-                                <div class="row text-muted">{{ item.producto.categoria }}</div>
-                                <div class="row">{{ item.producto.nombre }}</div>
-                            </div>
-                            <div class="col">
-                                <a href="#">-</a><a href="#" class="border">{{ item.cantidad }}</a><a href="#">+</a>
-                            </div>
-                            <div class="col">&euro; {{ item.producto.precio|floatformat:2 }} <span
-                                    class="close">&#10005;</span></div>
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}"></div>
+                        <div class="col">
+                            <div class="row text-muted">{{ item.producto.nombre }}</div>
+                            <div class="row text-muted">{{ item.producto.categoria|default:"N/A" }}</div>
                         </div>
+                        <div class="col">
+                            <form class="d-inline" method="POST" action="{% url 'actualizar_cantidad_carrito' %}" id="form-{{ item.id }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" onchange="actualizarCantidad('{{ item.id }}')">
+                            </form>
+                        </div>
+                        <div class="col">$ {{ item.producto.precio|floatformat:2 }}</div>
+                        <a href="{% url 'eliminar_del_carrito' item.id %}"><span class="close">&#10005;</span></a>
                     </div>
                     {% endfor %}
-
-                    <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span>
-                    </div>
                 </div>
-
-                <!-- Resumen de Compra -->
-                <div class="col-md-4 summary">
-                    <div>
-                        <h5><b>Resumen de la compra</b></h5>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col" style="padding-left:0;">Productos ({{ productos|length }})</div>
-                        <div class="col text-right">$ {{ total|floatformat:2 }}</div>
-                    </div>
-                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                        <div class="col">Total</div>
-                        <div class="col text-right">$ {{ total|floatformat:2 }}</div>
-                    </div>
-                    <button class="btn">Continuar compra</button>
+                <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            </div>
+            <div class="col-md-4 summary">
+                <div><h5><b>Summary</b></h5></div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;">ITEMS 3</div>
+                    <div class="col text-right">&euro; 132.00</div>
                 </div>
+                <form>
+                    <p>SHIPPING</p>
+                    <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
+                    <p>GIVE CODE</p>
+                    <input id="code" placeholder="Enter your code">
+                </form>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">Total:</div>
+                    <p>$<span id="total">{{ total|floatformat:2 }}</span></p>
+                </div>
+                <button class="btn">CHECKOUT</button>
             </div>
         </div>
     </div>
+
+
+    <script>
+        function actualizarCantidad(itemId) {
+            const form = document.getElementById(`form-${itemId}`);
+            const formData = new FormData(form);
+        
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('total').innerText = data.total.toLocaleString('es-CL');
+                }
+            });
+        }
+    </script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <!--footer-->
     <footer class="text-center text-lg-start text-light">

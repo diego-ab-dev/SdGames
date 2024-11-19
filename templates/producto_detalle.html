@@ -84,16 +84,16 @@
             <p><strong>Stock:</strong> {{ producto.stock }}</p>
             <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
             <h5><strong>Cantidad:</strong></h5>
-            <select id="cantidad" name="cantidad" class="form-select" style="width: 100px;">
-                {% for i in rango_cantidad %}
+            <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
+                {% csrf_token %}
+                <label for="cantidad">Cantidad:</label>
+                <select id="cantidad" name="cantidad" class="form-select" style="width: 100px;">
+                    {% for i in rango_cantidad %}
                     <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-            </select>
-            {% if producto.stock == 0 %}
-                <button class="btncarrito btn mt-3" disabled>No disponible</button>
-            {% else %}
+                    {% endfor %}
+                </select>
                 <button class="btncarrito btn mt-3">Agregar al carrito</button>
-            {% endif %}
+            </form>
         </div>
     </div>
 </section>

@@ -102,6 +102,12 @@ class Carrito(models.Model):
     def genera_venta(self):
         pass
 
+    def total_carrito(self):
+    # Sumar los totales verificando cantidades y precios válidos
+        return sum(
+            (item.producto.precio or 0) * max(item.cantidad, 0) for item in self.items.all()
+        )
+
 class ItemCarritoProducto(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
