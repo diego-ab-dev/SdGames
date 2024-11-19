@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Avg
+from django.contrib.auth.hashers import make_password, check_password
 # Create your views here.
 
 def obtener_ciudades(request):
@@ -48,13 +49,15 @@ def login(request):
         contraseña = request.POST.get('contraseña')
         
         try:
-            usuario = Usuario.objects.get(email=email, contraseña=contraseña)
-            request.session['usuario_id'] = usuario.id 
-            messages.success(request, f"Bienvenido/a {usuario.nombre}")
-            return redirect('home')  
+            usuario = Usuario.objects.get(email=email)
+            if check_password(contraseña, usuario.contraseña):  # Verifica la contraseña
+                request.session['usuario_id'] = usuario.id
+                messages.success(request, f"Bienvenido/a {usuario.nombre}")
+                return redirect('home')
+            else:
+                messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
         except Usuario.DoesNotExist:
             messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
-            return redirect('login')  
     
     return render(request, 'login.html')
 
@@ -77,7 +80,7 @@ def register(request):
                 nombre=form.cleaned_data['nombre'],
                 telefono=form.cleaned_data['telefono'],
                 email=form.cleaned_data['email'],
-                contraseña=form.cleaned_data['contraseña'],
+                contraseña=make_password(form.cleaned_data['contraseña']),
                 direccion=form.cleaned_data['direccion'],
                 ciudad=form.cleaned_data['ciudad'],
                 region=form.cleaned_data['region'],
@@ -103,7 +106,26 @@ def perfil(request):
 
 
 def cambiar_contraseña(request):
-    return (request, 'cambiar_contrausu.html')
+    if request.method == 'POST':
+        nueva_contraseña = request.POST.get('nueva_contraseña')
+        confirmar_contraseña = request.POST.get('confirmar_contraseña')
+        
+        if nueva_contraseña != confirmar_contraseña:
+            messages.error(request, "Las contraseñas no coinciden. Inténtelo nuevamente.")
+        else:
+            usuario_id = request.session.get('usuario_id')
+            if usuario_id:
+                try:
+                    usuario = Usuario.objects.get(id=usuario_id)
+                    usuario.contraseña = make_password(nueva_contraseña)  # Almacena la contraseña encriptada
+                    usuario.save()
+                    messages.success(request, "Contraseña actualizada exitosamente.")
+                    return redirect('perfil')
+                except Usuario.DoesNotExist:
+                    messages.error(request, "Usuario no encontrado.")
+            else:
+                messages.error(request, "Debes iniciar sesión para cambiar tu contraseña.")
+    return render(request, 'cambiar_contrausu.html')
 
 @csrf_exempt
 def editar_perfil(request):

@@ -34,6 +34,7 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('perfil/', perfil, name='perfil'),
     path('editar/', editar_perfil, name='editar'),
+    path('cambiar/', cambiar_contraseña, name='cambiar'),
     path('carrito/', carrito),
     path('obtener_ciudades/', obtener_ciudades, name='obtener_ciudades'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
