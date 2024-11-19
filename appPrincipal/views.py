@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto ,ItemCarritoProducto, Usuario
 from appPrincipal import forms
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Avg
@@ -100,8 +101,43 @@ def perfil(request):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     return render(request, 'perfil_usuario.html', {'usuario': usuario})
 
+
+def cambiar_contraseña(request):
+    return (request, 'cambiar_contrausu.html')
+
+@csrf_exempt
 def editar_perfil(request):
-    return render(request, 'editar_datos.html')
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para acceder a la edición de perfil.")
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
+    if request.method == 'POST':
+        telefono = request.POST.get('telefono')
+        direccion = request.POST.get('direccion')
+        region = request.POST.get('region')
+        ciudad = request.POST.get('ciudad')
+
+        if region and ciudad not in regiones_ciudades.get(region, []):
+            return JsonResponse({'error': 'La ciudad no coincide con la región seleccionada.'}, status=400)
+
+        usuario.telefono = telefono or usuario.telefono
+        usuario.direccion = direccion or usuario.direccion
+        usuario.region = region or usuario.region
+        usuario.ciudad = ciudad or usuario.ciudad
+        usuario.save()
+
+        return JsonResponse({'success': 'Perfil actualizado correctamente.'})
+
+    ciudades = regiones_ciudades.get(usuario.region, [])
+    context = {
+        'usuario': usuario,
+        'regiones': regiones_ciudades.keys(),
+        'ciudades': ciudades,
+    }
+    return render(request, 'editar_datos.html', context)
 
 def producto_detalle(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)

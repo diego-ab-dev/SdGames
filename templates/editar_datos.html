@@ -11,67 +11,83 @@
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'styles/styles_editar_datos.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
-    <title>Document</title>
+    <title>Modificar Datos</title>
 </head>
 <body>
-    <div class="container justify-content-center">
-		<div class="main-body">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="card">
-						<div class="card-body">
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Nombre</h6>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="John Doe">
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Correo Electrónico</h6>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="john@example.com">
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Teléfono</h6>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="(239) 816-9029">
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Dirección</h6>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="(320) 380-4539">
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Ciudad</h6>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="Bay Area, San Francisco, CA">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-3"></div>
-								<div class="col-sm-9 text-secondary">
-									<input type="button" class="btn btn-primary px-4" value="Guardar Cambios">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-				</div>
-			</div>
+	<br><br>
+    <div class="container">
+		<div class="text-center mb-4">
+			<h3>Modificar tus datos personales, {{ usuario.nombre }}</h3>
 		</div>
+		<form id="form-editar-perfil">
+			<div class="mb-3">
+				<label for="telefono" class="form-label">Teléfono</label>
+				<input type="text" id="telefono" name="telefono" class="form-control" value="{{ usuario.telefono }}">
+			</div>
+			<div class="mb-3">
+				<label for="direccion" class="form-label">Dirección</label>
+				<input type="text" id="direccion" name="direccion" class="form-control" value="{{ usuario.direccion }}">
+			</div>
+			<div class="mb-3">
+				<label for="region" class="form-label">Región</label>
+				<select id="region" name="region" class="form-control">
+					<option value="">Seleccione una región</option>
+					{% for region in regiones %}
+					<option value="{{ region }}" {% if region == usuario.region %}selected{% endif %}>
+						{{ region }}
+					</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="ciudad" class="form-label">Ciudad</label>
+				<select id="ciudad" name="ciudad" class="form-control">
+					{% for ciudad in ciudades %}
+					<option value="{{ ciudad }}" {% if ciudad == usuario.ciudad %}selected{% endif %}>
+						{{ ciudad }}
+					</option>
+					{% endfor %}
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Actualizar</button>
+		</form>
 	</div>
+	
+	<script>
+		document.getElementById('region').addEventListener('change', function () {
+			const region = this.value;
+			fetch(`/obtener_ciudades/?region=${region}`)
+				.then(response => response.json())
+				.then(data => {
+					const ciudadSelect = document.getElementById('ciudad');
+					ciudadSelect.innerHTML = '';
+					data.ciudades.forEach(ciudad => {
+						const option = document.createElement('option');
+						option.value = ciudad;
+						option.textContent = ciudad;
+						ciudadSelect.appendChild(option);
+					});
+				});
+		});
+	
+		document.getElementById('form-editar-perfil').addEventListener('submit', function (e) {
+			e.preventDefault();
+			const formData = new FormData(this);
+			fetch('{% url "editar" %}', {
+				method: 'POST',
+				headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.error) {
+					alert(data.error);
+				} else {
+					alert(data.success);
+				}
+			});
+		});
+	</script>
+	
 </body>
 </html>
