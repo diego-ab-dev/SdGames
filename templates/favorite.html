@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
+    <link rel="stylesheet" href="{% static 'styles/styles_favorite.css' %}">
+    <title>Lista de deseos - SD Games</title>
+</head>
+<body>
+    <div class="container padding-bottom-3x mb-2">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+                <!-- Wishlist Table-->
+                <div class="table-responsive wishlist-table margin-bottom-none">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Producto</th>
+                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista de deseos</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="product-item">
+                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/FF0000/000000" alt="Product"></a>
+                                        <div class="product-info">
+                                            <h4 class="product-title"><a href="#">Unionbay Park</a></h4>
+                                            <div class="text-lg text-medium text-muted">$43.90</div>
+                                            <div>Disponibilidad:
+                                                <div class="d-inline text-success">In Stock</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product-item">
+                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/87CEFA/000000" alt="Product"></a>
+                                        <div class="product-info">
+                                            <h4 class="product-title"><a href="#">Daily Fabric Cap</a></h4>
+                                            <div class="text-lg text-medium text-muted">$24.70</div>
+                                            <div>Availability:
+                                                <div class="d-inline text-warning">2 - 3 Weeks</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product-item">
+                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/483D8B/000000" alt="Product"></a>
+                                        <div class="product-info">
+                                            <h4 class="product-title"><a href="#">Cole Haan Crossbody</a></h4>
+                                            <div class="text-lg text-medium text-muted">$200.00</div>
+                                            <div>Availability:
+                                                <div class="d-inline text-success">In Stock</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

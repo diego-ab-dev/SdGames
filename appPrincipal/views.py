@@ -33,7 +33,7 @@ def productos_por_categoria(request, categoria):
 
 
 def home(request):
-    usuario_id = request.session.get('usuario_id')  # Obtener el ID del usuario si está en sesión
+    usuario_id = request.session.get('usuario_id')
     usuario = None
     if usuario_id:
         try:
@@ -50,7 +50,7 @@ def login(request):
         
         try:
             usuario = Usuario.objects.get(email=email)
-            if check_password(contraseña, usuario.contraseña):  # Verifica la contraseña
+            if check_password(contraseña, usuario.contraseña):  
                 request.session['usuario_id'] = usuario.id
                 messages.success(request, f"Bienvenido/a {usuario.nombre}")
                 return redirect('home')
@@ -117,7 +117,7 @@ def cambiar_contraseña(request):
             if usuario_id:
                 try:
                     usuario = Usuario.objects.get(id=usuario_id)
-                    usuario.contraseña = make_password(nueva_contraseña)  # Almacena la contraseña encriptada
+                    usuario.contraseña = make_password(nueva_contraseña)  
                     usuario.save()
                     messages.success(request, "Contraseña actualizada exitosamente.")
                     return redirect('perfil')
@@ -207,44 +207,34 @@ def vista_carrusel(request):
     return render(request, 'productosmenu.html', {'productos': productos, 'cod6': cod6, 'fc25': fc25, 'silent':silent})
 
 def agregar_al_carrito(request, producto_id):
-    # Obtener el ID del usuario desde la sesión (suponiendo que tienes autenticación con sesión)
     usuario_id = request.session.get('usuario_id')
     
-    # Verificar si el usuario está autenticado
     if not usuario_id:
-        return redirect('login')  # Redirigir a la página de login si no hay usuario autenticado
+        return redirect('login') 
 
     try:
-        # Obtener el objeto Usuario correspondiente
         usuario = Usuario.objects.get(id=usuario_id)
     except Usuario.DoesNotExist:
-        raise Http404("Usuario no encontrado")  # Lanzar error 404 si no se encuentra el usuario
-
-    # Obtener o crear un carrito para el usuario
+        raise Http404("Usuario no encontrado") 
     carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
 
     try:
-        # Obtener el producto correspondiente al ID
         producto = Producto.objects.get(id=producto_id)
     except Producto.DoesNotExist:
-        raise Http404("Producto no encontrado")  # Lanzar error 404 si no se encuentra el producto
-
-    # Verificar si el producto ya existe en el carrito
+        raise Http404("Producto no encontrado")  
     item_carrito, item_created = ItemCarritoProducto.objects.get_or_create(
         carrito=carrito, producto=producto
     )
 
-    # Si el producto ya está en el carrito, incrementamos la cantidad
     if not item_created:
         item_carrito.cantidad += 1
         item_carrito.save()
 
-    # Si el producto es nuevo en el carrito, inicializamos la cantidad
     else:
         item_carrito.cantidad = 1
         item_carrito.save()
 
-    return redirect('ver_carrito')  #
+    return redirect('ver_carrito')  
 
 def eliminar_del_carrito(request, item_id):
     item = get_object_or_404(ItemCarritoProducto, id=item_id)
@@ -276,15 +266,17 @@ def ver_carrito(request):
 
     carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
 
-    # Pasar los ítems del carrito a la plantilla
     return render(request, 'carrito.html', {
         'carrito': carrito,
-        'productos': carrito.items.all(),  # Esto debe coincidir con el `related_name`
+        'productos': carrito.items.all(), 
         'total': carrito.total_carrito()
     })
 
 def carrito(request):
     return render(request, 'carrito.html')
+
+def lista_favoritos(request):
+    return render(request, 'favorite.html')
 
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],
