@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Método de Pago</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      padding: 20px;
+    }
+    .wizard-step {
+      margin-bottom: 20px;
+    }
+    .wizard-step h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between; /* Distribuir los botones */
+    }
+    .button-group button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    .button-group button:hover {
+      background-color: #0056b3;
+    }
+    .button-group button:nth-child(1) {
+      background-color: #6c757d; /* Estilo del botón 'Volver' */
+    }
+    .button-group button:nth-child(1):hover {
+      background-color: #5a6268; /* Estilo del hover del botón 'Volver' */
+    }
+    .direccion-local {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #555;
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Paso 1: Tipo de Entrega -->
+    <div class="wizard-step" id="step-1">
+      <h2>1. Tipo de Entrega</h2>
+      <div class="form-group">
+        <label>
+          <input type="radio" name="tipo_entrega" value="domicilio" id="entrega-domicilio"> Entrega a Domicilio
+        </label>
+        <label>
+          <input type="radio" name="tipo_entrega" value="retiro" id="entrega-retiro"> Retiro en Tienda
+        </label>
+      </div>
+      <div class="direccion-local hidden" id="direccion-local">
+        <p><strong>Dirección del local:</strong> Comuna: Valdivia, Calle: Av. Simpson, Número: 641</p>
+      </div>
+      <div id="direccion-domicilio" class="hidden">
+        <div class="form-group">
+          <label for="region">Región</label>
+          <input type="text" id="region" placeholder="Ej: Metropolitana">
+          <span class="error-message hidden" id="error-region">Debe rellenar el campo Región.</span>
+        </div>
+        <div class="form-group">
+          <label for="comuna">Comuna</label>
+          <input type="text" id="comuna" placeholder="Ej: Santiago">
+          <span class="error-message hidden" id="error-comuna">Debe rellenar el campo Comuna.</span>
+        </div>
+        <div class="form-group">
+          <label for="calle">Calle</label>
+          <input type="text" id="calle" placeholder="Ej: Av. Siempre Viva">
+          <span class="error-message hidden" id="error-calle">Debe rellenar el campo Calle.</span>
+        </div>
+        <div class="form-group">
+          <label for="numero">Número de Casa/Dpto</label>
+          <input type="text" id="numero" placeholder="Ej: 742">
+          <span class="error-message hidden" id="error-numero">Debe rellenar el campo Número de Casa/Dpto.</span>
+        </div>
+      </div>
+      <span class="error-message hidden" id="error-tipo-entrega">Debe seleccionar un tipo de entrega.</span>
+      <div class="button-group">
+        <button type="button" onclick="volverAlCarrito()">Volver al Carrito</button>
+        <button type="button" onclick="validarTipoEntrega()">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Paso 2: Método de Pago -->
+    <div class="wizard-step" id="step-2" style="display: none;">
+      <h2>2. Método de Pago</h2>
+      <div class="form-group">
+        <label>
+          <input type="radio" name="metodo_pago" value="credito" id="pago-credito"> Crédito
+        </label>
+        <label>
+          <input type="radio" name="metodo_pago" value="debito" id="pago-debito"> Débito
+        </label>
+      </div>
+      <span class="error-message hidden" id="error-metodo-pago">Debe seleccionar un método de pago.</span>
+      <div class="button-group">
+        <button type="button" onclick="volverPaso1()">Volver</button>
+        <button type="button" onclick="validarMetodoPago()">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Paso 3: Confirmación -->
+    <div class="wizard-step" id="step-3" style="display: none;">
+      <h2>3. Confirmación del Pedido</h2>
+      <p>Revisa tu pedido y los detalles antes de finalizar.</p>
+      <div class="button-group">
+        <button type="button" onclick="volverPaso2()">Volver</button>
+        <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Función para volver al carrito
+    function volverAlCarrito() {
+      window.location.href = '/carrito'; // Aquí debes colocar la URL donde se muestra el carrito
+    }
+
+    // Muestra/oculta campos según la selección de tipo de entrega
+    document.getElementById('entrega-domicilio').addEventListener('change', () => {
+      document.getElementById('direccion-domicilio').classList.remove('hidden');
+      document.getElementById('direccion-local').classList.add('hidden');
+      document.getElementById('error-tipo-entrega').classList.add('hidden'); // Oculta error si estaba visible
+    });
+
+    document.getElementById('entrega-retiro').addEventListener('change', () => {
+      document.getElementById('direccion-domicilio').classList.add('hidden');
+      document.getElementById('direccion-local').classList.remove('hidden');
+      document.getElementById('error-tipo-entrega').classList.add('hidden'); // Oculta error si estaba visible
+    });
+
+    // Función para validar tipo de entrega
+    function validarTipoEntrega() {
+      const tipoEntrega = document.querySelector('input[name="tipo_entrega"]:checked');
+      const region = document.getElementById('region').value.trim();
+      const comuna = document.getElementById('comuna').value.trim();
+      const calle = document.getElementById('calle').value.trim();
+      const numero = document.getElementById('numero').value.trim();
+
+      // Mensajes de error
+      const errorTipoEntrega = document.getElementById('error-tipo-entrega');
+      const errorRegion = document.getElementById('error-region');
+      const errorComuna = document.getElementById('error-comuna');
+      const errorCalle = document.getElementById('error-calle');
+      const errorNumero = document.getElementById('error-numero');
+
+      // Ocultar mensajes de error previos
+      errorTipoEntrega.classList.add('hidden');
+      errorRegion.classList.add('hidden');
+      errorComuna.classList.add('hidden');
+      errorCalle.classList.add('hidden');
+      errorNumero.classList.add('hidden');
+
+      if (!tipoEntrega) {
+        errorTipoEntrega.classList.remove('hidden');
+        return false;
+      }
+
+      if (tipoEntrega.value === 'domicilio') {
+        let valido = true;
+
+        if (!region) {
+          errorRegion.classList.remove('hidden');
+          valido = false;
+        }
+        if (!comuna) {
+          errorComuna.classList.remove('hidden');
+          valido = false;
+        }
+        if (!calle) {
+          errorCalle.classList.remove('hidden');
+          valido = false;
+        }
+        if (!numero) {
+          errorNumero.classList.remove('hidden');
+          valido = false;
+        }
+
+        if (!valido) {
+          return false;
+        }
+      }
+
+      // Si todo está bien, mostrar el siguiente paso
+      document.getElementById('step-1').style.display = 'none';
+      document.getElementById('step-2').style.display = 'block';
+    }
+
+    // Función para validar método de pago
+    function validarMetodoPago() {
+      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked');
+      const errorMetodoPago = document.getElementById('error-metodo-pago');
+
+      // Ocultar mensaje de error previo
+      errorMetodoPago.classList.add('hidden');
+
+      if (!metodoPago) {
+        errorMetodoPago.classList.remove('hidden');
+        return false;
+      }
+
+      // Si todo está bien, mostrar el siguiente paso
+      document.getElementById('step-2').style.display = 'none';
+      document.getElementById('step-3').style.display = 'block';
+    }
+
+    // Función para confirmar el pedido
+    function confirmarPedido() {
+      alert('Pedido confirmado exitosamente!');
+    }
+
+    // Función para volver al paso 1
+    function volverPaso1() {
+      document.getElementById('step-2').style.display = 'none';
+      document.getElementById('step-1').style.display = 'block';
+    }
+
+    // Función para volver al paso 2
+    function volverPaso2() {
+      document.getElementById('step-3').style.display = 'none';
+      document.getElementById('step-2').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

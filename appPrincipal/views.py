@@ -278,6 +278,17 @@ def carrito(request):
 def lista_favoritos(request):
     return render(request, 'favorite.html')
 
+def metodo_pago(request):
+    form = Usuario(request.POST or None)
+    ciudad_choices = []
+
+    if request.method == 'POST' and form.is_valid():
+        # Obtenemos la región seleccionada del formulario
+        region = form.cleaned_data.get('region')
+        ciudad_choices = regiones_ciudades.get(region, [])
+
+    return render(request, 'metodo_pago.html', {'form': form, 'ciudad_choices': ciudad_choices})
+
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],
     'TARAPACA': ['Iquique', 'Alto Hospicio'],

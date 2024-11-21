@@ -159,5 +159,3 @@ class Reclamo(models.Model):
 
     def editar_reclamo(self):
         pass
-
-
