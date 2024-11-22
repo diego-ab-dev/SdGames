@@ -1,264 +1,319 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Método de Pago</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      width: 80%;
-      margin: auto;
-      padding: 20px;
-    }
-    .wizard-step {
-      margin-bottom: 20px;
-    }
-    .wizard-step h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .hidden {
-      display: none;
-    }
-    .error-message {
-      color: red;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-    }
-    .button-group {
-      display: flex;
-      justify-content: space-between; /* Distribuir los botones */
-    }
-    .button-group button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007BFF;
-      color: white;
-      cursor: pointer;
-    }
-    .button-group button:hover {
-      background-color: #0056b3;
-    }
-    .button-group button:nth-child(1) {
-      background-color: #6c757d; /* Estilo del botón 'Volver' */
-    }
-    .button-group button:nth-child(1):hover {
-      background-color: #5a6268; /* Estilo del hover del botón 'Volver' */
-    }
-    .direccion-local {
-      font-size: 1em;
-      margin-top: 10px;
-      color: #555;
-      background-color: #f8f9fa;
-      padding: 10px;
-      border-radius: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago - Tienda de Videojuegos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* Flexbox layout for form and cart summary */
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        /* Form styles */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+        }
+
+        form .form-group {
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Cart summary styles */
+        .cart-summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 28%;
+        }
+
+        .cart-summary h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-items .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-items .item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-summary .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        /* Error messages */
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 1.1em;
+        }
+
+        /* Payment method styles */
+        .payment-methods {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods label {
+            margin-right: 10px;
+        }
+
+        .payment-methods input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        /* Delivery method styles */
+        .delivery-method {
+            margin-top: 20px;
+        }
+
+        .delivery-method label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .delivery-method select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="container">
-    <!-- Paso 1: Tipo de Entrega -->
-    <div class="wizard-step" id="step-1">
-      <h2>1. Tipo de Entrega</h2>
-      <div class="form-group">
-        <label>
-          <input type="radio" name="tipo_entrega" value="domicilio" id="entrega-domicilio"> Entrega a Domicilio
-        </label>
-        <label>
-          <input type="radio" name="tipo_entrega" value="retiro" id="entrega-retiro"> Retiro en Tienda
-        </label>
-      </div>
-      <div class="direccion-local hidden" id="direccion-local">
-        <p><strong>Dirección del local:</strong> Comuna: Valdivia, Calle: Av. Simpson, Número: 641</p>
-      </div>
-      <div id="direccion-domicilio" class="hidden">
-        <div class="form-group">
-          <label for="region">Región</label>
-          <input type="text" id="region" placeholder="Ej: Metropolitana">
-          <span class="error-message hidden" id="error-region">Debe rellenar el campo Región.</span>
+    <div class="container mt-5">
+        <header>
+            <h1>Formulario de Pago</h1>
+        </header>
+
+        <div class="form-container">
+            <!-- Left Side: Payment Form -->
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+
+
+
+                    <!-- Tipo de Entrega -->
+                    <div class="form-floating mb-3">
+                        <label for="tipo_entrega">Tipo de Entrega</label>
+                        <select class="form-select" id="tipo_entrega" name="tipo_entrega" required>
+                            <option value="" disabled selected>Seleccione un tipo de entrega</option>
+                            <option value="domicilio">A Domicilio</option>
+                            <option value="retiro">Retiro en Tienda</option>
+                        </select>
+                    </div>
+
+                    <!-- Información de Envío (A Domicilio) -->
+                    <div id="envio_domicilio" style="display:none;">
+                        <!-- Selección de Región -->
+                        <div class="form-floating mb-3">
+                            <label for="region">Region</label>
+                            <select class="form-select" id="region" name="region" required>
+                                <option value="" disabled selected>Seleccione una región</option>
+                                {% for region in regiones_ciudades.keys %}
+                                <option value="{{ region }}">{{ region }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Selección de Ciudad -->
+                        <div class="form-floating mb-3">
+                            <label for="ciudad">Ciudad</label>
+                            <select class="form-select" id="ciudad" name="ciudad" disabled required>
+                                <option value="" disabled selected>Seleccione una ciudad</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Método de Pago -->
+                    <div class="form-floating mb-3">
+                        <label for="metodo_pago">Método de Pago</label>
+                        <select class="form-select" id="metodo_pago" name="metodo_pago" required>
+                            <option value="" disabled selected>Seleccione un método de pago</option>
+                            <option value="credito">Tarjeta de Crédito</option>
+                            <option value="debito">Tarjeta de Débito</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Información de Tarjeta -->
+                    <div id="informacion_tarjeta" style="display:none;">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="numero_tarjeta" name="numero_tarjeta"
+                                placeholder="Número de Tarjeta" required>
+                            <label for="numero_tarjeta">Número de Tarjeta</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento"
+                                placeholder="Fecha de Vencimiento" required>
+                            <label for="fecha_vencimiento">Fecha de Vencimiento</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="codigo_seguridad" name="codigo_seguridad"
+                                placeholder="Código de Seguridad" required>
+                            <label for="codigo_seguridad">Código de Seguridad</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nombre_titular" name="nombre_titular"
+                                placeholder="Nombre del Titular" required>
+                            <label for="nombre_titular">Nombre del Titular</label>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Enviar -->
+                    <button type="submit" class="btn btn-primary">Completar Pago</button>
+                </form>
+            </div>
+
+            <!-- Resumen del Carrito -->
+            <div class="col-md-4">
+                <div class="cart-summary">
+                    <h3>Resumen del Carrito</h3>
+                    <ul>
+                        <li><span>Producto 1</span> <span>$20.00</span></li>
+                        <li><span>Producto 2</span> <span>$15.00</span></li>
+                    </ul>
+                    <div class="total">
+                        <span>Total</span> <span>$35.00</span>
+                    </div>
+                    <!-- Botón Completar Pago dentro del resumen -->
+                    <button type="submit" class="btn btn-success">Completar Pago</button>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="comuna">Comuna</label>
-          <input type="text" id="comuna" placeholder="Ej: Santiago">
-          <span class="error-message hidden" id="error-comuna">Debe rellenar el campo Comuna.</span>
-        </div>
-        <div class="form-group">
-          <label for="calle">Calle</label>
-          <input type="text" id="calle" placeholder="Ej: Av. Siempre Viva">
-          <span class="error-message hidden" id="error-calle">Debe rellenar el campo Calle.</span>
-        </div>
-        <div class="form-group">
-          <label for="numero">Número de Casa/Dpto</label>
-          <input type="text" id="numero" placeholder="Ej: 742">
-          <span class="error-message hidden" id="error-numero">Debe rellenar el campo Número de Casa/Dpto.</span>
-        </div>
-      </div>
-      <span class="error-message hidden" id="error-tipo-entrega">Debe seleccionar un tipo de entrega.</span>
-      <div class="button-group">
-        <button type="button" onclick="volverAlCarrito()">Volver al Carrito</button>
-        <button type="button" onclick="validarTipoEntrega()">Continuar</button>
-      </div>
     </div>
 
-    <!-- Paso 2: Método de Pago -->
-    <div class="wizard-step" id="step-2" style="display: none;">
-      <h2>2. Método de Pago</h2>
-      <div class="form-group">
-        <label>
-          <input type="radio" name="metodo_pago" value="credito" id="pago-credito"> Crédito
-        </label>
-        <label>
-          <input type="radio" name="metodo_pago" value="debito" id="pago-debito"> Débito
-        </label>
-      </div>
-      <span class="error-message hidden" id="error-metodo-pago">Debe seleccionar un método de pago.</span>
-      <div class="button-group">
-        <button type="button" onclick="volverPaso1()">Volver</button>
-        <button type="button" onclick="validarMetodoPago()">Continuar</button>
-      </div>
-    </div>
+    <!-- Script para manejar la lógica de las selecciones -->
+    <script>
+        $(document).ready(function () {
+            // Mostrar las ciudades correspondientes a la región seleccionada
+            $('#region').change(function () {
+                var region = $(this).val();
+                $.ajax({
+                    url: "{% url 'obtener_ciudades' %}",
+                    data: { 'region': region },
+                    success: function (data) {
+                        var ciudades = data.ciudades;
+                        var ciudadSelect = $('#ciudad');
+                        ciudadSelect.empty();
+                        ciudadSelect.append('<option value="" disabled selected>Seleccione una ciudad</option>');
+                        $.each(ciudades, function (index, ciudad) {
+                            ciudadSelect.append('<option value="' + ciudad + '">' + ciudad + '</option>');
+                        });
+                        ciudadSelect.prop('disabled', false);
+                    }
+                });
+            });
 
-    <!-- Paso 3: Confirmación -->
-    <div class="wizard-step" id="step-3" style="display: none;">
-      <h2>3. Confirmación del Pedido</h2>
-      <p>Revisa tu pedido y los detalles antes de finalizar.</p>
-      <div class="button-group">
-        <button type="button" onclick="volverPaso2()">Volver</button>
-        <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
-      </div>
-    </div>
-  </div>
+            // Mostrar opciones de envío a domicilio
+            $('#tipo_entrega').change(function () {
+                var tipoEntrega = $(this).val();
+                if (tipoEntrega === 'domicilio') {
+                    $('#envio_domicilio').show();
+                } else {
+                    $('#envio_domicilio').hide();
+                }
+            });
 
-  <script>
-    // Función para volver al carrito
-    function volverAlCarrito() {
-      window.location.href = '/carrito'; // Aquí debes colocar la URL donde se muestra el carrito
-    }
-
-    // Muestra/oculta campos según la selección de tipo de entrega
-    document.getElementById('entrega-domicilio').addEventListener('change', () => {
-      document.getElementById('direccion-domicilio').classList.remove('hidden');
-      document.getElementById('direccion-local').classList.add('hidden');
-      document.getElementById('error-tipo-entrega').classList.add('hidden'); // Oculta error si estaba visible
-    });
-
-    document.getElementById('entrega-retiro').addEventListener('change', () => {
-      document.getElementById('direccion-domicilio').classList.add('hidden');
-      document.getElementById('direccion-local').classList.remove('hidden');
-      document.getElementById('error-tipo-entrega').classList.add('hidden'); // Oculta error si estaba visible
-    });
-
-    // Función para validar tipo de entrega
-    function validarTipoEntrega() {
-      const tipoEntrega = document.querySelector('input[name="tipo_entrega"]:checked');
-      const region = document.getElementById('region').value.trim();
-      const comuna = document.getElementById('comuna').value.trim();
-      const calle = document.getElementById('calle').value.trim();
-      const numero = document.getElementById('numero').value.trim();
-
-      // Mensajes de error
-      const errorTipoEntrega = document.getElementById('error-tipo-entrega');
-      const errorRegion = document.getElementById('error-region');
-      const errorComuna = document.getElementById('error-comuna');
-      const errorCalle = document.getElementById('error-calle');
-      const errorNumero = document.getElementById('error-numero');
-
-      // Ocultar mensajes de error previos
-      errorTipoEntrega.classList.add('hidden');
-      errorRegion.classList.add('hidden');
-      errorComuna.classList.add('hidden');
-      errorCalle.classList.add('hidden');
-      errorNumero.classList.add('hidden');
-
-      if (!tipoEntrega) {
-        errorTipoEntrega.classList.remove('hidden');
-        return false;
-      }
-
-      if (tipoEntrega.value === 'domicilio') {
-        let valido = true;
-
-        if (!region) {
-          errorRegion.classList.remove('hidden');
-          valido = false;
-        }
-        if (!comuna) {
-          errorComuna.classList.remove('hidden');
-          valido = false;
-        }
-        if (!calle) {
-          errorCalle.classList.remove('hidden');
-          valido = false;
-        }
-        if (!numero) {
-          errorNumero.classList.remove('hidden');
-          valido = false;
-        }
-
-        if (!valido) {
-          return false;
-        }
-      }
-
-      // Si todo está bien, mostrar el siguiente paso
-      document.getElementById('step-1').style.display = 'none';
-      document.getElementById('step-2').style.display = 'block';
-    }
-
-    // Función para validar método de pago
-    function validarMetodoPago() {
-      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked');
-      const errorMetodoPago = document.getElementById('error-metodo-pago');
-
-      // Ocultar mensaje de error previo
-      errorMetodoPago.classList.add('hidden');
-
-      if (!metodoPago) {
-        errorMetodoPago.classList.remove('hidden');
-        return false;
-      }
-
-      // Si todo está bien, mostrar el siguiente paso
-      document.getElementById('step-2').style.display = 'none';
-      document.getElementById('step-3').style.display = 'block';
-    }
-
-    // Función para confirmar el pedido
-    function confirmarPedido() {
-      alert('Pedido confirmado exitosamente!');
-    }
-
-    // Función para volver al paso 1
-    function volverPaso1() {
-      document.getElementById('step-2').style.display = 'none';
-      document.getElementById('step-1').style.display = 'block';
-    }
-
-    // Función para volver al paso 2
-    function volverPaso2() {
-      document.getElementById('step-3').style.display = 'none';
-      document.getElementById('step-2').style.display = 'block';
-    }
-  </script>
+            // Mostrar información de tarjeta al seleccionar el método de pago
+            $('#metodo_pago').change(function () {
+                var metodoPago = $(this).val();
+                if (metodoPago === 'credito' || metodoPago === 'debito') {
+                    $('#informacion_tarjeta').show();
+                } else {
+                    $('#informacion_tarjeta').hide();
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

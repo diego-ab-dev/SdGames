@@ -278,16 +278,49 @@ def carrito(request):
 def lista_favoritos(request):
     return render(request, 'favorite.html')
 
+
+
+# Diccionario de regiones y ciudades
+regiones_ciudades = {
+    'ARICA Y PARINACOTA': ['Arica', 'Putre'],
+    'TARAPACA': ['Iquique', 'Alto Hospicio'],
+    'ANTOFAGASTA': ['Antofagasta', 'Calama', 'Tocopilla'],
+    'ATACAMA': ['Copiapó', 'Vallenar', 'Chañaral'],
+    'COQUIMBO': ['La Serena', 'Coquimbo', 'Ovalle'],
+    'VALPARAISO': ['Valparaíso', 'Viña del Mar', 'Quillota', 'San Antonio'],
+    'METROPOLITANA': ['Santiago', 'Puente Alto', 'Maipú', 'La Florida'],
+    'OHIGGINS': ['Rancagua', 'San Fernando', 'Pichilemu'],
+    'MAULE': ['Talca', 'Curicó', 'Linares'],
+    'ÑUBLE': ['Chillán', 'San Carlos'],
+    'BIOBIO': ['Concepción', 'Los Ángeles', 'Coronel'],
+    'ARAUCANIA': ['Temuco', 'Villarrica', 'Angol'],
+    'LOS RIOS': ['Valdivia', 'La Unión'],
+    'LOS LAGOS': ['Puerto Montt', 'Osorno', 'Castro'],
+    'AYSEN': ['Coyhaique', 'Puerto Aysén'],
+    'MAGALLANES': ['Punta Arenas', 'Puerto Natales'],
+}
+
 def metodo_pago(request):
-    form = Usuario(request.POST or None)
-    ciudad_choices = []
+    if request.method == 'POST':
+        # Obtener los datos enviados en el POST
+        region = request.POST.get('region')
+        ciudad = request.POST.get('ciudad')
+        tipo_entrega = request.POST.get('tipo_entrega')
+        metodo_pago = request.POST.get('metodo_pago')
+        numero_tarjeta = request.POST.get('numero_tarjeta')
+        fecha_vencimiento = request.POST.get('fecha_vencimiento')
+        codigo_seguridad = request.POST.get('codigo_seguridad')
+        nombre_titular = request.POST.get('nombre_titular')
 
-    if request.method == 'POST' and form.is_valid():
-        # Obtenemos la región seleccionada del formulario
-        region = form.cleaned_data.get('region')
-        ciudad_choices = regiones_ciudades.get(region, [])
+        # Validar los datos o hacer el procesamiento necesario
+        if not region or not ciudad or not metodo_pago:
+            messages.error(request, "Por favor complete todos los campos requeridos.")
+        else:
+            messages.success(request, "Pago procesado correctamente.")
+            # Realiza el procesamiento del pago aquí
 
-    return render(request, 'metodo_pago.html', {'form': form, 'ciudad_choices': ciudad_choices})
+    # Pasar las regiones y ciudades a la plantilla
+    return render(request, 'metodo_pago.html', {'regiones_ciudades': regiones_ciudades})
 
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],
