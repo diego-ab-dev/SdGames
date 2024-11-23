@@ -17,86 +17,186 @@
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
 </head>
 <body>
+  {% load humanize %}
     <!--Nav de la web-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c2e33;">
-    <div class="contnav container">
-        <!-- Logo -->
-        <a class="navbar-brand" href="/home">
-            <strong>SD Games</strong>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/menu">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#nosotros">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#local">Local</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#redes">Redes</a>
-                </li>
+    <nav>
+        <div class="navbar">
+          <i class='bx bx-menu'></i>
+          <div class="logo"><a href="/home">SD Games</a></div>
+          <div class="nav-links">
+            <div class="sidebar-logo">
+              <span class="logo-name">SD Games</span>
+              <i class='bx bx-x' ></i>
+            </div>
+            <ul class="links">
+              <li><a href="/home">HOME</a></li>
+              <li>
+                <a href="#">VIDEOJUEGOS</a>
+                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+                <ul class="htmlCss-sub-menu sub-menu">
+                  <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3' %}">PlayStation 3</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4' %}">PlayStation 4</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5' %}">PlayStation 5</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360' %}">XBOX 360</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE' %}">XBOX ONE</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES' %}">XBOX SERIES</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' '3DS' %}">3DS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII' %}">WII</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U' %}">WII U</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH' %}">SWITCH</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">CONSOLAS</a>
+                <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                <ul class="js-sub-menu sub-menu">
+                  <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-CONSOLA' %}">PLAYSTATION 4</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-CONSOLA' %}">PLAYSTATION 5</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-CONSOLA' %}">XBOX ONE</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-CONSOLA' %}">XBOX SERIES</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-CONSOLA' %}">WII U</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-CONSOLA' %}">SWITCH</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">ACCESORIOS</a>
+                <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                <ul class="js-sub-menu sub-menu">
+                  <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PSP-ACCESORIOS' %}">PSP</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS-VITA-ACCESORIOS' %}">VITA</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS1-ACCESORIOS' %}">PLAY STATION 1</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS2-ACCESORIOS' %}">PLAY STATION 2</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS3-ACCESORIOS' %}">PLAY STATION 3</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS4-ACCESORIOS' %}">PLAY STATION 4</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'PS5-ACCESORIOS' %}">PLAY STATION 5</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-360-ACCESORIOS' %}">XBOX 360</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-ONE-ACCESORIOS' %}">XBOX ONE</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'XBOX-SERIES-ACCESORIOS' %}">XBOX SERIES</a></li>
+                  <hr>
+                  <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'N3DS-ACCESORIOS' %}">3DS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'WII-U-ACCESORIOS' %}">WII U</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'SWITCH-ACCESORIOS' %}">SWITCH</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">FIGURAS</a>
+                <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                <ul class="js-sub-menu sub-menu">
+                  <li><span class="dropdown-header text-white text-start">Figuras Coleccionables</span></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'FUNKO' %}">FUNKO POP</a></li>
+                  <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'AMIIBO' %}">AMIIBO</a></li>
+                </ul>
+              </li>
             </ul>
-
-            <!-- Botones de Iniciar Sesión y Registrarse -->
-            <div class="d-flex" style="gap: 20px;">
-              <button class="buttonlogreg" onclick="window.location.href='/login'">
+            <div class="sidebar-login">
+              <button onclick="window.location.href='/login'">
                 Iniciar Sesión
                 <div class="arrow-wrapper">
                     <div class="arrow"></div>
                 </div>
             </button>
-                <button class="buttonlogreg" onclick="window.location.href='/register'">
-                  Registrarse
+            </div>
+    
+          </div>
+    
+            <div class="d-flex login-desktop">
+              {% if usuario %}
+                <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
+                <div class="menu">
+                  <div class="item">
+                    <a href="/perfil" class="link">
+                      <span> Mi Perfil </span>
+                      <svg viewBox="0 0 360 360" xml:space="preserve">
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            id="XMLID_225_"
+                            d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+                          ></path>
+                        </g>
+                      </svg>
+                    </a>
+                    <div class="submenu">
+                      <div class="submenu-item">
+                        <a href="/logout" class="submenu-link">Cerrar Sesión</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              {% else %}
+                <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
+                <button onclick="window.location.href='/login'">
+                  Iniciar Sesión
+                  <div class="arrow-wrapper">
+                      <div class="arrow"></div>
+                  </div>
                 </button>
-            </div>
+              {% endif %}
+            </div>    
+          <div class="icons d-flex gap-3">
+            <a href="/favorites" style="color: #9c9592;">
+                <i class="fas fa-heart"></i>
+            </a>
+            <a href="{% url 'ver_carrito' %}" style="color: #9c9592;">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
         </div>
-    </div>
-</nav>
+          <div class="search-box">
+            <i class='bx bx-search'></i>
+            <div class="input-box">
+              <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search" style="width: 50%;">
+                <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search" id="name" name="buscar">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-<section style="margin-top: 100px;">
-    <div class="contdet container flex">
-        <div class="left">
-            <div class="main_image">
-                <img src="{{ producto.imagen_principal.url }}" class="slide">
-            </div>
-            <div class="option flex">
-                <img src="{{ producto.imagen_principal.url }}" onclick="img('{{ producto.imagen_principal.url }}')">
-                {% for imagen in producto.imagenes %}
-                    <img src="{{ imagen.url }}" onclick="img('{{ imagen.url }}')">
-                {% endfor %}
-            </div>
-        </div>
-        <div class="right">
-            <h3>{{ producto.nombre }}</h3>
-            <h4><small>$</small>{{ producto.precio }}</h4>
-            <p>{{ producto.descripcion }}</p>
-            <p><strong>Stock:</strong> {{ producto.stock }}</p>
-            <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
-            <h5><strong>Cantidad:</strong></h5>
-            <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
-                {% csrf_token %}
-                <label for="cantidad">Cantidad:</label>
-                <select id="cantidad" name="cantidad" class="form-select" style="width: 100px;">
-                    {% for i in rango_cantidad %}
-                    <option value="{{ i }}">{{ i }}</option>
+      <section style="margin-top: 100px;">
+        <div class="contdet container flex">
+            <div class="left">
+                <div class="main_image zoom-container">
+                    <img src="{{ producto.imagen_principal.url }}" class="slide zoom-image">
+                </div>
+                <div class="option flex">
+                    {% for imagen in producto.imagenes %}
+                        <img src="{{ imagen.url }}" onclick="img('{{ imagen.url }}')">
                     {% endfor %}
-                </select>
-                <button class="btncarrito btn mt-3">Agregar al carrito</button>
-            </form>
+                </div>
+            </div>
+            <div class="right">
+                <h3>{{ producto.nombre }}</h3>
+                <h4><small>$</small>{{ producto.precio|intcomma }}</h4>
+                <p>{{ producto.descripcion }}</p>
+                <p><strong>Stock:</strong> {{ producto.stock }}</p>
+                <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+                <h5><strong>Cantidad:</strong></h5>
+                <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
+                    {% csrf_token %}
+                    <select id="cantidad" name="cantidad" class="form-select" style="width: 100px;">
+                        {% for i in rango_cantidad %}
+                        <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btncarrito btn mt-3">Agregar al carrito</button>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    
 
 <h2 class="anim-down display-6 fw-bold fst-italic text-center">Opiniones</h2>
 {% if opiniones_list %}
@@ -129,14 +229,49 @@
 
 
 <script>
-function img(anything) {
-    document.querySelector('.slide').src = anything;
-}
+    function img(anything) {
+        document.querySelector('.slide').src = anything;
+    }
 
-document.querySelector('#cantidad').addEventListener('change', function() {
-    const cantidadSeleccionada = this.value;
-    console.log('Cantidad seleccionada:', cantidadSeleccionada);
-});
+    document.querySelector('#cantidad').addEventListener('change', function() {
+        const cantidadSeleccionada = this.value;
+        console.log('Cantidad seleccionada:', cantidadSeleccionada);
+    });
+
+    let navbar = document.querySelector(".navbar");
+    let searchBox = document.querySelector(".search-box .bx-search");
+    // let searchBoxCancel = document.querySelector(".search-box .bx-x");
+    searchBox.addEventListener("click", ()=>{
+        navbar.classList.toggle("showInput");
+        if(navbar.classList.contains("showInput")){
+        searchBox.classList.replace("bx-search" ,"bx-x");
+        }else {
+        searchBox.classList.replace("bx-x" ,"bx-search");
+        }
+    });
+    // sidebar open close js code
+    let navLinks = document.querySelector(".nav-links");
+    let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+    let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+    menuOpenBtn.onclick = function() {
+    navLinks.style.left = "0";
+    }
+    menuCloseBtn.onclick = function() {
+    navLinks.style.left = "-100%";
+    }
+    // sidebar submenu open close js code
+    let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+    htmlcssArrow.onclick = function() {
+    navLinks.classList.toggle("show1");
+    }
+    let moreArrow = document.querySelector(".more-arrow");
+    moreArrow.onclick = function() {
+    navLinks.classList.toggle("show2");
+    }
+    let jsArrow = document.querySelector(".js-arrow");
+    jsArrow.onclick = function() {
+    navLinks.classList.toggle("show3");
+    }
 </script>
 </body>
 </html>
