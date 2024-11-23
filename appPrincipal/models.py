@@ -18,45 +18,61 @@ class Usuario(models.Model):
 class Producto(models.Model):
     CATEGORIAS = [
         ('VIDEOJUEGOS', [
-            ('PS3', 'PlayStation 3'),
-            ('PS4', 'PlayStation 4'),
-            ('PS5', 'PlayStation 5'),
-            ('XBOX-360', 'Xbox 360'),
-            ('XBOX-ONE', 'Xbox One'),
-            ('XBOX-SERIES', 'Xbox Series'),
-            ('N3DS', 'Nintendo 3DS'),
-            ('WII', 'Nintendo Wii'),
-            ('WII-U', 'Nintendo Wii U'),
-            ('SWITCH', 'Nintendo Switch'),
-            ('PC', 'PC'),
+            ('Videojuegos PS3', 'PlayStation 3'),
+            ('Videojuegos PS4', 'PlayStation 4'),
+            ('Videojuegos PS5', 'PlayStation 5'),
+            ('Videojuegos XBOX 360', 'Xbox 360'),
+            ('Videojuegos XBOX ONE', 'Xbox One'),
+            ('Videojuegos XBOX SERIES', 'Xbox Series'),
+            ('Videojuegos Nintendo 3DS', 'Nintendo 3DS'),
+            ('Videojuegos WII', 'Nintendo Wii'),
+            ('Videojuegos WII U', 'Nintendo Wii U'),
+            ('Videojuegos Nintendo SWITCH', 'Nintendo Switch'),
+            ('Videojuegos para PC', 'PC'),
         ]),
         ('CONSOLAS', [
-            ('PS4-CONSOLA', 'PlayStation 4'),
-            ('PS5-CONSOLA', 'PlayStation 5'),
-            ('XBOX-ONE-CONSOLA', 'Xbox One'),
-            ('XBOX-SERIES-CONSOLA', 'Xbox Series'),
-            ('WII-U-CONSOLA', 'Wii U'),
-            ('SWITCH-CONSOLA', 'Switch'),
+            ('Ps4 Consolas', 'Consola PlayStation 4'),
+            ('Ps5 Consolas', 'Consola PlayStation 5'),
+            ('Xbox One Consolas', 'Consola Xbox One'),
+            ('Xbox Series Consolas', 'Consola Xbox Series'),
+            ('Wii U Consolas', 'Consola Wii U'),
+            ('Switch Consolas', 'Consola Switch'),
         ]),
         ('ACCESORIOS', [
-            ('PSP-ACCESORIOS', 'PSP'),
-            ('PS-VITA-ACCESORIOS', 'PlayStation Vita'),
-            ('PS1-ACCESORIOS', 'PlayStation 1'),
-            ('PS2-ACCESORIOS', 'PlayStation 2'),
-            ('PS3-ACCESORIOS', 'PlayStation 3'),
-            ('PS4-ACCESORIOS', 'PlayStation 4'),
-            ('PS5-ACCESORIOS', 'PlayStation 5'),
-            ('XBOX-360-ACCESORIOS', 'Xbox 360'),
-            ('XBOX-ONE-ACCESORIOS', 'Xbox One'),
-            ('XBOX-SERIES-ACCESORIOS', 'Xbox Series'),
-            ('N3DS-ACCESORIOS', 'Nintendo 3DS'),
-            ('WII-U-ACCESORIOS', 'Wii U'),
-            ('SWITCH-ACCESORIOS', 'Switch'),
+            ('Accesorios Psp', 'PSP'),
+            ('Accesorios Ps Vita', 'PlayStation Vita'),
+            ('Accesorios PS1', 'PlayStation 1'),
+            ('Accesorios PS2', 'PlayStation 2'),
+            ('Accesorios PS3', 'PlayStation 3'),
+            ('Accesorios PS4', 'PlayStation 4'),
+            ('Accesorios PS5', 'PlayStation 5'),
+            ('Accesorios XBOX 360', 'Xbox 360'),
+            ('Accesorios XBOX ONE', 'Xbox One'),
+            ('Accesorios XBOX SERIES', 'Xbox Series'),
+            ('Accesorios Nintendo 3DS', 'Nintendo 3DS'),
+            ('Accesorios WII U', 'Wii U'),
+            ('Accesorios Nintendo SWITCH', 'Switch'),
         ]),
         ('FIGURAS', [
-            ('FUNKO', 'Funko Pop'),
-            ('AMIIBO', 'Amiibo'),
+            ('Figuras Funko', 'Funko Pop'),
+            ('Figuras Amiibo', 'Amiibo'),
         ]),
+    ]
+
+    GENEROS = [
+        ('ACCION', 'Acción'),
+        ('AVENTURA', 'Aventura'),
+        ('RPG', 'RPG'),
+        ('DEPORTES', 'Deportes'),
+        ('CARRERAS', 'Carreras'),
+        ('ESTRATEGIA', 'Estrategia'),
+        ('SIMULACION', 'Simulación'),
+        ('PUZZLE', 'Puzzle'),
+        ('TERROR', 'Terror'),
+        ('CONSOLAS', 'Consolas'),
+        ('FIGURAS', 'Figuras'),
+        ('ACCESORIOS', 'Accesorios'),
+        ('OTRO', 'Otro'),
     ]
     codigo_de_barra = models.CharField(max_length=20, unique=True, verbose_name="Código de Barra") 
     nombre = models.CharField(max_length=100)
@@ -70,6 +86,8 @@ class Producto(models.Model):
     imagen_5 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 5")
     imagen_6 = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen Opcional 6")
     categoria = models.CharField(max_length=40, choices=CATEGORIAS, verbose_name="Categoría") 
+    genero = models.CharField(max_length=20, choices=GENEROS, verbose_name="Género", default='OTRO')
+
 
     def imagenes(self):
         return [img for img in [

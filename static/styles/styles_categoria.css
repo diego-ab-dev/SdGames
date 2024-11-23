@@ -217,3 +217,15 @@ a:hover {
 .paused * { 
 	animation-play-state: paused;
 }
+
+
+.filtros {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.filtros h4 {
+  margin-bottom: 15px;
+}

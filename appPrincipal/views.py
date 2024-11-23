@@ -24,10 +24,24 @@ def productos_menu(request):
         return render(request, 'productosmenu.html', {'productos': productos})
     
 def productos_por_categoria(request, categoria):
+    # Obtener todos los productos de la categoría
     productos = Producto.objects.filter(categoria=categoria)
+    
+    # Filtrar por género
+    genero = request.GET.get('genero')
+    if genero:
+        productos = productos.filter(genero=genero)
+    
+    # Filtrar por rango de precio
+    precio_min = request.GET.get('precio_min')
+    precio_max = request.GET.get('precio_max')
+    if precio_min and precio_max:
+        productos = productos.filter(precio__gte=precio_min, precio__lte=precio_max)
+    
     context = {
         'categoria': dict(Producto.CATEGORIAS).get(categoria, categoria),
         'productos': productos,
+        'generos': Producto.GENEROS,  # Para mostrar los géneros en la barra lateral
     }
     return render(request, 'productos_por_categoria.html', context)
 

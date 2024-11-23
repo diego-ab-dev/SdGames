@@ -83,6 +83,41 @@
 </nav>
 
 
+<div class="row">
+  <div class="col-md-3">
+      <form method="GET" action="{% url 'productos_menu' %}">
+          <h5>Filtrar por:</h5>
+          <label for="categoria">Categoría</label>
+          <select name="categoria" id="categoria" class="form-control">
+              <option value="">Todas</option>
+              {% for categoria, nombre in Producto.CATEGORIAS %}
+              <option value="{{ categoria }}" {% if categoria == request.GET.categoria %}selected{% endif %}>
+                  {{ nombre }}
+              </option>
+              {% endfor %}
+          </select>
+          
+          <label for="genero">Género</label>
+          <select name="genero" id="genero" class="form-control">
+              <option value="">Todos</option>
+              {% for clave, nombre in Producto.GENEROS %}
+              <option value="{{ clave }}" {% if clave == request.GET.genero %}selected{% endif %}>
+                  {{ nombre }}
+              </option>
+              {% endfor %}
+          </select>
+
+          <label for="precio_min">Precio Mínimo</label>
+          <input type="number" name="precio_min" id="precio_min" class="form-control" value="{{ request.GET.precio_min }}">
+
+          <label for="precio_max">Precio Máximo</label>
+          <input type="number" name="precio_max" id="precio_max" class="form-control" value="{{ request.GET.precio_max }}">
+
+          <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+      </form>
+  </div>
+
+    <div class="col-md-9">
         <section class="section-products">
             <div class="container">
                 <div class="row justify-content-center text-center">
@@ -121,7 +156,7 @@
                 </div>
             </div>
           </section>
-
+        </div>
           <a href="{% url 'productos_menu' %}">Volver a todos los productos</a>
 
 
