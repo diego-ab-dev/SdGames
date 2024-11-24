@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.http import JsonResponse, Http404
 from django.db.models import Avg
 from django.contrib.auth.hashers import make_password, check_password
+from django.conf import settings
+import mercadopago
+import json
 # Create your views here.
 
 def obtener_ciudades(request):
@@ -338,37 +341,121 @@ def lista_favoritos(request):
     return render(request, 'favorite.html')
 
 
-def metodo_pago(request):
+def detalles_compra(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
         return redirect('login') 
-    
-    usuario = get_object_or_404(Usuario, id=usuario_id)
 
+    usuario = get_object_or_404(Usuario, id=usuario_id)
     carrito = get_object_or_404(Carrito, usuario=usuario, estado='E')
 
     if request.method == 'POST':
-        rut = request.POST.get('rut')
-        direccion = request.POST.get('direccion')
-        region = request.POST.get('region')
-        ciudad = request.POST.get('ciudad')
-        telefono = request.POST.get('telefono')
+        metodo_envio = request.POST.get('metodo_envio')
+        direccion_envio = usuario.direccion if metodo_envio == 'domicilio' else "Retiro en tienda"
 
-        usuario.rut = rut  
-        usuario.direccion = direccion
-        usuario.region = region
-        usuario.ciudad = ciudad
-        usuario.telefono = telefono
-        usuario.save()
+        venta = Venta.objects.create(
+            usuario=usuario,
+            metodo_envio=metodo_envio,
+            direccion_envio=direccion_envio,
+            estado='Pendiente'
+        )
+        venta.productos.set(carrito.items.all())
+        venta.calcular_total()
 
-        return redirect('confirmacion_pago') 
+        carrito.estado = 'C'
+        carrito.save()
 
-    return render(request, 'metodo_pago.html', {
+        return redirect('pago') 
+
+    return render(request, 'detalles_compra.html', {
         'usuario': usuario,
         'carrito': carrito,
         'productos': carrito.items.all(),
         'total': carrito.total_carrito(),
     })
+
+def pago(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body) 
+            metodo = data.get('metodo_pago')
+            total = data.get('total')
+
+            if metodo == 'mercado_pago':
+                sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
+                preference_data = {
+                    "items": [
+                        {
+                            "title": "Compra en MiTienda",
+                            "quantity": 1,
+                            "currency_id": "CLP",
+                            "unit_price": float(total)
+                        }
+                    ],
+                    "back_urls": {
+                        "success": request.build_absolute_uri('/pago-exitoso/'),
+                        "failure": request.build_absolute_uri('/pago-fallido/'),
+                        "pending": request.build_absolute_uri('/pago-pendiente/')
+                    },
+                    "auto_return": "approved",
+                }
+
+                preference_response = sdk.preference().create(preference_data)
+
+                return JsonResponse({
+                    'mensaje': 'Redirigiendo a Mercado Pago...',
+                    'redirect_url': preference_response["response"]["init_point"]
+                })
+
+            return JsonResponse({'mensaje': 'Método de pago no soportado'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Datos mal formados'}, status=400)
+    elif request.method == 'GET':
+        total = float(request.GET.get('total', 0)) 
+        return render(request, 'pago.html', {'total': total})
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def mercado_pago_webhook(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            payment_id = data.get('data', {}).get('id')
+
+            sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
+            payment = sdk.payment().get(payment_id)
+
+            if payment['status'] == 200:
+                status = payment['response']['status']
+                carrito_id = payment['response']['external_reference']
+
+                venta = Venta.objects.get(carrito__id=carrito_id)
+                if status == 'approved':
+                    venta.estado = 'Pagado'
+                elif status == 'in_process':
+                    venta.estado = 'Pendiente'
+                else:
+                    venta.estado = 'Fallido'
+                venta.save()
+
+            return JsonResponse({'message': 'Webhook procesado correctamente'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+
+def pago_exitoso(request):
+    return render(request, 'pago_exitoso.html', {'mensaje': '¡Tu pago ha sido exitoso! Gracias por tu compra.'})
+
+def pago_fallido(request):
+    return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
+
+def pago_pendiente(request):
+    return render(request, 'pago_pendiente.html', {'mensaje': 'Tu pago está pendiente de aprobación. Recibirás una notificación cuando sea confirmado.'})
+
+
 
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],
