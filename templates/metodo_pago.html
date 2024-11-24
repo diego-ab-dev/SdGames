@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 {% load static %}
+{% load custom_filters %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,156 +10,175 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_metodo_pago.css' %}">
 </head>
 <body>
-    <div class="container mt-5">
-        <header>
-            <h1>Formulario de Pago</h1>
-        </header>
-
-        <div class="form-container">
-            <!-- Left Side: Payment Form -->
-            <div>
-                <form method="POST">
-                    {% csrf_token %}
-
-
-
-                    <!-- Tipo de Entrega -->
-                    <div class="form-floating mb-3">
-                        <label for="tipo_entrega">Tipo de Entrega</label>
-                        <select class="form-select" id="tipo_entrega" name="tipo_entrega" required>
-                            <option value="" disabled selected>Seleccione un tipo de entrega</option>
-                            <option value="domicilio">A Domicilio</option>
-                            <option value="retiro">Retiro en Tienda</option>
-                        </select>
-                    </div>
-
-                    <!-- Información de Envío (A Domicilio) -->
-                    <div id="envio_domicilio" style="display:none;">
-                        <!-- Selección de Región -->
-                        <div class="form-floating mb-3">
-                            <label for="region">Region</label>
-                            <select class="form-select" id="region" name="region" required>
-                                <option value="" disabled selected>Seleccione una región</option>
-                                {% for region in regiones_ciudades.keys %}
-                                <option value="{{ region }}">{{ region }}</option>
-                                {% endfor %}
-                            </select>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="box-1 bg-light">
+                    <h5 class="fw-bold">Resumen del Pedido</h5>
+                    <div class="box-inner-2">
+                        {% for item in productos %}
+                        <div class="d-flex justify-content-between">
+                            <p>{{ item.producto.nombre }} x{{ item.cantidad }}</p>
                         </div>
-
-                        <!-- Selección de Ciudad -->
-                        <div class="form-floating mb-3">
-                            <label for="ciudad">Ciudad</label>
-                            <select class="form-select" id="ciudad" name="ciudad" disabled required>
-                                <option value="" disabled selected>Seleccione una ciudad</option>
+                        {% endfor %}
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold">
+                            <p>Total</p>
+                            <p>${{ total|formato_chileno }}</p>
+                        </div>
+                        <div class="mt-3">
+                            <label for="metodo-envio" class="form-label">Método de envío</label>
+                            <select id="metodo-envio" class="form-select">
+                                <option value="principal" selected>Selecciona un método de envío</option>
+                                <option value="domicilio">Envío a domicilio</option>
+                                <option value="tienda">Retiro en tienda</option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- Método de Pago -->
-                    <div class="form-floating mb-3">
-                        <label for="metodo_pago">Método de Pago</label>
-                        <select class="form-select" id="metodo_pago" name="metodo_pago" required>
-                            <option value="" disabled selected>Seleccione un método de pago</option>
-                            <option value="credito">Tarjeta de Crédito</option>
-                            <option value="debito">Tarjeta de Débito</option>
-                        </select>
-
-                    </div>
-
-                    <!-- Información de Tarjeta -->
-                    <div id="informacion_tarjeta" style="display:none;">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="numero_tarjeta" name="numero_tarjeta"
-                                placeholder="Número de Tarjeta" required>
-                            <label for="numero_tarjeta">Número de Tarjeta</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento"
-                                placeholder="Fecha de Vencimiento" required>
-                            <label for="fecha_vencimiento">Fecha de Vencimiento</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="codigo_seguridad" name="codigo_seguridad"
-                                placeholder="Código de Seguridad" required>
-                            <label for="codigo_seguridad">Código de Seguridad</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nombre_titular" name="nombre_titular"
-                                placeholder="Nombre del Titular" required>
-                            <label for="nombre_titular">Nombre del Titular</label>
-                        </div>
-                    </div>
-
-                    <!-- Botón de Enviar -->
-                    <button type="submit" class="btn btn-primary">Completar Pago</button>
-                </form>
-            </div>
-
-            <!-- Resumen del Carrito -->
-            <div class="col-md-4">
-                <div class="cart-summary">
-                    <h3>Resumen del Carrito</h3>
-                    <ul>
-                        <li><span>Producto 1</span> <span>$20.00</span></li>
-                        <li><span>Producto 2</span> <span>$15.00</span></li>
-                    </ul>
-                    <div class="total">
-                        <span>Total</span> <span>$35.00</span>
-                    </div>
-                    <!-- Botón Completar Pago dentro del resumen -->
-                    <button type="submit" class="btn btn-success">Completar Pago</button>
                 </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="box-2 bg-light">
+                    <h5 class="fw-bold">Datos del Usuario</h5>
+                    <div id="user-details" style="display: block;">
+                        <p><strong>RUT:</strong> {{ usuario.rut }}</p>
+                        <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+                        <p><strong>Región:</strong> {{ usuario.region }}</p>
+                        <p><strong>Ciudad:</strong> {{ usuario.ciudad }}</p>
+                        <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                        <button id="edit-button" class="Btn mt-2">Editar 
+                            <svg class="svg" viewBox="0 0 512 512">
+                              <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path></svg>
+                        </button>
+                    </div>
+                    <div id="retiro-tienda" style="display: none;">
+                        <p><strong>Dirección:</strong> Av. Simpson 3242</p>
+                        <p><strong>Horarios:</strong> 9:00 AM - 7:00 PM</p>
+                    </div>
+                    <form id="edit-form" method="POST" style="display: none;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="rut" class="form-label">RUT</label>
+                            <input type="text" id="rut" name="rut" class="form-control" value="{{ usuario.rut|default:'' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" id="direccion" name="direccion" class="form-control" value="{{ usuario.direccion }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="region" class="form-label">Región</label>
+                            <input type="text" id="region" name="region" class="form-control" value="{{ usuario.region }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ciudad" class="form-label">Ciudad</label>
+                            <input type="text" id="ciudad" name="ciudad" class="form-control" value="{{ usuario.ciudad }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control" value="{{ usuario.telefono }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" id="cancel-button" class="btn btn-secondary">Cancelar</button>
+                    </form>
+                </div>
+                <form class="mt-4">
+                    <div class="mb-3">
+                        <label class="fw-bold">Detalles de la Tarjeta</label>
+                        <div class="d-flex card-atm border rounded">
+                            <input type="text" class="form-control" placeholder="Número de Tarjeta">
+                            <input type="text" class="form-control w-25" placeholder="MM/YY">
+                            <input type="password" class="form-control w-25" maxlength="3" placeholder="CVV">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Nombre del Titular</label>
+                        <input type="text" class="form-control" placeholder="Nombre completo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Dirección de Facturación</label>
+                        <select class="form-select mb-2">
+                            <option selected hidden>Seleccione un país</option>
+                            <option>Chile</option>
+                            <option>Argentina</option>
+                            <option>Perú</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="Código Postal">
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <p>Subtotal</p>
+                        <p>${{ total|formato_chileno }}</p>
+                    </div>
+                    <div id="total-container" data-total="{{ total }}"></div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <p>Envío</p>
+                        <p class="envio-costo">$0</p>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <p>Total</p>
+                        <p class="total-costo">$-</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Pagar</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- Script para manejar la lógica de las selecciones -->
+    
+    
     <script>
-        $(document).ready(function () {
-            // Mostrar las ciudades correspondientes a la región seleccionada
-            $('#region').change(function () {
-                var region = $(this).val();
-                $.ajax({
-                    url: "{% url 'obtener_ciudades' %}",
-                    data: { 'region': region },
-                    success: function (data) {
-                        var ciudades = data.ciudades;
-                        var ciudadSelect = $('#ciudad');
-                        ciudadSelect.empty();
-                        ciudadSelect.append('<option value="" disabled selected>Seleccione una ciudad</option>');
-                        $.each(ciudades, function (index, ciudad) {
-                            ciudadSelect.append('<option value="' + ciudad + '">' + ciudad + '</option>');
-                        });
-                        ciudadSelect.prop('disabled', false);
-                    }
-                });
-            });
+        document.addEventListener("DOMContentLoaded", () => {
+        const editButton = document.getElementById("edit-button");
+        const cancelButton = document.getElementById("cancel-button");
+        const userDetails = document.getElementById("user-details");
+        const editForm = document.getElementById("edit-form");
 
-            // Mostrar opciones de envío a domicilio
-            $('#tipo_entrega').change(function () {
-                var tipoEntrega = $(this).val();
-                if (tipoEntrega === 'domicilio') {
-                    $('#envio_domicilio').show();
-                } else {
-                    $('#envio_domicilio').hide();
-                }
-            });
-
-            // Mostrar información de tarjeta al seleccionar el método de pago
-            $('#metodo_pago').change(function () {
-                var metodoPago = $(this).val();
-                if (metodoPago === 'credito' || metodoPago === 'debito') {
-                    $('#informacion_tarjeta').show();
-                } else {
-                    $('#informacion_tarjeta').hide();
-                }
-            });
+        editButton.addEventListener("click", () => {
+            userDetails.style.display = "none";
+            editForm.style.display = "block";
         });
+
+        cancelButton.addEventListener("click", () => {
+            userDetails.style.display = "block";
+            editForm.style.display = "none";
+        });
+
+        const metodoEnvio = document.getElementById("metodo-envio");
+        const envioDomicilio = document.getElementById("user-details");
+        const retiroTienda = document.getElementById("retiro-tienda");
+
+        const envioCosto = document.querySelector(".envio-costo"); 
+        const totalCosto = document.querySelector(".total-costo"); 
+
+        const totalBase = parseFloat(
+            document.getElementById("total-container").dataset.total
+        );
+
+        metodoEnvio.addEventListener("change", () => {
+            let envioExtra = 0;
+
+            if (metodoEnvio.value === "domicilio") {
+                envioExtra = 6000;
+                envioDomicilio.style.display = "block";
+                retiroTienda.style.display = "none";
+            } else {
+                envioExtra = 0;
+                envioDomicilio.style.display = "none";
+                retiroTienda.style.display = "block";
+            }
+
+            envioCosto.textContent = `$${envioExtra.toLocaleString()}`;
+            totalCosto.textContent = `$${(totalBase + envioExtra).toLocaleString()}`;
+        });
+    });
     </script>
+    
+    
+    
 </body>
 
 </html>

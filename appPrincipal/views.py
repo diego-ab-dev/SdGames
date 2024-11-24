@@ -21,7 +21,7 @@ def productos_menu(request):
         return render(request, 'resultado_busqueda.html', {'productos': productos, 'query':query})
     else:
         productos = Producto.objects.all() 
-        productos_recientes = Producto.objects.order_by('-id')[:10]  # Los 10 más recientes
+        productos_recientes = Producto.objects.order_by('-id')[:10] 
         return render(request, 'productosmenu.html', {
             'productos': productos,
             'productos_recientes': productos_recientes,
@@ -241,23 +241,19 @@ def agregar_al_carrito(request, producto_id):
 
     producto = get_object_or_404(Producto, id=producto_id)
 
-    # Obtener la cantidad enviada desde el formulario (por defecto 1)
     cantidad = int(request.POST.get('cantidad', 1))
 
-    # Verificar si ya existe el producto en el carrito
     item_carrito, item_created = ItemCarritoProducto.objects.get_or_create(
         carrito=carrito, producto=producto
     )
 
     if item_created:
-        # Si el producto es nuevo en el carrito, establecer la cantidad seleccionada
         if cantidad <= producto.stock:
             item_carrito.cantidad = cantidad
             item_carrito.save()
         else:
             messages.error(request, f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}.")
     else:
-        # Si el producto ya está en el carrito, sumar la cantidad seleccionada
         if item_carrito.cantidad + cantidad <= producto.stock:
             item_carrito.cantidad += cantidad
             item_carrito.save()
@@ -273,7 +269,6 @@ def eliminar_del_carrito(request, item_id):
             carrito = item.carrito
             item.delete()
 
-            # Recalcular los totales después de eliminar
             total_items = sum(i.cantidad for i in carrito.items.all())
             total = carrito.total_carrito()
 
@@ -333,7 +328,7 @@ def ver_carrito(request):
         'carrito': carrito,
         'productos': carrito.items.all(),
         'total': carrito.total_carrito(),
-        'total_items': total_items,  # Enviar el total de items al template
+        'total_items': total_items,  
     })
 
 def carrito(request):
@@ -343,48 +338,37 @@ def lista_favoritos(request):
     return render(request, 'favorite.html')
 
 
-
-# Diccionario de regiones y ciudades
-regiones_ciudades = {
-    'ARICA Y PARINACOTA': ['Arica', 'Putre'],
-    'TARAPACA': ['Iquique', 'Alto Hospicio'],
-    'ANTOFAGASTA': ['Antofagasta', 'Calama', 'Tocopilla'],
-    'ATACAMA': ['Copiapó', 'Vallenar', 'Chañaral'],
-    'COQUIMBO': ['La Serena', 'Coquimbo', 'Ovalle'],
-    'VALPARAISO': ['Valparaíso', 'Viña del Mar', 'Quillota', 'San Antonio'],
-    'METROPOLITANA': ['Santiago', 'Puente Alto', 'Maipú', 'La Florida'],
-    'OHIGGINS': ['Rancagua', 'San Fernando', 'Pichilemu'],
-    'MAULE': ['Talca', 'Curicó', 'Linares'],
-    'ÑUBLE': ['Chillán', 'San Carlos'],
-    'BIOBIO': ['Concepción', 'Los Ángeles', 'Coronel'],
-    'ARAUCANIA': ['Temuco', 'Villarrica', 'Angol'],
-    'LOS RIOS': ['Valdivia', 'La Unión'],
-    'LOS LAGOS': ['Puerto Montt', 'Osorno', 'Castro'],
-    'AYSEN': ['Coyhaique', 'Puerto Aysén'],
-    'MAGALLANES': ['Punta Arenas', 'Puerto Natales'],
-}
-
 def metodo_pago(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login') 
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
+    carrito = get_object_or_404(Carrito, usuario=usuario, estado='E')
+
     if request.method == 'POST':
-        # Obtener los datos enviados en el POST
+        rut = request.POST.get('rut')
+        direccion = request.POST.get('direccion')
         region = request.POST.get('region')
         ciudad = request.POST.get('ciudad')
-        tipo_entrega = request.POST.get('tipo_entrega')
-        metodo_pago = request.POST.get('metodo_pago')
-        numero_tarjeta = request.POST.get('numero_tarjeta')
-        fecha_vencimiento = request.POST.get('fecha_vencimiento')
-        codigo_seguridad = request.POST.get('codigo_seguridad')
-        nombre_titular = request.POST.get('nombre_titular')
+        telefono = request.POST.get('telefono')
 
-        # Validar los datos o hacer el procesamiento necesario
-        if not region or not ciudad or not metodo_pago:
-            messages.error(request, "Por favor complete todos los campos requeridos.")
-        else:
-            messages.success(request, "Pago procesado correctamente.")
-            # Realiza el procesamiento del pago aquí
+        usuario.rut = rut  
+        usuario.direccion = direccion
+        usuario.region = region
+        usuario.ciudad = ciudad
+        usuario.telefono = telefono
+        usuario.save()
 
-    # Pasar las regiones y ciudades a la plantilla
-    return render(request, 'metodo_pago.html', {'regiones_ciudades': regiones_ciudades})
+        return redirect('confirmacion_pago') 
+
+    return render(request, 'metodo_pago.html', {
+        'usuario': usuario,
+        'carrito': carrito,
+        'productos': carrito.items.all(),
+        'total': carrito.total_carrito(),
+    })
 
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],

@@ -227,11 +227,13 @@
                     </div>
                       <div class="col text-right" id="total">${{ total|formato_chileno }}</div>
                   </div>
-                  <button>
-                      <span class="transition"></span>
-                      <span class="gradient"></span>
-                      <span class="label">Proceder a la compra</span>
-                  </button>
+                  <form method="GET" action="{% url 'metodo_pago' %}">
+                    <button type="submit">
+                        <span class="transition"></span>
+                        <span class="gradient"></span>
+                        <span class="label">Proceder a la compra</span>
+                    </button>
+                  </form>
               </div>
           </div>
       </div>
@@ -264,7 +266,7 @@
                   // Mostrar mensaje de carrito vacío si no hay productos
                   toggleCarritoVacio(data.total_items);
               } else if (data.error) {
-                  alert(data.error); // Mostrar el error si hay uno
+                  alert(data.error); 
               }
           })
           .catch(error => console.error('Error:', error));
@@ -306,13 +308,11 @@
       const productosContainer = document.querySelector('.row.border-top.border-bottom');
 
       if (totalItems === 0) {
-          // Mostrar mensaje de carrito vacío
           productosContainer.innerHTML = `
               <div class="text-center p-4">
                   <h5 class="text-muted">Tu carrito está vacío.</h5>
               </div>`;
       } else {
-          // Si hay productos, no hacer nada porque ya se manejan dinámicamente
       }
   }
 
@@ -320,7 +320,6 @@
 
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
-        // let searchBoxCancel = document.querySelector(".search-box .bx-x");
         searchBox.addEventListener("click", ()=>{
             navbar.classList.toggle("showInput");
             if(navbar.classList.contains("showInput")){
@@ -329,7 +328,6 @@
             searchBox.classList.replace("bx-x" ,"bx-search");
             }
         });
-        // sidebar open close js code
         let navLinks = document.querySelector(".nav-links");
         let menuOpenBtn = document.querySelector(".navbar .bx-menu");
         let menuCloseBtn = document.querySelector(".nav-links .bx-x");
@@ -339,7 +337,6 @@
         menuCloseBtn.onclick = function() {
         navLinks.style.left = "-100%";
         }
-        // sidebar submenu open close js code
         let htmlcssArrow = document.querySelector(".htmlcss-arrow");
         htmlcssArrow.onclick = function() {
         navLinks.classList.toggle("show1");

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Usuario, Producto, Venta, Reclamo, Opinion
 
 # Edite admin.py para que se reflejen los datos de las tablas en el panel de administracion que ofrece django
-# Las tablas "ItemCarritoProducto" y "Carrito" no aparecen en el panel de admin ya que no tiene mucho sentidon que las pueda ver
+# Las tablas "ItemCarritoProducto" y "Carrito" no aparecen en el panel de admin ya que no tiene mucho sentido que las pueda ver
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ("codigo_de_barra", "nombre", "precio", "stock", "imagen_display", "categoria", "genero")
@@ -19,7 +19,7 @@ class ProductoAdmin(admin.ModelAdmin):
     imagen_display.short_description = 'Imagen Principal'
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display=("nombre", "email", "telefono", "direccion", "ciudad", 'region')
+    list_display=("nombre", "email", "rut" , "telefono", "direccion", "ciudad", 'region')
     search_fields=("nombre", "email", "telefono",)
     list_per_page=20
 
