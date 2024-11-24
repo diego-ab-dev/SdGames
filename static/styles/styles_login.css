@@ -35,7 +35,7 @@ body{
   }
 
   .form-floating {
-    margin-bottom: 2rem; /* Aumenta la separación entre campos */
+    margin-bottom: 2rem; 
   }
 
 .is-invalid {
@@ -46,7 +46,7 @@ body{
 .invalid-feedback {
     color: #dc3545;
     font-size: 0.875em;
-    margin-top: 0.25rem; /* Espacio entre el input y el mensaje */
+    margin-top: 0.25rem; 
     position: relative;
     z-index: 1;
 }
@@ -56,6 +56,6 @@ body{
   right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 3; /* Encima de todo */
+  z-index: 3; 
   display: none;
 }

@@ -70,7 +70,6 @@
                 const passwordInput = document.getElementById('floatingPassword');
                 const errorFeedback = document.querySelector('.invalid-feedback');
             
-                // Manejar el click para mostrar/ocultar contraseña
                 togglePasswordButton.addEventListener('click', function () {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
@@ -83,23 +82,18 @@
                         eyeIcon.classList.add('fa-eye-slash');
                     }
                 });
-            
-                // Detectar escritura en el campo de contraseña
+
                 passwordInput.addEventListener('input', function () {
-                    // Verificar si hay texto en el campo
                     const hasError = errorFeedback && !errorFeedback.classList.contains('d-none');
             
-                    // Mostrar el botón del ojo si hay texto y no hay errores
                     togglePasswordButton.style.display = passwordInput.value ? 'block' : 'none';
             
-                    // Ocultar el mensaje de error si el usuario comienza a escribir nuevamente
                     if (passwordInput.value && hasError) {
-                        errorFeedback.classList.add('d-none'); // Ocultar el mensaje
-                        passwordInput.classList.remove('is-invalid'); // Quitar estilo de error
+                        errorFeedback.classList.add('d-none'); 
+                        passwordInput.classList.remove('is-invalid'); 
                     }
                 });
             
-                // Inicialmente, ocultar el botón del ojo
                 togglePasswordButton.style.display = 'none';
             });
             </script>

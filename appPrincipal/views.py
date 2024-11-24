@@ -236,46 +236,87 @@ def agregar_al_carrito(request, producto_id):
     if not usuario_id:
         return redirect('login') 
 
-    try:
-        usuario = Usuario.objects.get(id=usuario_id)
-    except Usuario.DoesNotExist:
-        raise Http404("Usuario no encontrado") 
+    usuario = get_object_or_404(Usuario, id=usuario_id)
     carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
 
-    try:
-        producto = Producto.objects.get(id=producto_id)
-    except Producto.DoesNotExist:
-        raise Http404("Producto no encontrado")  
+    producto = get_object_or_404(Producto, id=producto_id)
+
+    # Obtener la cantidad enviada desde el formulario (por defecto 1)
+    cantidad = int(request.POST.get('cantidad', 1))
+
+    # Verificar si ya existe el producto en el carrito
     item_carrito, item_created = ItemCarritoProducto.objects.get_or_create(
         carrito=carrito, producto=producto
     )
 
-    if not item_created:
-        item_carrito.cantidad += 1
-        item_carrito.save()
-
+    if item_created:
+        # Si el producto es nuevo en el carrito, establecer la cantidad seleccionada
+        if cantidad <= producto.stock:
+            item_carrito.cantidad = cantidad
+            item_carrito.save()
+        else:
+            messages.error(request, f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}.")
     else:
-        item_carrito.cantidad = 1
-        item_carrito.save()
+        # Si el producto ya está en el carrito, sumar la cantidad seleccionada
+        if item_carrito.cantidad + cantidad <= producto.stock:
+            item_carrito.cantidad += cantidad
+            item_carrito.save()
+        else:
+            messages.error(request, f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}.")
 
-    return redirect('ver_carrito')  
+    return redirect('ver_carrito')
 
 def eliminar_del_carrito(request, item_id):
-    item = get_object_or_404(ItemCarritoProducto, id=item_id)
-    item.delete()
-    return redirect('carrito')
+    if request.method == 'POST':
+        try:
+            item = get_object_or_404(ItemCarritoProducto, id=item_id)
+            carrito = item.carrito
+            item.delete()
+
+            # Recalcular los totales después de eliminar
+            total_items = sum(i.cantidad for i in carrito.items.all())
+            total = carrito.total_carrito()
+
+            return JsonResponse({
+                'success': True,
+                'total_items': total_items,
+                'total': total,
+            })
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 def actualizar_cantidad_carrito(request):
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
-        nueva_cantidad = int(request.POST.get('cantidad'))
+        nueva_cantidad = int(request.POST.get('cantidad', 1))
+
         item = get_object_or_404(ItemCarritoProducto, id=item_id)
+        producto = item.producto
+
+        if nueva_cantidad > producto.stock:
+            return JsonResponse({
+                'success': False,
+                'error': f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}."
+            })
+
         if nueva_cantidad > 0:
             item.cantidad = nueva_cantidad
             item.save()
         else:
             item.delete()
-        return JsonResponse({'success': True, 'total': item.carrito.total_carrito()})
+
+        carrito = item.carrito
+        total_items = sum(i.cantidad for i in carrito.items.all())
+        total = carrito.total_carrito()
+
+        return JsonResponse({
+            'success': True,
+            'total': total,
+            'total_items': total_items,
+        })
+
     return JsonResponse({'success': False})
 
 def ver_carrito(request):
@@ -283,17 +324,16 @@ def ver_carrito(request):
     if not usuario_id:
         return redirect('login')
 
-    try:
-        usuario = Usuario.objects.get(id=usuario_id)
-    except Usuario.DoesNotExist:
-        raise Http404("Usuario no encontrado")
-
+    usuario = get_object_or_404(Usuario, id=usuario_id)
     carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
+
+    total_items = sum(item.cantidad for item in carrito.items.all())
 
     return render(request, 'carrito.html', {
         'carrito': carrito,
-        'productos': carrito.items.all(), 
-        'total': carrito.total_carrito()
+        'productos': carrito.items.all(),
+        'total': carrito.total_carrito(),
+        'total_items': total_items,  # Enviar el total de items al template
     })
 
 def carrito(request):
