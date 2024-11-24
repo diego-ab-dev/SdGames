@@ -7,7 +7,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     contraseña = models.CharField(max_length=100, default='')
-    rut = models.CharField(max_length=12, default='Rut no especificado' , verbose_name="RUT") 
+    rut = models.CharField(max_length=12, unique=True, default='Rut no especificado') 
     telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     direccion = models.CharField(max_length=120, verbose_name="Dirección")
     region = models.CharField(max_length=100, default='Región no especificada')  

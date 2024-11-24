@@ -93,7 +93,6 @@ def logout(request):
 def register(request):
     form = forms.Usuario()
     if request.method == 'POST':
-        print(request.POST)
         form = forms.Usuario(request.POST)
         region_seleccionada = request.POST.get('region')
         ciudades = regiones_ciudades.get(region_seleccionada, [])
@@ -101,6 +100,7 @@ def register(request):
 
         if form.is_valid():
             registro = Usuario(
+                rut=form.cleaned_data['rut'],
                 nombre=form.cleaned_data['nombre'],
                 telefono=form.cleaned_data['telefono'],
                 email=form.cleaned_data['email'],
@@ -117,6 +117,7 @@ def register(request):
             messages.error(request, "Hubo un error en el formulario.")
     data = {'form': form, 'regiones_ciudades': regiones_ciudades}
     return render(request, 'register.html', data)
+
 
 
 def perfil(request):

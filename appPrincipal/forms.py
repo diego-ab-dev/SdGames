@@ -1,5 +1,7 @@
 from django import forms
 from django.core import validators
+from django.core.exceptions import ValidationError
+import re
 
 
 regiones_ciudades = {
@@ -22,6 +24,32 @@ regiones_ciudades = {
 }
 
 class Usuario(forms.Form):
+
+
+    def validar_rut(rut):
+        rut = rut.upper().replace(".", "").replace("-", "")
+        cuerpo = rut[:-1]
+        verificador = rut[-1]
+
+        suma = 0
+        multiplicador = 2
+        for caracter in reversed(cuerpo):
+            suma += int(caracter) * multiplicador
+            multiplicador = 9 if multiplicador == 7 else multiplicador + 1
+
+        resto = suma % 11
+        dv = 11 - resto
+        if dv == 10:
+            dv = 'K'
+        elif dv == 11:
+            dv = '0'
+
+        return str(dv) == verificador
+
+
+
+    rut = forms.CharField(validators=[validar_rut]) 
+        
     nombre = forms.CharField(
         validators=[
             validators.MinLengthValidator(5),

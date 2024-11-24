@@ -26,18 +26,20 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputUsername" name="nombre"
-                                   placeholder="myusername" required autofocus>
-                            <label for="floatingInputUsername">Nombre</label>
+                            <input type="text" class="form-control" id="floatingRut" name="rut" 
+                                   placeholder="12345678-9" 
+                                   pattern="\d{1,8}-[0-9Kk]" 
+                                   maxlength="10" 
+                                   title="Ingrese un RUT en el formato 12345678-9" 
+                                   required autofocus>
+                            <label for="floatingRut">RUT</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputRut" name="rut"
-                                   placeholder="22.222.222-2" required autofocus>
-                            <label for="floatingInputRut">Rut</label>
+                            <input type="text" class="form-control" id="floatingInputUsername" name="nombre"
+                                   placeholder="myusername" required>
+                            <label for="floatingInputUsername">Nombre</label>
                         </div>
-
-
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="floatingInputEmail" name="email"
                                    placeholder="name@example.com">
