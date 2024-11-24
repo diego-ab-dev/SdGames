@@ -28,7 +28,7 @@
             <i class='bx bx-x' ></i>
           </div>
           <ul class="links">
-            <li><a href="/home">Home</a></li>
+            <li><a href="/menu">Productos</a></li>
             <li>
               <a href="#">Videojuegos</a>
               <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
@@ -175,8 +175,8 @@
                           <div class="col">
                               <h4><b>Carrito de Compras</b></h4>
                           </div>
-                          <div class="col align-self-center text-right text-muted total-items">
-                              {{ total_items }} items
+                          <div class="col align-self-center text-right text-muted">
+                            <span class="total-items">{{ total_items }}</span> items
                           </div>
                       </div>
                   </div>
@@ -222,7 +222,9 @@
                   <div><h5><b>Resumen</b></h5></div>
                   <hr>
                   <div class="row">
-                      <div class="col" style="padding-left:0;">ITEMS <span class="total-items">{{ total_items }}</span></div>
+                    <div class="col" style="padding-left:0;">
+                      <span class="total-items">{{ total_items }}</span> items
+                    </div>
                       <div class="col text-right" id="total">${{ total|formato_chileno }}</div>
                   </div>
                   <button>
@@ -256,7 +258,7 @@
 
                   // Actualizar todas las referencias de total de items
                   document.querySelectorAll('.total-items').forEach(el => {
-                      el.innerText = `${data.total_items} items`;
+                      el.innerText = data.total_items; // Solo el número
                   });
 
                   // Mostrar mensaje de carrito vacío si no hay productos
