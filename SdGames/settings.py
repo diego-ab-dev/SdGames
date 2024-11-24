@@ -133,3 +133,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# mercado pago
+MERCADO_PAGO_ACCESS_TOKEN = "APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885"
+MERCADO_PAGO_PUBLIC_KEY = "APP_USR-988393a0-619d-4dab-99ea-fdfa6cc75ac1"

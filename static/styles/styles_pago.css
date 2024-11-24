@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;    /* Centrado vertical */
+    height: 100vh;          /* Altura del viewport */
+    margin: 0;         
+    background-color: #d7ccc8;
+}
+
+form-control:focus,
+.form-select:focus {
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #7700ff;
+}
+
+.border:focus-within {
+    border: 1px solid #7700ff !important;
+}
+
+.box-2 .card-atm .form-control {
+    border: none;
+    box-shadow: none;
+}
+
+.form-select {
+    border-radius: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+}
+
+.address .form-control.zip {
+    border-radius: 0;
+    border-bottom-left-radius: 10px;
+
+}
+
+.address .form-control.state {
+    border-radius: 0;
+    border-bottom-right-radius: 10px;
+
+}

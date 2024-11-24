@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, metodo_pago
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, detalles_compra, pago, pago_exitoso, pago_fallido, pago_pendiente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,7 +42,11 @@ urlpatterns = [
     path('actualizar-cantidad/', actualizar_cantidad_carrito, name='actualizar_cantidad_carrito'),
     path('favorites/', lista_favoritos),
     path('obtener_ciudades/', obtener_ciudades, name='obtener_ciudades'),
-    path('metodo-pago/', metodo_pago, name='metodo_pago'),
+    path('detalles_compra/', detalles_compra, name='detalles_compra'),
+    path('pago/', pago, name='pago'),
+    path('pago-exitoso/', pago_exitoso, name='pago_exitoso'),
+    path('pago-fallido/', pago_fallido, name='pago_fallido'),
+    path('pago-pendiente/', pago_pendiente, name='pago_pendiente'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion

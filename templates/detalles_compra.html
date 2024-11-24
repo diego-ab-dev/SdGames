@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
-    <link rel="stylesheet" href="{% static 'styles/styles_metodo_pago.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/styles_detalles_compra.css' %}">
 </head>
 <body>
     <div class="container">
@@ -32,12 +32,17 @@
                             <p>${{ total|formato_chileno }}</p>
                         </div>
                         <div class="mt-3">
-                            <label for="metodo-envio" class="form-label">Método de envío</label>
-                            <select id="metodo-envio" class="form-select">
-                                <option value="principal" selected>Selecciona un método de envío</option>
-                                <option value="domicilio">Envío a domicilio</option>
-                                <option value="tienda">Retiro en tienda</option>
-                            </select>
+                            <form method="POST" action="{% url 'detalles_compra' %}">
+                                {% csrf_token %}
+                                <div class="mt-3">
+                                    <label for="metodo-envio" class="form-label">Método de envío</label>
+                                    <select id="metodo-envio" name="metodo_envio" class="form-select" required>
+                                        <option value="domicilio">Envío a domicilio</option>
+                                        <option value="tienda">Retiro en tienda</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3">Confirmar Pedido</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -87,29 +92,6 @@
                         <button type="button" id="cancel-button" class="btn btn-secondary">Cancelar</button>
                     </form>
                 </div>
-                <form class="mt-4">
-                    <div class="mb-3">
-                        <label class="fw-bold">Detalles de la Tarjeta</label>
-                        <div class="d-flex card-atm border rounded">
-                            <input type="text" class="form-control" placeholder="Número de Tarjeta">
-                            <input type="text" class="form-control w-25" placeholder="MM/YY">
-                            <input type="password" class="form-control w-25" maxlength="3" placeholder="CVV">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Nombre del Titular</label>
-                        <input type="text" class="form-control" placeholder="Nombre completo">
-                    </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Dirección de Facturación</label>
-                        <select class="form-select mb-2">
-                            <option selected hidden>Seleccione un país</option>
-                            <option>Chile</option>
-                            <option>Argentina</option>
-                            <option>Perú</option>
-                        </select>
-                        <input type="text" class="form-control" placeholder="Código Postal">
-                    </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <p>Subtotal</p>
                         <p>${{ total|formato_chileno }}</p>
@@ -123,7 +105,10 @@
                         <p>Total</p>
                         <p class="total-costo">$-</p>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-3">Pagar</button>
+                    <form action="{% url 'pago' %}" method="get">
+                        <input type="hidden" name="total" value="{{ total }}">
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Ir a Métodos de Pago</button>
+                    </form>                    
                 </form>
             </div>
         </div>

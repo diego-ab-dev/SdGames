@@ -123,7 +123,6 @@ class Carrito(models.Model):
         pass
 
     def total_carrito(self):
-    # Sumar los totales verificando cantidades y precios válidos
         return sum(
             (item.producto.precio or 0) * max(item.cantidad, 0) for item in self.items.all()
         )
@@ -134,17 +133,26 @@ class ItemCarritoProducto(models.Model):
     cantidad = models.PositiveIntegerField(default=1) 
 
 class Venta(models.Model):
+    ESTADO_CHOICES = [
+        ('Pendiente', 'Pendiente'),
+        ('Pagado', 'Pagado'),
+        ('Fallido', 'Fallido'),
+    ]
+    ENVIO_CHOICES = [
+        ('domicilio', 'Envío a domicilio'),
+        ('tienda', 'Retiro en tienda'),
+    ]
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas', default='')
+    productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas')
     total = models.PositiveIntegerField(default=0)
-    estado = models.CharField(max_length=20, default='Pendiente') 
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente')
     fecha = models.DateTimeField(auto_now_add=True)
-    carrito = models.OneToOneField(Carrito, on_delete=models.CASCADE)
+    metodo_envio = models.CharField(max_length=10, choices=ENVIO_CHOICES, default='')
+    direccion_envio = models.TextField(blank=True, null=True)
 
     def calcular_total(self):
-        self.total = sum(item.subtotal() for item in self.carrito.items.all())
+        self.total = sum(item.producto.precio * item.cantidad for item in self.productos.all())
         self.save()
-
-    def genera_boleta(self):
-        pass
 
 class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")
