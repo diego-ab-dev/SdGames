@@ -134,25 +134,27 @@ class ItemCarritoProducto(models.Model):
 
 class Venta(models.Model):
     ESTADO_CHOICES = [
-        ('Pendiente', 'Pendiente'),
-        ('Pagado', 'Pagado'),
-        ('Fallido', 'Fallido'),
+        ('Sin Enviar', 'Sin Enviar'),
+        ('Enviado', 'Enviado'),
     ]
     ENVIO_CHOICES = [
         ('domicilio', 'Envío a domicilio'),
         ('tienda', 'Retiro en tienda'),
     ]
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas', default='')
-    productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas')
+    productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas', verbose_name='Productos')
     total = models.PositiveIntegerField(default=0)
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente')
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Sin Enviar')
     fecha = models.DateTimeField(auto_now_add=True)
     metodo_envio = models.CharField(max_length=10, choices=ENVIO_CHOICES, default='')
     direccion_envio = models.TextField(blank=True, null=True)
 
     def calcular_total(self):
-        self.total = sum(item.producto.precio * item.cantidad for item in self.productos.all())
+        self.total = sum(
+            item.producto.precio * item.cantidad for item in self.productos.all()
+        )
         self.save()
+
 
 class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")

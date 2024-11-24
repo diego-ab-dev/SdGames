@@ -382,6 +382,13 @@ def pago(request):
             metodo = data.get('metodo_pago')
             total = data.get('total')
 
+            usuario_id = request.session.get('usuario_id')
+            if not usuario_id:
+                return JsonResponse({'error': 'Usuario no autenticado'}, status=403)
+
+            usuario = get_object_or_404(Usuario, id=usuario_id)
+            carrito = get_object_or_404(Carrito, usuario=usuario, estado='E')  # Obtener el carrito activo
+
             if metodo == 'mercado_pago':
                 sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
                 preference_data = {
@@ -399,6 +406,7 @@ def pago(request):
                         "pending": request.build_absolute_uri('/pago-pendiente/')
                     },
                     "auto_return": "approved",
+                    "external_reference": str(carrito.id)  # Usar carrito.id como referencia única
                 }
 
                 preference_response = sdk.preference().create(preference_data)
@@ -428,9 +436,12 @@ def mercado_pago_webhook(request):
 
             if payment['status'] == 200:
                 status = payment['response']['status']
-                carrito_id = payment['response']['external_reference']
+                external_reference = payment['response']['external_reference']
 
-                venta = Venta.objects.get(carrito__id=carrito_id)
+                # Buscar la venta asociada
+                venta = Venta.objects.get(carrito__id=external_reference)
+
+                # Actualizar el estado de la venta según el pago
                 if status == 'approved':
                     venta.estado = 'Pagado'
                 elif status == 'in_process':
@@ -447,9 +458,11 @@ def mercado_pago_webhook(request):
 
 
 
-def pago_exitoso(request):
-    return render(request, 'pago_exitoso.html', {'mensaje': '¡Tu pago ha sido exitoso! Gracias por tu compra.'})
 
+def pago_exitoso(request):
+    venta_id = request.GET.get('venta_id') 
+    venta = get_object_or_404(Venta, id=venta_id)
+    return render(request, 'pago_exitoso.html', {'venta': venta})
 def pago_fallido(request):
     return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
 

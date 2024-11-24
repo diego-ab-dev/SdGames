@@ -24,8 +24,9 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_per_page=20
 
 class VentaAdmin(admin.ModelAdmin):
-    list_display=("total", "estado", "fecha")
+    list_display=("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
     list_filter=("estado", "fecha",)
+    list_editable = ("estado",)
     date_hierarchy="fecha"
     list_per_page=20
 
