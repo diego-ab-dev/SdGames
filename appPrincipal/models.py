@@ -112,11 +112,6 @@ class Producto(models.Model):
         return round(sum(opinion.puntuacion for opinion in opiniones) / len(opiniones), 1)
 
 class Carrito(models.Model):
-    TIPO_CHOICES = [
-        ('E', 'En Proceso'),
-        ('C', 'Completado'),
-    ]
-    estado = models.CharField(max_length=1, choices=TIPO_CHOICES, null=True, blank=True, default='E')
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='carritos')
 
     def genera_venta(self):
@@ -141,6 +136,7 @@ class Venta(models.Model):
         ('domicilio', 'Envío a domicilio'),
         ('tienda', 'Retiro en tienda'),
     ]
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, null=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas', default='')
     productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas', verbose_name='Productos')
     total = models.PositiveIntegerField(default=0)

@@ -3,7 +3,7 @@ from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import Avg
 from django.contrib.auth.hashers import make_password, check_password
 from django.conf import settings
@@ -241,7 +241,7 @@ def agregar_al_carrito(request, producto_id):
         return redirect('login') 
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
+    carrito, created = Carrito.objects.get_or_create(usuario=usuario)
 
     producto = get_object_or_404(Producto, id=producto_id)
 
@@ -324,7 +324,7 @@ def ver_carrito(request):
         return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito, created = Carrito.objects.get_or_create(usuario=usuario, estado='E')
+    carrito, created = Carrito.objects.get_or_create(usuario=usuario)
 
     total_items = sum(item.cantidad for item in carrito.items.all())
 
@@ -348,7 +348,7 @@ def detalles_compra(request):
         return redirect('login') 
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito = get_object_or_404(Carrito, usuario=usuario, estado='E')
+    carrito = get_object_or_404(Carrito, usuario=usuario)
 
     if request.method == 'POST':
         metodo_envio = request.POST.get('metodo_envio')
@@ -358,12 +358,12 @@ def detalles_compra(request):
             usuario=usuario,
             metodo_envio=metodo_envio,
             direccion_envio=direccion_envio,
-            estado='Pendiente'
+            estado='Pendiente',
+            carrito=carrito
         )
         venta.productos.set(carrito.items.all())
         venta.calcular_total()
 
-        carrito.estado = 'C'
         carrito.save()
 
         return redirect('pago') 
@@ -387,7 +387,7 @@ def pago(request):
                 return JsonResponse({'error': 'Usuario no autenticado'}, status=403)
 
             usuario = get_object_or_404(Usuario, id=usuario_id)
-            carrito = get_object_or_404(Carrito, usuario=usuario, estado='E')  # Obtener el carrito activo
+            carrito = get_object_or_404(Carrito, usuario=usuario)  # Obtener el carrito activo
 
             if metodo == 'mercado_pago':
                 sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
@@ -460,9 +460,8 @@ def mercado_pago_webhook(request):
 
 
 def pago_exitoso(request):
-    venta_id = request.GET.get('venta_id') 
-    venta = get_object_or_404(Venta, id=venta_id)
-    return render(request, 'pago_exitoso.html', {'venta': venta})
+    return render(request, 'pago_exitoso.html')
+    
 def pago_fallido(request):
     return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
 
