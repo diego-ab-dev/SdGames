@@ -189,7 +189,7 @@
                                   <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" onchange="actualizarCantidad('{{ item.id }}')">
                               </form>
                           </div>
-                          <div class="col">$ {{ item.producto.precio|floatformat:2 }}</div>
+                          <div class="col">$ {{ item.producto.precio|floatformat:0 }}</div>
                           <a href="{% url 'eliminar_del_carrito' item.id %}"><span class="close">&#10005;</span></a>
                       </div>
                       {% endfor %}
@@ -201,17 +201,13 @@
                   <hr>
                   <div class="row">
                       <div class="col" style="padding-left:0;">ITEMS 3</div>
-                      <div class="col text-right">&euro; 132.00</div>
+                      <div class="col text-right">${{ total|floatformat:0 }}</div>
                   </div>
-                  <form>
-                      <p>Envío</p>
-                      <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
-                  </form>
-                  <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                      <div class="col">Total:</div>
-                      <p>$<span id="total">{{ total|floatformat:2 }}</span></p>
-                  </div>
-                  <button class="btn">Proceder a la compra</button>
+                  <button>
+                    <span class="transition"></span>
+                    <span class="gradient"></span>
+                    <span class="label">Proceder a la compra</span>
+                  </button>                  
               </div>
           </div>
       </div>

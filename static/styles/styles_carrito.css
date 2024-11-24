@@ -665,26 +665,63 @@ input {
 input:focus::-webkit-input-placeholder {
   color: transparent;
 }
-.btn {
-  background-color: #000;
-  border-color: #000;
+
+/* From Uiverse.io by cssbuttons-io */ 
+button {
+  font-size: 14px;
+  padding: 1em 2.7em;
+  font-weight: 400;
+  background: #2c2e33;
   color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6em;
+  cursor: pointer;
+}
+
+.gradient {
+  position: absolute;
   width: 100%;
-  font-size: 0.7rem;
-  margin-top: 4vh;
-  padding: 1vh;
-  border-radius: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 0.6em;
+  margin-top: -0.25em;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.3)
+  );
 }
-.btn:focus {
-  box-shadow: none;
-  outline: none;
-  box-shadow: none;
-  color: white;
-  transition: none;
+
+.label {
+  position: relative;
+  top: -1px;
 }
-.btn:hover {
-  color: white;
+
+.transition {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background-color: #d7ccc8;
+  border-radius: 9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
+
+button:hover .transition {
+  width: 14em;
+  height: 14em;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
 a {
   color: black;
 }

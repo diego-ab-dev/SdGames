@@ -832,6 +832,7 @@ a:hover {
 
 .section-products .single-product {
   margin-bottom: 26px;
+  padding: 15px; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -975,6 +976,13 @@ a:hover {
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
 }
 
+
+.section-products .row.g-3 {
+  display: grid;
+  gap: 20px; /* Espaciado entre tarjetas */
+  grid-template-columns: repeat(4, 1fr); /* Cuatro columnas en pantallas grandes */
+}
+
 .btn-detalles {
   display: flex;
   justify-content: center;
@@ -995,6 +1003,30 @@ a:hover {
 }
 
 
+/* Contenedor principal para los productos */
+.section-products .row.g-3 {
+  display: grid;
+  gap: 20px; /* Espaciado entre tarjetas */
+  grid-template-columns: repeat(4, 1fr); /* Cuatro columnas en pantallas grandes */
+}
+
+/* Ajuste para dispositivos medianos */
+@media (max-width: 768px) {
+  .section-products .row.g-3 {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas medianas */
+  }
+}
+
+/* Ajuste para dispositivos pequeños */
+@media (max-width: 576px) {
+  .section-products .row.g-3 {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas pequeñas */
+    gap: 15px; /* Reduce el espaciado para pantallas más pequeñas */
+  }
+}
+
+
+
 @keyframes anim-fade-in { from { opacity: 0; } to { opacity: 1 } }		
 
 @keyframes anim-down { 
@@ -1013,6 +1045,71 @@ a:hover {
 .paused * { 
 	animation-play-state: paused;
 }
+
+
+.go-top-container {
+  position: fixed;
+  bottom: 4rem;
+  right: 4rem;
+  width: 4.6rem;
+  height: 4.6rem;
+  z-index: -1;
+}
+
+.go-top-button {
+  width: 0rem;
+  height: 0rem;
+  background: #5a5d64;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.go-top-button img {
+  position: absolute;
+  font-size: 1rem;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  color: #fff;
+  transition: 0.2s;
+}
+
+.show {
+  z-index: 10;
+}
+
+.show .go-top-button {
+  animation: popup 0.3s ease-in-out;
+  width: 4.6rem;
+  height: 4.6rem;
+  z-index: 11;
+}
+
+.show img {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes popup {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  50% {
+    width: 4rem;
+    height: 4rem;
+  }
+  100% {
+    width: 4.6rem;
+    height: 4.6rem;
+  }
+}
+
 
 footer{
   background-color: #2c2e33;

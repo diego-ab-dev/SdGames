@@ -21,18 +21,19 @@ def productos_menu(request):
         return render(request, 'resultado_busqueda.html', {'productos': productos, 'query':query})
     else:
         productos = Producto.objects.all() 
-        return render(request, 'productosmenu.html', {'productos': productos})
+        productos_recientes = Producto.objects.order_by('-id')[:10]  # Los 10 más recientes
+        return render(request, 'productosmenu.html', {
+            'productos': productos,
+            'productos_recientes': productos_recientes,
+        })
     
 def productos_por_categoria(request, categoria):
-    # Obtener todos los productos de la categoría
     productos = Producto.objects.filter(categoria=categoria)
     
-    # Filtrar por género
     genero = request.GET.get('genero')
     if genero:
         productos = productos.filter(genero=genero)
     
-    # Filtrar por rango de precio
     precio_min = request.GET.get('precio_min')
     precio_max = request.GET.get('precio_max')
     if precio_min and precio_max:
@@ -41,7 +42,7 @@ def productos_por_categoria(request, categoria):
     context = {
         'categoria': dict(Producto.CATEGORIAS).get(categoria, categoria),
         'productos': productos,
-        'generos': Producto.GENEROS,  # Para mostrar los géneros en la barra lateral
+        'generos': Producto.GENEROS,  
     }
     return render(request, 'productos_por_categoria.html', context)
 
@@ -58,22 +59,31 @@ def home(request):
 
 
 def login(request):
+    errors = {}  
     if request.method == 'POST':
-        email = request.POST.get('email')
-        contraseña = request.POST.get('contraseña')
-        
-        try:
-            usuario = Usuario.objects.get(email=email)
-            if check_password(contraseña, usuario.contraseña):  
-                request.session['usuario_id'] = usuario.id
-                messages.success(request, f"Bienvenido/a {usuario.nombre}")
-                return redirect('home')
-            else:
-                messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
-        except Usuario.DoesNotExist:
-            messages.error(request, "Credenciales incorrectas. Intente nuevamente.")
-    
-    return render(request, 'login.html')
+        email = request.POST.get('email', '').strip()
+        contraseña = request.POST.get('contraseña', '').strip()
+
+        if not email:
+            errors['email'] = "Por favor, ingresa tu correo electrónico."
+        if not contraseña:
+            errors['contraseña'] = "Por favor, ingresa tu contraseña."
+
+        if not errors:
+            try:
+                usuario = Usuario.objects.get(email=email)
+                if check_password(contraseña, usuario.contraseña):  
+                    request.session['usuario_id'] = usuario.id
+                    return redirect('home')
+                else:
+                    errors['contraseña'] = "Contraseña incorrecta."
+            except Usuario.DoesNotExist:
+                errors['email'] = "Correo electrónico no registrado."
+
+    return render(request, 'login.html', {'errors': errors})
+
+
+
 
 def logout(request):
     request.session.flush()  

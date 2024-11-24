@@ -1,172 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pago - Tienda de Videojuegos</title>
+    <title>Pago - Sd Games</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        /* General styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header styles */
-        header {
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-
-        /* Flexbox layout for form and cart summary */
-        .form-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        /* Form styles */
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 70%;
-        }
-
-        form .form-group {
-            margin-bottom: 15px;
-        }
-
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        form input[type="text"],
-        form input[type="number"],
-        form input[type="date"],
-        form select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        form input[type="submit"] {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        /* Cart summary styles */
-        .cart-summary {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 28%;
-        }
-
-        .cart-summary h3 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-items .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-items .item:last-child {
-            border-bottom: none;
-        }
-
-        .cart-summary .total {
-            font-weight: bold;
-            font-size: 1.2em;
-            text-align: center;
-        }
-
-        /* Error messages */
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-        }
-
-        .success-message {
-            color: green;
-            font-size: 1.1em;
-        }
-
-        /* Payment method styles */
-        .payment-methods {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .payment-methods label {
-            margin-right: 10px;
-        }
-
-        .payment-methods input[type="radio"] {
-            margin-right: 5px;
-        }
-
-        /* Delivery method styles */
-        .delivery-method {
-            margin-top: 20px;
-        }
-
-        .delivery-method label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .delivery-method select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
+    <link rel="stylesheet" href="{% static 'styles/styles_metodo_pago.css' %}">
 </head>
-
 <body>
     <div class="container mt-5">
         <header>

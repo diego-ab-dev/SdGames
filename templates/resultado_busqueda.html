@@ -1,167 +1,304 @@
 <!DOCTYPE html>
 {% load static %}
+{% load humanize %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_busqueda.css' %}">
     <title>Document</title>
 </head>
 <body>
     <!--Nav de la web-->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c2e33;">
-    <div class="container">
-        <!-- Logo -->
-        <a class="navbar-brand" href="/home">
-            <strong>SD Games</strong>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/menu">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#nosotros">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#local">Local</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/#redes">Redes</a>
-                </li>
-            </ul>
-
-            <!-- Botones de Iniciar Sesión y Registrarse -->
-            <div class="d-flex" style="gap: 20px;">
+    <nav>
+      <div class="navbar">
+        <i class='bx bx-menu'></i>
+        <div class="logo"><a href="/home">SD Games</a></div>
+        <div class="nav-links">
+          <div class="sidebar-logo">
+            <span class="logo-name">SD Games</span>
+            <i class='bx bx-x' ></i>
+          </div>
+          <ul class="links">
+            <li><a href="/home">HOME</a></li>
+            <li>
+              <a href="#">VIDEOJUEGOS</a>
+              <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+              <ul class="htmlCss-sub-menu sub-menu">
+                <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos PS3' %}">PlayStation 3</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos PS4' %}">PlayStation 4</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos PS5' %}">PlayStation 5</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos XBOX 360' %}">XBOX 360</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos XBOX ONE' %}">XBOX ONE</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos XBOX SERIES' %}">XBOX SERIES</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos Nintendo 3DS' %}">3DS</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos WII' %}">WII</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos WII U' %}">WII U</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos Nintendo SWITCH' %}">SWITCH</a></li>
+                <li><span class="dropdown-header text-white text-start">PC</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Videojuegos para PC' %}">Videojuegos PC</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">CONSOLAS</a>
+              <i class='bx bxs-chevron-down js-arrow arrow '></i>
+              <ul class="js-sub-menu sub-menu">
+                <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Ps4 Consolas' %}">PLAYSTATION 4</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Ps5 Consolas' %}">PLAYSTATION 5</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Xbox One Consolas' %}">XBOX ONE</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Xbox Series Consolas' %}">XBOX SERIES</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Wii U Consolas' %}">WII U</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Switch Consolas' %}">SWITCH</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">ACCESORIOS</a>
+              <i class='bx bxs-chevron-down js-arrow arrow '></i>
+              <ul class="js-sub-menu sub-menu">
+                <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios Psp' %}">PSP</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios Ps Vita' %}">VITA</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios PS1' %}">PLAY STATION 1</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios PS2' %}">PLAY STATION 2</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios PS3' %}">PLAY STATION 3</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios PS4' %}">PLAY STATION 4</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios PS5' %}">PLAY STATION 5</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios XBOX 360' %}">XBOX 360</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios XBOX ONE' %}">XBOX ONE</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios XBOX SERIES' %}">XBOX SERIES</a></li>
+                <hr>
+                <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios Nintendo 3DS' %}">3DS</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios WII U' %}">WII U</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Accesorios Nintendo SWITCH' %}">SWITCH</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">FIGURAS</a>
+              <i class='bx bxs-chevron-down js-arrow arrow '></i>
+              <ul class="js-sub-menu sub-menu">
+                <li><span class="dropdown-header text-white text-start">Figuras Coleccionables</span></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Figuras Funko' %}">FUNKO POP</a></li>
+                <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Figuras Amiibo' %}">AMIIBO</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="sidebar-login">
+            <button onclick="window.location.href='/login'">
+              Iniciar Sesión
+              <div class="arrow-wrapper">
+                  <div class="arrow"></div>
+              </div>
+          </button>
+          </div>
+  
+        </div>
+  
+          <div class="d-flex login-desktop">
+            {% if usuario %}
+              <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
+              <div class="menu">
+                <div class="item">
+                  <a href="/perfil" class="link">
+                    <span> Mi Perfil </span>
+                    <svg viewBox="0 0 360 360" xml:space="preserve">
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          id="XMLID_225_"
+                          d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </a>
+                  <div class="submenu">
+                    <div class="submenu-item">
+                      <a href="/logout" class="submenu-link">Cerrar Sesión</a>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+            {% else %}
+              <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
               <button onclick="window.location.href='/login'">
                 Iniciar Sesión
                 <div class="arrow-wrapper">
                     <div class="arrow"></div>
                 </div>
-            </button>
-                <button onclick="window.location.href='/register'">
-                  Registrarse
-                </button>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<nav class="navbar navbar-light py-2 fixed-top">
-  <div class="container d-flex justify-content-between">
-        <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search" style="width: 50%;">
-          <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search" id="name" name="buscar">
-          <button class="btn" type="submit">Buscar</button>
-        </form>
-        
-      <div class="icons d-flex gap-3">
-          <a href="/favoritos" style="color: #9c9592;">
+              </button>
+            {% endif %}
+          </div>    
+        <div class="icons d-flex gap-3">
+          <a href="/favorites" style="color: #9c9592;">
               <i class="fas fa-heart"></i>
           </a>
-          <a href="/carrito" style="color: #9c9592;">
+          <a href="{% url 'ver_carrito' %}" style="color: #9c9592;">
               <i class="fas fa-shopping-cart"></i>
           </a>
       </div>
-  </div>
-</nav>
+        <div class="search-box">
+          <i class='bx bx-search'></i>
+          <div class="input-box">
+            <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search" style="width: 50%;">
+              <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search" id="name" name="buscar">
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
 
 
-<div class="row">
-  <div class="col-md-3">
-      <form method="GET" action="{% url 'productos_menu' %}">
-          <h5>Filtrar por:</h5>
-          <label for="categoria">Categoría</label>
-          <select name="categoria" id="categoria" class="form-control">
-              <option value="">Todas</option>
-              {% for categoria, nombre in Producto.CATEGORIAS %}
-              <option value="{{ categoria }}" {% if categoria == request.GET.categoria %}selected{% endif %}>
-                  {{ nombre }}
-              </option>
-              {% endfor %}
-          </select>
-          
-          <label for="genero">Género</label>
-          <select name="genero" id="genero" class="form-control">
-              <option value="">Todos</option>
-              {% for clave, nombre in Producto.GENEROS %}
-              <option value="{{ clave }}" {% if clave == request.GET.genero %}selected{% endif %}>
-                  {{ nombre }}
-              </option>
-              {% endfor %}
-          </select>
-
-          <label for="precio_min">Precio Mínimo</label>
-          <input type="number" name="precio_min" id="precio_min" class="form-control" value="{{ request.GET.precio_min }}">
-
-          <label for="precio_max">Precio Máximo</label>
-          <input type="number" name="precio_max" id="precio_max" class="form-control" value="{{ request.GET.precio_max }}">
-
-          <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
-      </form>
-  </div>
-
-    <div class="col-md-9">
-        <section class="section-products">
+          <section class="section-products">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-8 col-lg-6">
                         <div class="header">
-                            <h2>Resultados para "{{ query }}"</h2>
+                            <h2 class="anim-down display-6 fw-bold fst-italic text-center">Resultados para "{{ query }}"</h2>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <!-- Single Product -->
-                    {% if productos %}
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div id="product-4" class="single-product" style="background-color: white; border-radius: 20px; padding: 20px;">
+                    <!-- Barra lateral de filtros -->
+                    <div class="col-md-3">
+                        <div class="filtros">
+                            <h4 class="fw-bold">Filtrar</h4>
+                            <form method="get">
+                                <!-- Filtrar por género -->
+                                <div class="mb-3">
+                                    <label for="genero" class="form-label">Género</label>
+                                    <select name="genero" id="genero" class="form-select">
+                                        <option value="">Todos</option>
+                                        {% for key, value in generos %}
+                                            <option value="{{ key }}" {% if request.GET.genero == key %}selected{% endif %}>
+                                                {{ value }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- Filtrar por rango de precios -->
+                                <div class="mb-3">
+                                    <label for="precio_min" class="form-label">Precio Mínimo</label>
+                                    <input type="number" name="precio_min" id="precio_min" class="form-control" placeholder="Ej: 9990" value="{{ request.GET.precio_min }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precio_max" class="form-label">Precio Máximo</label>
+                                    <input type="number" name="precio_max" id="precio_max" class="form-control" placeholder="Ej: 12990" value="{{ request.GET.precio_max }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
+                            </form>
+                        </div>
+                    </div>
+        
+                    <!-- Productos -->
+                    <div class="col-md-9">
+                        <div class="row">
                             {% for producto in productos %}
-                            <div class="part-1">
-                                <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                                <span class="new">Tendencia</span>
-                                <ul>
-                                    <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                    <li><a href="{% url 'producto_detalle' producto.id %}"><i class="fas fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="part-2">
-                                <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
-                                <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio }}</h4>
-                            </div>
-                            <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
+                                <div class="col-md-6 col-lg-4 col-xl-3">
+                                    <div id="product-4" class="single-product" style="background-color: white; border-radius: 20px; padding: 20px;">
+                                        <div class="part-1">
+                                            <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                                            <span class="new">Tendencia</span>
+                                            <ul>
+                                                <li>
+                                                    <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}" style="display: inline;">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="cantidad" value="1">
+                                                        <button type="submit" class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
+                                                    </form>
+                                                </li>
+                                                <li>
+                                                    <button type="submit" class="btn-icon"><i class="fas fa-heart"></i></button>
+                                                </li>
+                                                <li>
+                                                    <form method="POST" action="{% url 'producto_detalle' producto.id %}" style="display: inline;">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="cantidad" value="1">
+                                                        <button type="submit" class="btn-icon"><i class="fas fa-expand"></i></button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="part-2">
+                                            <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
+                                            <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|intcomma }}</h4>
+                                        </div>
+                                        <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p>No hay productos disponibles en este momento.</p>
                             {% endfor %}
                         </div>
                     </div>
-                    {% else %}
-                        <p>No se encontraron productos para "{{ query }}"</p>
-                    {% endif %}
                 </div>
             </div>
-          </section>
-        </div>
-          <a href="{% url 'productos_menu' %}">Volver a todos los productos</a>
+        </section>
 
 
 
-            <!--footer-->
+        <script>
+          let navbar = document.querySelector(".navbar");
+          let searchBox = document.querySelector(".search-box .bx-search");
+          // let searchBoxCancel = document.querySelector(".search-box .bx-x");
+          searchBox.addEventListener("click", ()=>{
+              navbar.classList.toggle("showInput");
+              if(navbar.classList.contains("showInput")){
+              searchBox.classList.replace("bx-search" ,"bx-x");
+              }else {
+              searchBox.classList.replace("bx-x" ,"bx-search");
+              }
+          });
+          // sidebar open close js code
+          let navLinks = document.querySelector(".nav-links");
+          let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+          let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+          menuOpenBtn.onclick = function() {
+          navLinks.style.left = "0";
+          }
+          menuCloseBtn.onclick = function() {
+          navLinks.style.left = "-100%";
+          }
+          // sidebar submenu open close js code
+          let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+          htmlcssArrow.onclick = function() {
+          navLinks.classList.toggle("show1");
+          }
+          let moreArrow = document.querySelector(".more-arrow");
+          moreArrow.onclick = function() {
+          navLinks.classList.toggle("show2");
+          }
+          let jsArrow = document.querySelector(".js-arrow");
+          jsArrow.onclick = function() {
+          navLinks.classList.toggle("show3");
+          }
+      </script>
+
+
+<!--footer-->
   <footer class="text-center text-lg-start text-light">
     <section class="">
       <div class="container text-center text-md-start mt-5">

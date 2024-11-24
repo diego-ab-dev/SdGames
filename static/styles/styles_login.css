@@ -33,3 +33,29 @@ body{
     letter-spacing: 0.05rem;
     padding: 0.75rem 1rem;
   }
+
+  .form-floating {
+    margin-bottom: 2rem; /* Aumenta la separación entre campos */
+  }
+
+.is-invalid {
+    border-color: #dc3545; 
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem; /* Espacio entre el input y el mensaje */
+    position: relative;
+    z-index: 1;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3; /* Encima de todo */
+  display: none;
+}
