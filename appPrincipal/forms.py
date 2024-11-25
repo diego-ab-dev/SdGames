@@ -91,5 +91,10 @@ class Usuario(forms.Form):
             raise forms.ValidationError(f'La ciudad {ciudad} no es válida para la región seleccionada.')
         return ciudad
 
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label="Correo Electrónico", max_length=254, widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Ingresa tu correo electrónico',
+    }))
 
 
