@@ -423,7 +423,7 @@ def pago(request):
                 preference_data = {
                     "items": [
                         {
-                            "title": "Compra en MiTienda",
+                            "title": "Compra en SD Games",
                             "quantity": 1,
                             "currency_id": "CLP",
                             "unit_price": float(total)
@@ -473,6 +473,13 @@ def mercado_pago_webhook(request):
                 # Actualizar el estado de la venta según el pago
                 if status == 'approved':
                     venta.estado = 'Pagado'
+                    for item in venta.carrito.items.all():
+                        producto = item.producto
+                        producto.stock -= item.cantidad
+                        producto.save()
+                    # Limpiar el carrito
+                    venta.carrito.items.all().delete()
+                    venta.carrito.save()
                 elif status == 'in_process':
                     venta.estado = 'Pendiente'
                 else:
@@ -486,11 +493,9 @@ def mercado_pago_webhook(request):
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
-
-
 def pago_exitoso(request):
     return render(request, 'pago_exitoso.html')
-    
+
 def pago_fallido(request):
     return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
 
