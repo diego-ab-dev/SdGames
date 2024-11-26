@@ -32,17 +32,15 @@
                             <p>${{ total|formato_chileno }}</p>
                         </div>
                         <div class="mt-3">
-                            <form method="POST" action="{% url 'detalles_compra' %}">
-                                {% csrf_token %}
-                                <div class="mt-3">
-                                    <label for="metodo-envio" class="form-label">Método de envío</label>
-                                    <select id="metodo-envio" name="metodo_envio" class="form-select" required>
-                                        <option value='' disabled selected>Selecciona método de envío</option>
-                                        <option value="domicilio">Envío a domicilio</option>
-                                        <option value="tienda">Retiro en tienda</option>
-                                    </select>
-                                </div>
-                            </form>
+                            <label for="metodo-envio" class="form-label">Método de envío</label>
+                            <select id="metodo-envio" name="metodo_envio" class="form-select" required>
+                                <option value='' disabled selected>Selecciona método de envío</option>
+                                <option value="domicilio">Envío a domicilio</option>
+                                <option value="tienda">Retiro en tienda</option>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary w-100">Confirmar método de envío</button>
                         </div>
                     </div>
                 </div>

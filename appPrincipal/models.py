@@ -151,7 +151,8 @@ class Venta(models.Model):
         )
         self.save()
 
-
+    def __str__(self):
+        return f"Venta #{self.id} - Usuario: {self.usuario.nombre} - Total: ${self.total}"
 
 class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")

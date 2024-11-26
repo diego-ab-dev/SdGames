@@ -19,16 +19,30 @@ class ProductoAdmin(admin.ModelAdmin):
     imagen_display.short_description = 'Imagen Principal'
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display=("nombre", "email", "rut" , "telefono", "direccion", "ciudad", 'region')
-    search_fields=("nombre", "email", "telefono",)
-    list_per_page=20
+    list_display = ("nombre", "email", "rut", "telefono", "direccion", "ciudad", "region")
+    search_fields = ("nombre", "email", "telefono",)
+    list_per_page = 20
+    inlines = []
+
+    def ventas_asociadas(self, obj):
+        ventas = obj.ventas.all()
+        return ", ".join([f"#{venta.id} - ${venta.total}" for venta in ventas]) if ventas else "Sin ventas"
+    ventas_asociadas.short_description = "Ventas Asociadas"
+
+    readonly_fields = ["ventas_asociadas"]
+
 
 class VentaAdmin(admin.ModelAdmin):
-    list_display=("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
-    list_filter=("estado", "fecha",)
+    list_display = ("usuario", "productos_comprados", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
+    list_filter = ("estado", "fecha",)
     list_editable = ("estado",)
-    date_hierarchy="fecha"
-    list_per_page=20
+    date_hierarchy = "fecha"
+    list_per_page = 20
+
+    def productos_comprados(self, obj):
+        return ", ".join([f"{item.producto.nombre} (x{item.cantidad})" for item in obj.productos.all()])
+    productos_comprados.short_description = "Productos Comprados"
+
 
 class ReclamoAdmin(admin.ModelAdmin):
     list_display=("usuario", "estado", "descripcion")

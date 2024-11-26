@@ -444,7 +444,7 @@ def pago(request):
                         "pending": request.build_absolute_uri('/pago-pendiente/'),
                     },
                     "auto_return": "approved",
-                    "external_reference": str(carrito.id),  # Referencia única
+                    "external_reference": str(carrito.id), 
                 }
 
                 preference_response = sdk.preference().create(preference_data)
@@ -453,6 +453,41 @@ def pago(request):
                     'mensaje': 'Redirigiendo a Mercado Pago...',
                     'redirect_url': preference_response["response"]["init_point"],
                 })
+            
+            if metodo == 'tarjeta':
+                numero_tarjeta = data.get('numero_tarjeta')
+                tipo_tarjeta = data.get('tipo_tarjeta')
+                fecha_vencimiento = data.get('fecha_vencimiento')
+                cvv = data.get('cvv')
+
+                if not numero_tarjeta or not fecha_vencimiento or not cvv:
+                    return JsonResponse({'mensaje': 'Faltan datos de la tarjeta'}, status=400)
+
+                if tipo_tarjeta == "Desconocida":
+                    return JsonResponse({'mensaje': 'Tipo de tarjeta no soportado'}, status=400)
+
+                metodo_envio = "tarjeta" 
+                direccion_envio = usuario.direccion 
+
+                venta = Venta.objects.create(
+                    usuario=usuario,
+                    carrito=carrito,
+                    metodo_envio=metodo_envio,
+                    direccion_envio=direccion_envio,
+                    estado='Sin Enviar'
+                )
+
+                venta.productos.set(carrito.items.all())
+                venta.calcular_total() 
+
+                carrito.items.all().delete()
+                carrito.save()
+
+                return JsonResponse({
+                    'mensaje': 'Pago ficticio realizado con éxito',
+                    'redirect_url': '/pago-exitoso/',
+                })
+
 
             return JsonResponse({'mensaje': 'Método de pago no soportado'}, status=400)
         except json.JSONDecodeError:
@@ -467,7 +502,37 @@ def pago(request):
 
 
 def pago_exitoso(request):
-    return render(request, 'pago_exitoso.html')
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
+    venta = Venta.objects.filter(usuario=usuario).last()
+
+    if not venta:
+        messages.error(request, "No se encontró una venta asociada.")
+        return redirect('carrito')  
+
+    productos = venta.productos.all()
+    envio = venta.metodo_envio
+    total = venta.total
+
+    cantidad_total_items = sum(item.cantidad for item in productos)
+
+    carrito = get_object_or_404(Carrito, usuario=usuario)
+    carrito.items.all().delete() 
+    carrito.save()
+
+    return render(request, 'pago_exitoso.html', {
+        'usuario': usuario,
+        'venta': venta,
+        'productos': venta.productos.all(),
+        'envio': envio,
+        'total': total,
+        'cantidad_total_items': cantidad_total_items,
+    })
+
 
 def pago_fallido(request):
     return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
