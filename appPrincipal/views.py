@@ -19,12 +19,9 @@ def password_reset_request(request):
             email = form.cleaned_data['email']
             try:
                 usuario = Usuario.objects.get(email=email)
-                # Generar un token único (podría ser un link seguro en una implementación más compleja)
                 token = get_random_string(length=32)
                 usuario.contraseña = make_password(token)
                 usuario.save()
-
-                # Enviar el correo
                 send_mail(
                     subject="Recuperación de contraseña - SD Games",
                     message=f"Tu nueva contraseña temporal es: {token}",
@@ -181,18 +178,15 @@ def cambiar_contraseña(request):
         contraseña_actual = request.POST.get('contraseña_actual')
         nueva_contraseña = request.POST.get('nueva_contraseña')
         confirmar_contraseña = request.POST.get('confirmar_contraseña')
-
         usuario_id = request.session.get('usuario_id')
         if usuario_id:
             try:
                 usuario = Usuario.objects.get(id=usuario_id)
-                # Validar la contraseña actual
                 if not check_password(contraseña_actual, usuario.contraseña):
                     messages.error(request, "La contraseña actual no es correcta.")
                 elif nueva_contraseña != confirmar_contraseña:
                     messages.error(request, "Las contraseñas no coinciden. Inténtelo nuevamente.")
                 else:
-                    # Actualizar la contraseña
                     usuario.contraseña = make_password(nueva_contraseña)
                     usuario.save()
                     messages.success(request, "Contraseña actualizada exitosamente.")

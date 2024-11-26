@@ -40,8 +40,8 @@
                         <span class="icon">
                             {% if "error" in message.tags %}
                                 ❌
-                            <!--{% elif "success" in message.tags %}
-                                ✅-->
+                            {% elif "success" in message.tags %}
+                                ✅
                             {% elif "warning" in message.tags %}
                                 ⚠️
                             {% elif "info" in message.tags %}
