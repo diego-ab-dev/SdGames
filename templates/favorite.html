@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -17,7 +17,197 @@
     <link rel="stylesheet" href="{% static 'styles/styles_favorite.css' %}">
     <title>Lista de deseos - SD Games</title>
 </head>
+
 <body>
+    <!--Nav de la web-->
+    <nav>
+        <div class="navbar">
+            <i class='bx bx-menu'></i>
+            <div class="logo"><a href="/home">SD Games</a></div>
+            <div class="nav-links">
+                <div class="sidebar-logo">
+                    <span class="logo-name">SD Games</span>
+                    <i class='bx bx-x'></i>
+                </div>
+                <ul class="links">
+                    <li><a href="/menu">Productos</a></li>
+                    <li>
+                        <a href="#">Videojuegos</a>
+                        <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+                        <ul class="htmlCss-sub-menu sub-menu">
+                            <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos PS3' %}">PlayStation 3</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos PS4' %}">PlayStation 4</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos PS5' %}">PlayStation 5</a></li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos XBOX 360' %}">XBOX 360</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos XBOX ONE' %}">XBOX ONE</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos XBOX SERIES' %}">XBOX SERIES</a>
+                            </li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos Nintendo 3DS' %}">3DS</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos WII' %}">WII</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos WII U' %}">WII U</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos Nintendo SWITCH' %}">SWITCH</a>
+                            </li>
+                            <li><span class="dropdown-header text-white text-start">PC</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Videojuegos para PC' %}">Videojuegos PC</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Consolas</a>
+                        <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                        <ul class="js-sub-menu sub-menu">
+                            <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Ps4 Consolas' %}">PLAYSTATION 4</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Ps5 Consolas' %}">PLAYSTATION 5</a></li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Xbox One Consolas' %}">XBOX ONE</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Xbox Series Consolas' %}">XBOX SERIES</a>
+                            </li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                            <li><a class="dropdown-item" href="{% url 'productos_por_categoria' 'Wii U Consolas' %}">WII
+                                    U</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Switch Consolas' %}">SWITCH</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Accesorios</a>
+                        <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                        <ul class="js-sub-menu sub-menu">
+                            <li><span class="dropdown-header text-white text-start">PlayStation</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios Psp' %}">PSP</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios Ps Vita' %}">VITA</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios PS1' %}">PLAY STATION 1</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios PS2' %}">PLAY STATION 2</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios PS3' %}">PLAY STATION 3</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios PS4' %}">PLAY STATION 4</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios PS5' %}">PLAY STATION 5</a></li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Microsoft</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios XBOX 360' %}">XBOX 360</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios XBOX ONE' %}">XBOX ONE</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios XBOX SERIES' %}">XBOX SERIES</a>
+                            </li>
+                            <hr>
+                            <li><span class="dropdown-header text-white text-start">Nintendo</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios Nintendo 3DS' %}">3DS</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios WII U' %}">WII U</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Accesorios Nintendo SWITCH' %}">SWITCH</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Figuras</a>
+                        <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                        <ul class="js-sub-menu sub-menu">
+                            <li><span class="dropdown-header text-white text-start">Figuras Coleccionables</span></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Figuras Funko' %}">FUNKO POP</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{% url 'productos_por_categoria' 'Figuras Amiibo' %}">AMIIBO</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="sidebar-login">
+                    <button onclick="window.location.href='/login'">
+                        Iniciar Sesión
+                        <div class="arrow-wrapper">
+                            <div class="arrow"></div>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="d-flex login-desktop">
+                {% if usuario %}
+                <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
+                <div class="menu">
+                    <div class="item">
+                        <a href="/perfil" class="link">
+                            <span> Mi Perfil </span>
+                            <svg viewBox="0 0 360 360" xml:space="preserve">
+                                <g id="SVGRepo_iconCarrier">
+                                    <path id="XMLID_225_"
+                                        d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </a>
+                        <div class="submenu">
+                            <div class="submenu-item">
+                                <a href="/logout" class="submenu-link">Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
+                <button onclick="window.location.href='/login'">
+                    Iniciar Sesión
+                    <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                    </div>
+                </button>
+                {% endif %}
+            </div>
+            <div class="icons d-flex gap-3">
+                <a href="/favorites" style="color: #9c9592;">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="{% url 'ver_carrito' %}" style="color: #9c9592;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+            <div class="search-box">
+                <i class='bx bx-search'></i>
+                <div class="input-box">
+                    <form method="get" action="{% url 'productos_menu_vista' %}" class="d-flex mx-auto" role="search"
+                        style="width: 50%;">
+                        <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Search"
+                            id="name" name="buscar">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
     <div class="container padding-bottom-3x mb-2">
         <div class="row">
             <div class="col-lg-8">
@@ -28,60 +218,141 @@
                         <thead>
                             <tr>
                                 <th>Nombre del Producto</th>
-                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista de deseos</a></th>
+                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista
+                                        de deseos</a></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for item in wishlist_items %}
                             <tr>
                                 <td>
                                     <div class="product-item">
-                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/FF0000/000000" alt="Product"></a>
+                                        <a class="product-thumb" href="{{ item.producto.get_absolute_url }}">
+                                            <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}">
+                                        </a>
                                         <div class="product-info">
-                                            <h4 class="product-title"><a href="#">Unionbay Park</a></h4>
-                                            <div class="text-lg text-medium text-muted">$43.90</div>
+                                            <h4 class="product-title"><a href="{{ item.producto.get_absolute_url }}">{{ item.producto.nombre }}</a></h4>
+                                            <div class="text-lg text-medium text-muted">${{ item.producto.price }}</div>
                                             <div>Disponibilidad:
-                                                <div class="d-inline text-success">In Stock</div>
+                                                <div
+                                                    class="d-inline {% if item.producto.stock > 0 %}text-success{% else %}text-danger{% endif %}">
+                                                    {% if item.producto.stock > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
+                                <td class="text-center">
+                                    <a class="remove-from-cart" href="{% url 'wishlist_remove' item.id %}"
+                                        data-toggle="tooltip" title="Eliminar">
+                                        <i class="icon-cross"></i>
+                                    </a>
+                                </td>
                             </tr>
+                            {% empty %}
                             <tr>
-                                <td>
-                                    <div class="product-item">
-                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/87CEFA/000000" alt="Product"></a>
-                                        <div class="product-info">
-                                            <h4 class="product-title"><a href="#">Daily Fabric Cap</a></h4>
-                                            <div class="text-lg text-medium text-muted">$24.70</div>
-                                            <div>Availability:
-                                                <div class="d-inline text-warning">2 - 3 Weeks</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
+                                <td colspan="2" class="text-center">Tu lista de deseados está vacía.</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-item">
-                                        <a class="product-thumb" href="#"><img src="https://www.bootdey.com/image/220x180/483D8B/000000" alt="Product"></a>
-                                        <div class="product-info">
-                                            <h4 class="product-title"><a href="#">Cole Haan Crossbody</a></h4>
-                                            <div class="text-lg text-medium text-muted">$200.00</div>
-                                            <div>Availability:
-                                                <div class="d-inline text-success">In Stock</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    
+
+
+    <script>
+        let navbar = document.querySelector(".navbar");
+        let searchBox = document.querySelector(".search-box .bx-search");
+        searchBox.addEventListener("click", () => {
+            navbar.classList.toggle("showInput");
+            if (navbar.classList.contains("showInput")) {
+                searchBox.classList.replace("bx-search", "bx-x");
+            } else {
+                searchBox.classList.replace("bx-x", "bx-search");
+            }
+        });
+        let navLinks = document.querySelector(".nav-links");
+        let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+        let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+        menuOpenBtn.onclick = function () {
+            navLinks.style.left = "0";
+        }
+        menuCloseBtn.onclick = function () {
+            navLinks.style.left = "-100%";
+        }
+        let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+        htmlcssArrow.onclick = function () {
+            navLinks.classList.toggle("show1");
+        }
+        let moreArrow = document.querySelector(".more-arrow");
+        moreArrow.onclick = function () {
+            navLinks.classList.toggle("show2");
+        }
+        let jsArrow = document.querySelector(".js-arrow");
+        jsArrow.onclick = function () {
+            navLinks.classList.toggle("show3");
+        }
+    </script>
+
+    <!--footer-->
+    <footer class="text-center text-lg-start text-light">
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            SD Games
+                        </h6>
+                        <p>
+                            SD Games es la tienda de videojuegos líder en Valdivia, que ofrece una amplia
+                            selección de
+                            títulos para todas las plataformas y edades. Desde los últimos lanzamientos hasta clásicos
+                            retro,
+                            SD Games tiene algo para cada tipo de jugador. La tienda se enorgullece de su equipo
+                            experto, siempre
+                            dispuesto a
+                            recomendar juegos y a brindar un excelente servicio al cliente.
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Enlaces Rápidos:
+                        </h6>
+                        <p>
+                            <a href="/home" class="footerli text-reset">Home</a>
+                        </p>
+                        <p>
+                            <a href="/menu" class="footerli text-reset">Productos</a>
+                        </p>
+                        <p>
+                            <a href="#nosotros" class="footerli text-reset">Sobre Nosotros</a>
+                        </p>
+                        <p>
+                            <a href="#local" class="footerli text-reset">Local</a>
+                        </p>
+                        <p>
+                            <a href="#redes" class="footerli text-reset">Redes</a>
+                        </p>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">Contacto:</h6>
+                        <p><i class="fas fa-home me-3"></i> Valdivia, Av. Simpson 641, Chile</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            sdgames@gmail.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> 9 2344 5674</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="text-center p-4" style="background-color: #8e8f94;">
+            SD Games
+        </div>
+    </footer>
 </body>
+
 </html>

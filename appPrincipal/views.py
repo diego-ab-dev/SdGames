@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, ListaDeseados, Favorito
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -415,7 +415,32 @@ def carrito(request):
     return render(request, 'carrito.html')
 
 def lista_favoritos(request):
-    return render(request, 'favorite.html')
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
+    wishlist_items = ListaDeseados.objects.filter(usuario=usuario)
+    return render(request, 'favorite.html', {'wishlist_items': wishlist_items})
+
+def agregar_favorito(request, producto_id):
+    usuario_id = request.session.get('usuario_id')
+
+    if not usuario_id:
+        return redirect('login') 
+
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    producto = get_object_or_404(Producto, id=producto_id)
+    favorito, created = Favorito.objects.get_or_create(usuario=usuario, producto=producto)
+
+    if created:
+        messages.success(request, f"El producto {producto.nombre} ha sido agregado a tus favoritos.")
+    else:
+        messages.info(request, f"El producto {producto.nombre} ya está en tus favoritos.")
+
+    return redirect('lista_favorito')
 
 
 def detalles_compra(request):

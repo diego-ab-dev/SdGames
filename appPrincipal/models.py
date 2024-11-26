@@ -194,3 +194,22 @@ class Reclamo(models.Model):
 
     def editar_reclamo(self):
         pass
+
+class Favorito(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+
+    def str(self):
+        return f"{self.usuario} - {self.producto}"
+
+
+class ListaDeseados(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='lista_deseados')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='deseados')
+    fecha_agregado = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('usuario', 'producto')
+
+    def str(self):
+        return f"{self.usuario.nombre} - {self.producto.nombre}"
