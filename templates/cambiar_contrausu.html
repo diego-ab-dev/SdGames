@@ -11,7 +11,7 @@
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'styles/styles_cambiarcont.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
-    <title>Document</title>
+    <title>Cambiar contraseña</title>
 </head>
 <body>
     <div class="container mt-5">
@@ -40,8 +40,8 @@
                         <span class="icon">
                             {% if "error" in message.tags %}
                                 ❌
-                            {% elif "success" in message.tags %}
-                                ✅
+                            <!--{% elif "success" in message.tags %}
+                                ✅-->
                             {% elif "warning" in message.tags %}
                                 ⚠️
                             {% elif "info" in message.tags %}
