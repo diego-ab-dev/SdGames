@@ -390,9 +390,17 @@ def detalles_compra(request):
             estado='Pendiente',
             carrito=carrito
         )
-        venta.productos.set(carrito.items.all())
-        venta.calcular_total()
 
+
+        venta.productos.set(carrito.items.all())
+
+        venta.subtotal = sum(item.producto.precio * item.cantidad for item in carrito.items.all())
+
+        venta.envio = 0 if metodo_envio == 'tienda' else 5000
+
+        venta.total = venta.subtotal + venta.envio
+
+        venta.save()
         carrito.save()
 
         return redirect('pago') 
@@ -404,10 +412,11 @@ def detalles_compra(request):
         'total': carrito.total_carrito(),
     })
 
+
 def pago(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body) 
+            data = json.loads(request.body)
             metodo = data.get('metodo_pago')
             total = data.get('total')
 
@@ -416,7 +425,7 @@ def pago(request):
                 return JsonResponse({'error': 'Usuario no autenticado'}, status=403)
 
             usuario = get_object_or_404(Usuario, id=usuario_id)
-            carrito = get_object_or_404(Carrito, usuario=usuario)  # Obtener el carrito activo
+            carrito = get_object_or_404(Carrito, usuario=usuario)
 
             if metodo == 'mercado_pago':
                 sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
@@ -426,71 +435,35 @@ def pago(request):
                             "title": "Compra en SD Games",
                             "quantity": 1,
                             "currency_id": "CLP",
-                            "unit_price": float(total)
+                            "unit_price": float(total),
                         }
                     ],
                     "back_urls": {
                         "success": request.build_absolute_uri('/pago-exitoso/'),
                         "failure": request.build_absolute_uri('/pago-fallido/'),
-                        "pending": request.build_absolute_uri('/pago-pendiente/')
+                        "pending": request.build_absolute_uri('/pago-pendiente/'),
                     },
                     "auto_return": "approved",
-                    "external_reference": str(carrito.id)  # Usar carrito.id como referencia única
+                    "external_reference": str(carrito.id),  # Referencia única
                 }
 
                 preference_response = sdk.preference().create(preference_data)
 
                 return JsonResponse({
                     'mensaje': 'Redirigiendo a Mercado Pago...',
-                    'redirect_url': preference_response["response"]["init_point"]
+                    'redirect_url': preference_response["response"]["init_point"],
                 })
 
             return JsonResponse({'mensaje': 'Método de pago no soportado'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Datos mal formados'}, status=400)
+
     elif request.method == 'GET':
-        total = float(request.GET.get('total', 0)) 
+        total = float(request.GET.get('total', 0))
         return render(request, 'pago.html', {'total': total})
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def mercado_pago_webhook(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            payment_id = data.get('data', {}).get('id')
-
-            sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
-            payment = sdk.payment().get(payment_id)
-
-            if payment['status'] == 200:
-                status = payment['response']['status']
-                external_reference = payment['response']['external_reference']
-
-                # Buscar la venta asociada
-                venta = Venta.objects.get(carrito__id=external_reference)
-
-                # Actualizar el estado de la venta según el pago
-                if status == 'approved':
-                    venta.estado = 'Pagado'
-                    for item in venta.carrito.items.all():
-                        producto = item.producto
-                        producto.stock -= item.cantidad
-                        producto.save()
-                    # Limpiar el carrito
-                    venta.carrito.items.all().delete()
-                    venta.carrito.save()
-                elif status == 'in_process':
-                    venta.estado = 'Pendiente'
-                else:
-                    venta.estado = 'Fallido'
-                venta.save()
-
-            return JsonResponse({'message': 'Webhook procesado correctamente'}, status=200)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
 def pago_exitoso(request):

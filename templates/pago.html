@@ -18,68 +18,72 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h4>Total a pagar: ${{ total|formato_chileno }}</h4>
-        <form class="mt-4">
-            <div class="mb-3">
-                <label class="fw-bold">Método de Pago</label>
-                <div>
-                    <input type="radio" id="transferencia" name="metodo_pago" value="transferencia" onchange="mostrarFormulario(this.value)" checked>
-                    <label for="transferencia">Transferencia Bancaria</label>
-                </div>
-                <div>
-                    <input type="radio" id="mercado_pago" name="metodo_pago" value="mercado_pago" onchange="mostrarFormulario(this.value)">
-                    <label for="mercado_pago">Mercado Pago</label>
-                </div>
-                <div>
-                    <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" onchange="mostrarFormulario(this.value)">
-                    <label for="tarjeta">Tarjeta de Crédito/Débito</label>
-                </div>
-            </div>
-    
-            <!-- Formulario de Transferencia -->
-            <div id="form_transferencia" class="metodo-pago">
-                <p><strong>Datos de la empresa para transferencia:</strong></p>
-                <p>Banco: Banco de Chile</p>
-                <p>Cuenta Corriente: 12345678</p>
-                <p>RUT: 76.123.456-7</p>
-                <p>Email: empresa@correo.cl</p>
-                <p>Por favor, transfiera el monto exacto y envíe el comprobante al correo mencionado.</p>
-            </div>
-    
-            <!-- Formulario de Mercado Pago -->
-            <div id="form_mercado_pago" class="metodo-pago d-none">
-                <button id="mercado_pago_button" class="btn btn-primary" data-total="{{ total }}">Pagar con Mercado Pago</button>
-            </div>
-    
-            <!-- Formulario de Tarjeta -->
-            <div id="form_tarjeta" class="metodo-pago d-none">
+        <div class="card shadow p-4">
+            <h4 class="text-center fw-bold mb-4">Total a pagar: ${{ total|formato_chileno }}</h4>
+            <form>
                 <div class="mb-3">
-                    <label class="fw-bold">Detalles de la Tarjeta</label>
-                    <div class="d-flex card-atm border rounded">
-                        <input type="text" class="form-control" placeholder="Número de Tarjeta">
-                        <input type="text" class="form-control w-25" placeholder="MM/YY">
-                        <input type="password" class="form-control w-25" maxlength="3" placeholder="CVV">
+                    <label class="fw-bold">Método de Pago</label>
+                    <div class="form-check">
+                        <input type="radio" id="transferencia" name="metodo_pago" value="transferencia" onchange="mostrarFormulario(this.value)" checked>
+                        <label for="transferencia">Transferencia Bancaria</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="mercado_pago" name="metodo_pago" value="mercado_pago" onchange="mostrarFormulario(this.value)">
+                        <label for="mercado_pago">Mercado Pago</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" onchange="mostrarFormulario(this.value)">
+                        <label for="tarjeta">Tarjeta de Crédito/Débito</label>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label class="fw-bold">Nombre del Titular</label>
-                    <input type="text" class="form-control" placeholder="Nombre completo">
-                </div>
-                <div class="mb-3">
-                    <label class="fw-bold">Dirección de Facturación</label>
-                    <select class="form-select mb-2">
-                        <option selected hidden>Seleccione un país</option>
-                        <option>Chile</option>
-                        <option>Argentina</option>
-                        <option>Perú</option>
-                    </select>
-                    <input type="text" class="form-control" placeholder="Código Postal">
-                </div>
-            </div>
     
-            <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pago</button>
-        </form>
+                <!-- Formulario de Transferencia -->
+                <div id="form_transferencia" class="metodo-pago">
+                    <p><strong>Datos de SD Games para transferencia:</strong></p>
+                    <p>Banco: Banco de Chile</p>
+                    <p>Cuenta Corriente: 53674362</p>
+                    <p>RUT: 76.123.456-7</p>
+                    <p>Email: sdgames@correo.cl</p>
+                    <p>Por favor, transfiera el monto exacto y envíe el comprobante al correo mencionado. </p>
+                    <p class="text-body-secondary">(La confirmacion de la transferencia tarda de 24 hrs a 48 hrs dependiendo la cantidad de ventas)</p>
+                </div>
+    
+                <!-- Formulario de Mercado Pago -->
+                <div id="form_mercado_pago" class="metodo-pago d-none">
+                    <button id="mercado_pago_button" class="btn btn-primary w-100" data-total="{{ total }}">Pagar con Mercado Pago</button>
+                </div>
+    
+                <!-- Formulario de Tarjeta -->
+                <div id="form_tarjeta" class="metodo-pago d-none">
+                    <div class="mb-3">
+                        <label class="fw-bold">Detalles de la Tarjeta</label>
+                        <div class="d-flex card-atm border rounded">
+                            <input type="text" class="form-control" placeholder="Número de Tarjeta">
+                            <input type="text" class="form-control w-25" placeholder="MM/YY">
+                            <input type="password" class="form-control w-25" maxlength="3" placeholder="CVV">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Nombre del Titular</label>
+                        <input type="text" class="form-control" placeholder="Nombre completo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Dirección de Facturación</label>
+                        <select class="form-select mb-2">
+                            <option selected hidden>Seleccione un país</option>
+                            <option>Chile</option>
+                            <option>Argentina</option>
+                            <option>Perú</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="Código Postal">
+                    </div>
+                </div>
+    
+                <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pago</button>
+            </form>
+        </div>
     </div>
+    
 
 
     <script>

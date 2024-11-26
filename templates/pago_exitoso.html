@@ -32,7 +32,6 @@
             <p><strong>Subtotal:</strong> ${{ subtotal|formato_chileno }}</p>
             <p><strong>Costo de envío:</strong> ${{ envio|formato_chileno }}</p>
             <p><strong>Total pagado:</strong> ${{ total|formato_chileno }}</p>
-            <p><strong>Cantidad total de ítems:</strong> {{ cantidad_total_items }}</p>
     
             <h3>Método de envío seleccionado:</h3>
             {% if venta.metodo_envio == 'domicilio' %}
@@ -52,6 +51,6 @@
             </button>
         </div>
     </div>
-    
+
 </body>
 </html>

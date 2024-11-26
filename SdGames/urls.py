@@ -47,7 +47,7 @@ urlpatterns = [
     path('pago-exitoso/', pago_exitoso, name='pago_exitoso'),
     path('pago-fallido/', pago_fallido, name='pago_fallido'),
     path('pago-pendiente/', pago_pendiente, name='pago_pendiente'),
-     path('password-reset/', password_reset_request, name='password_reset'),
+    path('password-reset/', password_reset_request, name='password_reset'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion

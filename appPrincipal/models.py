@@ -152,6 +152,7 @@ class Venta(models.Model):
         self.save()
 
 
+
 class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name="opiniones")

@@ -1,53 +1,59 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
-    font-family: 'Montserrat', sans-serif;
-}
-
 body {
-    display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;    /* Centrado vertical */
-    height: 100vh;          /* Altura del viewport */
-    margin: 0;         
     background-color: #d7ccc8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-form-control:focus,
-.form-select:focus {
-    box-shadow: none;
-    outline: none;
-    border: 1px solid #7700ff;
+.container {
+    max-width: 600px;
+    margin: 0; /* Elimina cualquier margen vertical */
+    display: flex;
+    flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
 }
 
-.border:focus-within {
-    border: 1px solid #7700ff !important;
+
+.card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.box-2 .card-atm .form-control {
+.card h4 {
+    color: #333333;
+}
+
+.card-atm {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
     border: none;
-    box-shadow: none;
 }
 
-.form-select {
-    border-radius: 0;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
+.btn-primary:hover {
+    background-color: #0056b3;
 }
 
-.address .form-control.zip {
-    border-radius: 0;
-    border-bottom-left-radius: 10px;
-
+.btn-success {
+    background-color: #28a745;
+    border: none;
 }
 
-.address .form-control.state {
-    border-radius: 0;
-    border-bottom-right-radius: 10px;
+.btn-success:hover {
+    background-color: #218838;
+}
 
+.metodo-pago p {
+    margin: 0 0 10px;
+}
+
+.form-check label {
+    margin-left: 5px;
 }
