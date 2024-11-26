@@ -139,6 +139,7 @@ class Venta(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, null=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas', default='')
     productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas', verbose_name='Productos')
+    envio = models.PositiveIntegerField(default=0) 
     total = models.PositiveIntegerField(default=0)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Sin Enviar')
     fecha = models.DateTimeField(auto_now_add=True)

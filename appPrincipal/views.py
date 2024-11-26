@@ -159,7 +159,22 @@ def perfil(request):
         return redirect('login')
     
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    return render(request, 'perfil_usuario.html', {'usuario': usuario})
+    compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')[:3]  # Últimas 3 compras
+
+    return render(request, 'perfil_usuario.html', {'usuario': usuario, 'compras': compras})
+
+
+def ver_compras(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para ver tus compras.")
+        return redirect('login')
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')
+
+    return render(request, 'ver_compras.html', {'usuario': usuario, 'compras': compras})
+
 
 def cambiar_contraseña(request):
     if request.method == 'POST':
