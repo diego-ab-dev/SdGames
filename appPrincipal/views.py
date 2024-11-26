@@ -508,30 +508,39 @@ def pago_exitoso(request):
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
 
+    # Obtén la última venta asociada al usuario
     venta = Venta.objects.filter(usuario=usuario).last()
 
     if not venta:
         messages.error(request, "No se encontró una venta asociada.")
-        return redirect('carrito')  
+        return redirect('carrito')
 
+    # Productos de la venta
     productos = venta.productos.all()
-    envio = venta.metodo_envio
-    total = venta.total
 
+    # Costo de envío (asume 0 para retiro en tienda)
+    envio = 0 if venta.metodo_envio == 'tienda' else 6000
+
+    # Total pagado, calculando subtotal + envío
+    total_pagado = venta.total + envio
+
+    # Total de ítems en la compra
     cantidad_total_items = sum(item.cantidad for item in productos)
 
+    # Limpia el carrito
     carrito = get_object_or_404(Carrito, usuario=usuario)
-    carrito.items.all().delete() 
+    carrito.items.all().delete()
     carrito.save()
 
     return render(request, 'pago_exitoso.html', {
         'usuario': usuario,
         'venta': venta,
-        'productos': venta.productos.all(),
+        'productos': productos,
         'envio': envio,
-        'total': total,
+        'total': total_pagado,
         'cantidad_total_items': cantidad_total_items,
     })
+
 
 
 def pago_fallido(request):

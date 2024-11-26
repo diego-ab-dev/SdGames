@@ -23,15 +23,16 @@
             <h3>Productos:</h3>
             <p><strong>Ítems:</strong> {{ cantidad_total_items }}</p>
             <ul>
-                {% for item in productos %}
-                    <li>{{ item.producto.nombre }} - {{ item.cantidad }} x ${{ item.producto.precio|formato_chileno }}</li>
+                {% for producto in productos %}
+                    <li>{{ producto.producto.nombre }} x{{ producto.cantidad }}</li>
                 {% endfor %}
             </ul>
 
 
-            <p><strong>Subtotal:</strong> ${{ subtotal|formato_chileno }}</p>
+            <p><strong>Subtotal:</strong> ${{ venta.subtotal|formato_chileno }}</p>
             <p><strong>Costo de envío:</strong> ${{ envio|formato_chileno }}</p>
             <p><strong>Total pagado:</strong> ${{ total|formato_chileno }}</p>
+
     
             <h3>Método de envío seleccionado:</h3>
             {% if venta.metodo_envio == 'domicilio' %}

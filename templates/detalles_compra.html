@@ -39,9 +39,6 @@
                                 <option value="tienda">Retiro en tienda</option>
                             </select>
                         </div>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary w-100">Confirmar método de envío</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -97,16 +94,22 @@
                     <div id="total-container" data-total="{{ total }}"></div>
                     <div class="d-flex justify-content-between fw-bold">
                         <p>Envío</p>
-                        <p class="envio-costo">$0</p>
+                        <p class="envio-costo">
+                            {% if metodo_envio == "domicilio" %}
+                                ${{ 6000|formato_chileno }}
+                            {% else %}
+                                $0
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="d-flex justify-content-between fw-bold">
                         <p>Total</p>
-                        <p class="total-costo">$-</p>
+                        <p class="total-costo">${{ total|formato_chileno }}</p>
                     </div>
-                    <form action="{% url 'pago' %}" method="get">
-                        <input type="hidden" name="total" value="{{ total }}">
+                    <form action="{% url 'pago' %}" method="get" id="formCompra">
+                        <input type="hidden" name="total" id="input-total" value="{{ total }}">
                         <button type="submit" class="btn btn-primary w-100 mt-3">Proceder al Pago</button>
-                    </form>                    
+                    </form>                
                 </form>
             </div>
         </div>
@@ -124,6 +127,7 @@
             const retiroTienda = document.getElementById("retiro-tienda");
             const envioCosto = document.querySelector(".envio-costo"); 
             const totalCosto = document.querySelector(".total-costo"); 
+            const inputTotal = document.getElementById("input-total");
             const totalBase = parseFloat(
                 document.getElementById("total-container").dataset.total
             );
@@ -139,34 +143,17 @@
                 editForm.style.display = "none";
             });
 
-            // Manejar cambios en el método de envío
             metodoEnvio.addEventListener("change", () => {
-                let envioExtra = 0;
-
-                if (metodoEnvio.value === "domicilio") {
-                    envioExtra = 6000;
-                    envioDomicilio.style.display = "block";
-                    retiroTienda.style.display = "none";
-                } else if (metodoEnvio.value === "tienda") {
-                    envioExtra = 0;
-                    envioDomicilio.style.display = "none";
-                    retiroTienda.style.display = "block";
-
-                    // Cerrar el formulario de edición si está abierto
-                    if (editForm.style.display === "block") {
-                        editForm.style.display = "none";
-                        userDetails.style.display = "block";
-                    }
-                }
-
-                envioCosto.textContent = `$${envioExtra.toLocaleString()}`;
-                totalCosto.textContent = `$${(totalBase + envioExtra).toLocaleString()}`;
+                let envio = metodoEnvio.value === "domicilio" ? 6000 : 0;
+                envioCosto.textContent = `$${envio.toLocaleString('es-CL')}`;
+                const totalFinal = totalBase + envio;
+                totalCosto.textContent = `$${totalFinal.toLocaleString('es-CL')}`;
+                inputTotal.value = totalFinal; // Actualizar el valor del input hidden
             });
 
             // Validar método de envío antes de proceder al pago
-            const formCompra = document.querySelector("form[action='{% url 'detalles_compra' %}']");
             formCompra.addEventListener("submit", (event) => {
-                if (metodoEnvio.value === "Selecciona método de envío") {
+                if (!metodoEnvio.value) {
                     alert("Por favor, selecciona un método de envío.");
                     event.preventDefault();
                 }
