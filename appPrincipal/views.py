@@ -173,6 +173,12 @@ def ver_compras(request):
     return render(request, 'ver_compras.html', {'usuario': usuario, 'compras': compras})
 
 
+from django.contrib import messages
+from django.contrib.messages import get_messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import check_password, make_password
+import json
+
 def cambiar_contraseña(request):
     if request.method == 'POST':
         contraseña_actual = request.POST.get('contraseña_actual')
@@ -196,7 +202,11 @@ def cambiar_contraseña(request):
         else:
             messages.error(request, "Debes iniciar sesión para cambiar tu contraseña.")
 
-    return render(request, 'cambiar_contrausu.html')
+    # Convertir mensajes a una lista serializable
+    storage = get_messages(request)
+    mensajes = [{'tipo': message.tags, 'texto': message.message} for message in storage]
+
+    return render(request, 'cambiar_contrausu.html', {'mensajes_json': json.dumps(mensajes)})
 
 
 @csrf_exempt

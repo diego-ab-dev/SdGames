@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-
+from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -143,3 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # mercado pago
 MERCADO_PAGO_ACCESS_TOKEN = "APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885"
 MERCADO_PAGO_PUBLIC_KEY = "APP_USR-988393a0-619d-4dab-99ea-fdfa6cc75ac1"
+
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
