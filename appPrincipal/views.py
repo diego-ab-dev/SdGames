@@ -161,28 +161,34 @@ def perfil(request):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     return render(request, 'perfil_usuario.html', {'usuario': usuario})
 
-
 def cambiar_contraseña(request):
     if request.method == 'POST':
+        contraseña_actual = request.POST.get('contraseña_actual')
         nueva_contraseña = request.POST.get('nueva_contraseña')
         confirmar_contraseña = request.POST.get('confirmar_contraseña')
-        
-        if nueva_contraseña != confirmar_contraseña:
-            messages.error(request, "Las contraseñas no coinciden. Inténtelo nuevamente.")
-        else:
-            usuario_id = request.session.get('usuario_id')
-            if usuario_id:
-                try:
-                    usuario = Usuario.objects.get(id=usuario_id)
-                    usuario.contraseña = make_password(nueva_contraseña)  
+
+        usuario_id = request.session.get('usuario_id')
+        if usuario_id:
+            try:
+                usuario = Usuario.objects.get(id=usuario_id)
+                # Validar la contraseña actual
+                if not check_password(contraseña_actual, usuario.contraseña):
+                    messages.error(request, "La contraseña actual no es correcta.")
+                elif nueva_contraseña != confirmar_contraseña:
+                    messages.error(request, "Las contraseñas no coinciden. Inténtelo nuevamente.")
+                else:
+                    # Actualizar la contraseña
+                    usuario.contraseña = make_password(nueva_contraseña)
                     usuario.save()
                     messages.success(request, "Contraseña actualizada exitosamente.")
                     return redirect('perfil')
-                except Usuario.DoesNotExist:
-                    messages.error(request, "Usuario no encontrado.")
-            else:
-                messages.error(request, "Debes iniciar sesión para cambiar tu contraseña.")
+            except Usuario.DoesNotExist:
+                messages.error(request, "Usuario no encontrado. Inténtelo más tarde.")
+        else:
+            messages.error(request, "Debes iniciar sesión para cambiar tu contraseña.")
+
     return render(request, 'cambiar_contrausu.html')
+
 
 @csrf_exempt
 def editar_perfil(request):

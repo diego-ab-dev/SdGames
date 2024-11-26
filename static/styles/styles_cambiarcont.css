@@ -66,3 +66,45 @@ body{
 h3{
     text-align: center;
 }
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.message .icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.message.error {
+    background-color: #e74c3c; 
+    border: 1px solid #c0392b;
+}
+
+.message.success {
+    background-color: #2ecc71; 
+    border: 1px solid #27ae60;
+}
+
+.message.warning {
+    background-color: #f1c40f;
+    border: 1px solid #f39c12;
+    color: #333;
+}
+
+.message.info {
+    background-color: #3498db; 
+    border: 1px solid #2980b9;
+}

@@ -19,6 +19,11 @@
         <form method="POST">
             {% csrf_token %}
             <div class="mb-3">
+                <label for="contraseña_actual" class="form-label">Contraseña Actual</label>
+                <input type="password" name="contraseña_actual" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
                 <label for="nueva_contraseña" class="form-label">Nueva Contraseña</label>
                 <input type="password" name="nueva_contraseña" class="form-control" required>
             </div>
@@ -28,6 +33,27 @@
             </div>
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message {{ message.tags }}">
+                        <span class="icon">
+                            {% if "error" in message.tags %}
+                                ❌
+                            {% elif "success" in message.tags %}
+                                ✅
+                            {% elif "warning" in message.tags %}
+                                ⚠️
+                            {% elif "info" in message.tags %}
+                                ℹ️
+                            {% endif %}
+                        </span>
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
     </div>
 </body>
 </html>
