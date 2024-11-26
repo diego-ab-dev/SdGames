@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% load humanize %}
+{% load custom_filters %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -181,40 +181,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <!-- Barra lateral de filtros -->
-                    <div class="col-md-3">
-                        <div class="filtros">
-                            <h4 class="fw-bold">Filtrar</h4>
-                            <form method="get">
-                                <!-- Filtrar por género -->
-                                <div class="mb-3">
-                                    <label for="genero" class="form-label">Género</label>
-                                    <select name="genero" id="genero" class="form-select">
-                                        <option value="">Todos</option>
-                                        {% for key, value in generos %}
-                                            <option value="{{ key }}" {% if request.GET.genero == key %}selected{% endif %}>
-                                                {{ value }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <!-- Filtrar por rango de precios -->
-                                <div class="mb-3">
-                                    <label for="precio_min" class="form-label">Precio Mínimo</label>
-                                    <input type="number" name="precio_min" id="precio_min" class="form-control" placeholder="Ej: 9990" value="{{ request.GET.precio_min }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="precio_max" class="form-label">Precio Máximo</label>
-                                    <input type="number" name="precio_max" id="precio_max" class="form-control" placeholder="Ej: 12990" value="{{ request.GET.precio_max }}">
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
-                            </form>
-                        </div>
-                    </div>
-        
-                    <!-- Productos -->
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div class="row">
                             {% for producto in productos %}
                                 <div class="col-md-6 col-lg-4 col-xl-3">
@@ -244,7 +211,7 @@
                                         </div>
                                         <div class="part-2">
                                             <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
-                                            <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|intcomma }}</h4>
+                                            <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|formato_chileno }}</h4>
                                         </div>
                                         <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
                                     </div>
@@ -254,7 +221,6 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
             </div>
         </section>
 

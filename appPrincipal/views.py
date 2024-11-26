@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -12,6 +12,7 @@ import json
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 # Create your views here.
+
 def password_reset_request(request):
     if request.method == 'POST':
         form = forms.PasswordResetForm(request.POST)
@@ -68,10 +69,16 @@ def productos_por_categoria(request, categoria):
     if precio_min and precio_max:
         productos = productos.filter(precio__gte=precio_min, precio__lte=precio_max)
     
+    orden_precio = request.GET.get('orden_precio')
+    if orden_precio == 'asc':
+        productos = productos.order_by('precio')
+    elif orden_precio == 'desc':
+        productos = productos.order_by('-precio')
+    
     context = {
         'categoria': dict(Producto.CATEGORIAS).get(categoria, categoria),
         'productos': productos,
-        'generos': Producto.GENEROS,  
+        'generos': Producto.GENEROS,
     }
     return render(request, 'productos_por_categoria.html', context)
 
@@ -156,10 +163,25 @@ def perfil(request):
         return redirect('login')
     
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')[:3]  # Últimas 3 compras
+    compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')[:3]
+    opiniones = Opinion.objects.filter(usuario=usuario).order_by('-fecha_creacion')[:2]
+    
+    return render(request, 'perfil_usuario.html', {
+        'usuario': usuario,
+        'compras': compras,
+        'opiniones': opiniones
+    })
 
-    return render(request, 'perfil_usuario.html', {'usuario': usuario, 'compras': compras})
+def lista_opiniones(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
+        return redirect('login')
 
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    opiniones = Opinion.objects.filter(usuario=usuario).order_by('-fecha_creacion')
+
+    return render(request, 'lista_opiniones.html', {'opiniones': opiniones})
 
 def ver_compras(request):
     usuario_id = request.session.get('usuario_id')
@@ -399,36 +421,31 @@ def lista_favoritos(request):
 def detalles_compra(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
-        return redirect('login') 
+        return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
     carrito = get_object_or_404(Carrito, usuario=usuario)
 
     if request.method == 'POST':
         metodo_envio = request.POST.get('metodo_envio')
+        if not metodo_envio:
+            messages.error(request, "Por favor selecciona un método de envío.")
+            return redirect('detalles_compra')
+
         direccion_envio = usuario.direccion if metodo_envio == 'domicilio' else "Retiro en tienda"
 
+        # Crear la venta
         venta = Venta.objects.create(
             usuario=usuario,
             metodo_envio=metodo_envio,
             direccion_envio=direccion_envio,
-            estado='Pendiente',
+            estado='Sin Enviar',
             carrito=carrito
         )
+        venta.productos.set(carrito.items.all())  # Asociar productos del carrito
+        venta.calcular_total()
 
-
-        venta.productos.set(carrito.items.all())
-
-        venta.subtotal = sum(item.producto.precio * item.cantidad for item in carrito.items.all())
-
-        venta.envio = 0 if metodo_envio == 'tienda' else 5000
-
-        venta.total = venta.subtotal + venta.envio
-
-        venta.save()
-        carrito.save()
-
-        return redirect('pago') 
+        return redirect('pago', total=venta.total)
 
     return render(request, 'detalles_compra.html', {
         'usuario': usuario,
@@ -532,38 +549,19 @@ def pago_exitoso(request):
         return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
-
-    # Obtén la última venta asociada al usuario
     venta = Venta.objects.filter(usuario=usuario).last()
 
     if not venta:
         messages.error(request, "No se encontró una venta asociada.")
         return redirect('carrito')
 
-    # Productos de la venta
-    productos = venta.productos.all()
-
-    # Costo de envío (asume 0 para retiro en tienda)
-    envio = 0 if venta.metodo_envio == 'tienda' else 6000
-
-    # Total pagado, calculando subtotal + envío
-    total_pagado = venta.total + envio
-
-    # Total de ítems en la compra
-    cantidad_total_items = sum(item.cantidad for item in productos)
-
-    # Limpia el carrito
-    carrito = get_object_or_404(Carrito, usuario=usuario)
-    carrito.items.all().delete()
-    carrito.save()
-
     return render(request, 'pago_exitoso.html', {
         'usuario': usuario,
         'venta': venta,
-        'productos': productos,
-        'envio': envio,
-        'total': total_pagado,
-        'cantidad_total_items': cantidad_total_items,
+        'productos': venta.productos.all(),
+        'envio': venta.envio,
+        'subtotal': venta.subtotal,
+        'total': venta.total,
     })
 
 

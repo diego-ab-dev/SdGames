@@ -725,6 +725,10 @@ nav .navbar .links li .sub-menu li{
   height: 50vh;
 }
 
+.section-redes{
+  margin-bottom: 250px;
+}
+
 .img-content {
   position: relative;
   overflow: hidden;

@@ -744,14 +744,23 @@ nav .navbar .links li .sub-menu li{
     position: sticky;
     top: 20px;
     z-index: 1;
-    background-color: white;
+    background-color: #2c2e33;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
 }
 
 .filtros h4 {
   margin-bottom: 15px;
+}
+
+.btn{
+  background-color: #9c9592;
+}
+
+.btn:hover{
+  background-color: #6e6e6e;
 }
 
 @media (max-width: 768px) {

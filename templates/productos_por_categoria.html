@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% load humanize %}
+{% load custom_filters %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -199,14 +199,14 @@
                             </div>
                             <!-- Filtrar por rango de precios -->
                             <div class="mb-3">
-                                <label for="precio_min" class="form-label">Precio Mínimo</label>
-                                <input type="number" name="precio_min" id="precio_min" class="form-control" placeholder="Ej: 9990" value="{{ request.GET.precio_min }}">
+                              <label for="orden_precio" class="form-label">Ordenar por precio</label>
+                              <select name="orden_precio" id="orden_precio" class="form-select">
+                                  <option value="">Sin orden</option>
+                                  <option value="asc" {% if request.GET.orden_precio == "asc" %}selected{% endif %}>Menor a mayor</option>
+                                  <option value="desc" {% if request.GET.orden_precio == "desc" %}selected{% endif %}>Mayor a menor</option>
+                              </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="precio_max" class="form-label">Precio Máximo</label>
-                                <input type="number" name="precio_max" id="precio_max" class="form-control" placeholder="Ej: 12990" value="{{ request.GET.precio_max }}">
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
+                            <button type="submit" class="btn w-100">Aplicar filtros</button>
                         </form>
                     </div>
                 </div>
@@ -242,7 +242,7 @@
                                     </div>
                                     <div class="part-2">
                                         <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
-                                        <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|intcomma }}</h4>
+                                        <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|formato_chileno }}</h4>
                                     </div>
                                     <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
                                 </div>

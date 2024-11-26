@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load custom_filters %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +12,7 @@
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'styles/styles_perfil_usuario.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
-    <title>Document</title>
+    <title>Mis Compras</title>
 </head>
 <body>
     <div class="container">
@@ -30,7 +31,7 @@
                 {% for compra in compras %}
                     <tr>
                         <td>{{ compra.id }}</td>
-                        <td>${{ compra.total }}</td>
+                        <td>${{ compra.total|formato_chileno }}</td>
                         <td>{{ compra.fecha|date:"d/m/Y H:i" }}</td>
                         <td>{{ compra.estado }}</td>
                         <td>
