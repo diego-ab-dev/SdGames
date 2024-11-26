@@ -19,16 +19,17 @@ class ProductoAdmin(admin.ModelAdmin):
     imagen_display.short_description = 'Imagen Principal'
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display=("nombre", "email", "rut" , "telefono", "direccion", "ciudad", 'region')
-    search_fields=("nombre", "email", "telefono",)
-    list_per_page=20
+    list_display = ("nombre", "email", "rut", "telefono", "direccion", "ciudad", "region")
+    search_fields = ("nombre", "email", "telefono",)
+    list_per_page = 20
 
 class VentaAdmin(admin.ModelAdmin):
-    list_display=("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
-    list_filter=("estado", "fecha",)
+    list_display = ("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
+    list_filter = ("estado", "fecha",)
     list_editable = ("estado",)
-    date_hierarchy="fecha"
-    list_per_page=20
+    date_hierarchy = "fecha"
+    list_per_page = 20
+
 
 class ReclamoAdmin(admin.ModelAdmin):
     list_display=("usuario", "estado", "descripcion")

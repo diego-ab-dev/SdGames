@@ -17,121 +17,192 @@
     <title>Metodos de Pago</title>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="card shadow p-4">
-            <h4 class="text-center fw-bold mb-4">Total a pagar: ${{ total|formato_chileno }}</h4>
-            <form>
+    <!-- Quita el <form> de aquí -->
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h4 class="text-center fw-bold mb-4">Total a pagar: ${{ total|formato_chileno }}</h4>
+
+        <div class="mb-3">
+            <label class="fw-bold">Método de Pago</label>
+            <div class="form-check">
+                <input type="radio" id="transferencia" name="metodo_pago" value="transferencia" onchange="mostrarFormulario(this.value)" checked>
+                <label for="transferencia">Transferencia Bancaria</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="mercado_pago" name="metodo_pago" value="mercado_pago" onchange="mostrarFormulario(this.value)">
+                <label for="mercado_pago">Mercado Pago</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" onchange="mostrarFormulario(this.value)">
+                <label for="tarjeta">Tarjeta de Crédito/Débito</label>
+            </div>
+        </div>
+
+        <!-- Formulario de Transferencia -->
+        <div id="form_transferencia" class="metodo-pago">
+            <p><strong>Datos de SD Games para transferencia:</strong></p>
+            <p>Banco: Banco de Chile</p>
+            <p>Cuenta Corriente: 53674362</p>
+            <p>RUT: 76.123.456-7</p>
+            <p>Email: sdgames@correo.cl</p>
+            <p>Por favor, transfiera el monto exacto y envíe el comprobante al correo mencionado. </p>
+            <p class="text-body-secondary">(La confirmacion de la transferencia tarda de 24 hrs a 48 hrs dependiendo la cantidad de ventas)</p>
+            <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pago</button>
+        </div>
+
+        <!-- Formulario de Mercado Pago -->
+        <div id="form_mercado_pago" class="metodo-pago d-none">
+            <button id="mercado_pago_button" class="btn btn-primary w-100" data-total="{{ total }}">Pagar con Mercado Pago</button>
+        </div>
+
+        <!-- Formulario de Tarjeta -->
+    <div id="tarjeta_form_container" data-total="{{ total|default:0 }}">
+        <div id="form_tarjeta" class="metodo-pago d-none">
+            <form id="tarjeta_form">
                 <div class="mb-3">
-                    <label class="fw-bold">Método de Pago</label>
-                    <div class="form-check">
-                        <input type="radio" id="transferencia" name="metodo_pago" value="transferencia" onchange="mostrarFormulario(this.value)" checked>
-                        <label for="transferencia">Transferencia Bancaria</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" id="mercado_pago" name="metodo_pago" value="mercado_pago" onchange="mostrarFormulario(this.value)">
-                        <label for="mercado_pago">Mercado Pago</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" onchange="mostrarFormulario(this.value)">
-                        <label for="tarjeta">Tarjeta de Crédito/Débito</label>
-                    </div>
+                    <label class="fw-bold">Número de Tarjeta</label>
+                    <input type="text" id="numero_tarjeta" class="form-control" placeholder="Número de Tarjeta" maxlength="19">
+                    <small id="tipo_tarjeta" class="text-muted">Tipo: Desconocida</small>
                 </div>
-    
-                <!-- Formulario de Transferencia -->
-                <div id="form_transferencia" class="metodo-pago">
-                    <p><strong>Datos de SD Games para transferencia:</strong></p>
-                    <p>Banco: Banco de Chile</p>
-                    <p>Cuenta Corriente: 53674362</p>
-                    <p>RUT: 76.123.456-7</p>
-                    <p>Email: sdgames@correo.cl</p>
-                    <p>Por favor, transfiera el monto exacto y envíe el comprobante al correo mencionado. </p>
-                    <p class="text-body-secondary">(La confirmacion de la transferencia tarda de 24 hrs a 48 hrs dependiendo la cantidad de ventas)</p>
+                <div class="mb-3">
+                    <label class="fw-bold">Fecha de Vencimiento</label>
+                    <input type="text" id="fecha_vencimiento" class="form-control" placeholder="MM/YY">
                 </div>
-    
-                <!-- Formulario de Mercado Pago -->
-                <div id="form_mercado_pago" class="metodo-pago d-none">
-                    <button id="mercado_pago_button" class="btn btn-primary w-100" data-total="{{ total }}">Pagar con Mercado Pago</button>
+                <div class="mb-3">
+                    <label class="fw-bold">CVV</label>
+                    <input type="password" id="cvv" class="form-control" maxlength="4" placeholder="CVV">
                 </div>
-    
-                <!-- Formulario de Tarjeta -->
-                <div id="form_tarjeta" class="metodo-pago d-none">
-                    <div class="mb-3">
-                        <label class="fw-bold">Detalles de la Tarjeta</label>
-                        <div class="d-flex card-atm border rounded">
-                            <input type="text" class="form-control" placeholder="Número de Tarjeta">
-                            <input type="text" class="form-control w-25" placeholder="MM/YY">
-                            <input type="password" class="form-control w-25" maxlength="3" placeholder="CVV">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Nombre del Titular</label>
-                        <input type="text" class="form-control" placeholder="Nombre completo">
-                    </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Dirección de Facturación</label>
-                        <select class="form-select mb-2">
-                            <option selected hidden>Seleccione un país</option>
-                            <option>Chile</option>
-                            <option>Argentina</option>
-                            <option>Perú</option>
-                        </select>
-                        <input type="text" class="form-control" placeholder="Código Postal">
-                    </div>
-                </div>
-    
                 <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pago</button>
             </form>
         </div>
     </div>
-    
-
+    </div>
+</div>
 
     <script>
-            document.getElementById("mercado_pago_button").addEventListener("click", function (event) {
-            event.preventDefault();
-            console.log("Botón de Mercado Pago clickeado");
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("mercado_pago_button").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    console.log("Botón de Mercado Pago clickeado");
 
-            const total = parseFloat(this.getAttribute("data-total"));
-            console.log("Total a pagar:", total);
+                    const total = parseFloat(this.getAttribute("data-total"));
+                    console.log("Total a pagar:", total);
 
-            fetch("/pago/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: JSON.stringify({
-                    metodo_pago: "mercado_pago",
-                    total: total
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error en la solicitud: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.redirect_url) {
-                    window.location.href = data.redirect_url;
-                } else {
-                    alert(data.mensaje || "Error al procesar el pago.");
-                }
-            })
-            .catch(error => console.error("Error en el fetch:", error));
-        });
-
+                    fetch("/pago/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        body: JSON.stringify({
+                            metodo_pago: "mercado_pago",
+                            total: total
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Error en la solicitud: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            alert(data.mensaje || "Error al procesar el pago.");
+                        }
+                    })
+                    .catch(error => console.error("Error en el fetch:", error));
+                });
+            });
 
 
         function mostrarFormulario(metodo) {
-            // Oculta todos los formularios
             document.querySelectorAll('.metodo-pago').forEach(function (form) {
-                form.classList.add('d-none');
+                form.classList.add('d-none'); 
             });
-    
-            // Muestra el formulario correspondiente
-            document.getElementById('form_' + metodo).classList.remove('d-none');
+            document.getElementById('form_' + metodo).classList.remove('d-none'); 
         }
+
+
+        function detectarTipoTarjeta(numero) {
+        const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/; 
+        const masterCardRegex = /^5[1-5][0-9]{14}$/;   
+        const amexRegex = /^3[47][0-9]{13}$/;          
+
+        if (visaRegex.test(numero)) return "Visa";
+        if (masterCardRegex.test(numero)) return "MasterCard";
+        if (amexRegex.test(numero)) return "Amex";
+        return "Desconocida";
+    }
+
+    function validarNumeroTarjeta(numero) {
+        let suma = 0, alternar = false;
+        for (let i = numero.length - 1; i >= 0; i--) {
+            let digito = parseInt(numero.charAt(i), 10);
+            if (alternar) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+            }
+            suma += digito;
+            alternar = !alternar;
+        }
+        return suma % 10 === 0;
+    }
+
+    document.querySelector("#numero_tarjeta").addEventListener("input", function () {
+        const numero = this.value.replace(/\s+/g, ""); 
+        const tipo = detectarTipoTarjeta(numero);
+        document.querySelector("#tipo_tarjeta").textContent = tipo;
+
+        if (numero.length >= 13 && validarNumeroTarjeta(numero)) {
+            this.classList.add("is-valid");
+            this.classList.remove("is-invalid");
+        } else {
+            this.classList.add("is-invalid");
+            this.classList.remove("is-valid");
+        }
+    });
+
+    const tarjetaForm = document.getElementById('tarjeta_form');
+    const total = document.getElementById('tarjeta_form_container').getAttribute('data-total');
+
+    tarjetaForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const numeroTarjeta = document.getElementById('numero_tarjeta').value;
+        const fechaVencimiento = document.getElementById('fecha_vencimiento').value;
+        const cvv = document.getElementById('cvv').value;
+        const tipoTarjeta = document.querySelector('#tipo_tarjeta').textContent;
+
+        fetch('/pago/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                metodo_pago: 'tarjeta',
+                numero_tarjeta: numeroTarjeta,
+                fecha_vencimiento: fechaVencimiento,
+                cvv: cvv,
+                tipo_tarjeta: tipoTarjeta,
+                total: parseFloat(total),
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Error en el pago.');
+            return response.json();
+        })
+        .then(data => {
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url; 
+            } else {
+                alert(data.mensaje || 'Error al procesar el pago.');
+            }
+        })
+        .catch(error => console.error('Error en el fetch:', error));
+    });
     </script>
     
     
