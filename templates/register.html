@@ -107,6 +107,46 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function (event) {
+            let isValid = true;
+
+            // Validar nombre (solo letras)
+            const nombre = document.getElementById('floatingInputUsername');
+            const nombreRegex = /^[a-zA-Z\s]+$/;
+            if (!nombreRegex.test(nombre.value.trim())) {
+                isValid = false;
+                alert("El nombre solo debe contener letras.");
+                nombre.focus();
+            }
+
+            // Validar correo electrónico
+            const email = document.getElementById('floatingInputEmail');
+            if (!email.value.includes('@')) {
+                isValid = false;
+                alert("El correo debe contener un '@'.");
+                email.focus();
+            }
+
+            // Validar teléfono (exactamente 9 dígitos)
+            const telefono = document.getElementById('floatingInputNumber');
+            const telefonoRegex = /^\d{9}$/;
+            if (!telefonoRegex.test(telefono.value.trim())) {
+                isValid = false;
+                alert("El teléfono debe tener exactamente 9 dígitos.");
+                telefono.focus();
+            }
+
+            // Si alguna validación falla, evitar envío del formulario
+            if (!isValid) {
+                event.preventDefault(); // Detener el envío
+            }
+        });
+    });
+ 
+  
 const regionSelect = document.getElementById('region');
 const ciudadSelect = document.getElementById('ciudad');
 

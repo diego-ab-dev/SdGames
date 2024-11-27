@@ -125,7 +125,6 @@ def login(request):
 
 def logout(request):
     request.session.flush()  
-    messages.success(request, "Sesión cerrada exitosamente.")
     return redirect('login')
     
 def register(request):
@@ -148,7 +147,6 @@ def register(request):
                 region=form.cleaned_data['region'],
             )
             registro.save()
-            messages.success(request, "Usuario registrado correctamente.")
             return redirect('home')
         else:
             print(form.errors)
