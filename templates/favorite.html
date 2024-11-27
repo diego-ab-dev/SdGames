@@ -214,13 +214,11 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-                <!-- Wishlist Table-->
                 <div class="table-responsive wishlist-table margin-bottom-none">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Nombre del Producto</th>
-                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista de deseos</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -246,7 +244,7 @@
                                         <td class="text-center">
                                             <a href="#" class="close" data-url="{% url 'eliminar_favorito' item.id %}" onclick="eliminarItem('{{ item.id }}', this)">
                                                 <i class="fas fa-trash"></i>
-                                            </a>                                            
+                                            </a>                                           
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -298,26 +296,37 @@
             navLinks.classList.toggle("show3");
         }
 
-        function eliminarItem(itemId, buttonElement) {
-            fetch(buttonElement.getAttribute('data-url'), {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken(),
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    buttonElement.closest('tr').remove();
-                } else {
-                    alert('Hubo un error al eliminar el artículo.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Hubo un error al eliminar el artículo.');
-            });
+        function getCSRFToken() {
+        let cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            let [key, value] = cookie.trim().split('=');
+            if (key === 'csrftoken') return value;
         }
+        return null;
+    }
+
+    function eliminarItem(itemId, buttonElement) {
+        fetch(buttonElement.getAttribute('data-url'), {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                buttonElement.closest('tr').remove();
+            } else {
+                response.json().then(data => {
+                    alert(data.message || 'Hubo un error al eliminar el artículo.');
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al eliminar el artículo.');
+        });
+    }
     </script>
 
     <!--footer-->
