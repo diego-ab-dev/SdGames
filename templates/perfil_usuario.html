@@ -179,13 +179,37 @@
                         </div>
                     </div>
                 </div>                
-                  <div class="col-sm-6 mb-3">
-                    <div class="card h-100">
-                      <div class="card-body" style="background-color: #b8b8b9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
-                          <h1 class="fs-4 fst-italic fw-bold text-center">Mis reclamos</h1>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body" style="background-color: #b8b8b9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                      <h1 class="fs-4 fst-italic fw-bold text-center">Mis reclamos</h1>
+                      <ul class="list-group list-group-flush">
+                        {% for reclamo in reclamos_recientes %}
+                          <li class="list-group-item">
+                            <p class="mb-1"><strong>Estado:</strong> {{ reclamo.estado }}</p>
+                            <p class="mb-1"><strong>Descripción:</strong> {{ reclamo.descripcion }}</p>
+                          </li>
+                        {% empty %}
+                          <li class="list-group-item">No hay reclamos recientes.</li>
+                        {% endfor %}
+                      </ul>
+                      <div class="d-grid gap-2 mt-3">
+                        <div class="row">
+                          <div class="col text-center">
+                            <a href="{% url 'lista_reclamos' %}">
+                              <button class="learn-more">
+                                <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                                </span>
+                                <span class="button-text">Ver más</span>
+                              </button>
+                          </a>
+                          </div>
+                      </div>
                       </div>
                     </div>
                   </div>
+                </div>                
                 </div>
               </div>
     

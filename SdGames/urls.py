@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, remove_favorito,  detalles_compra, pago, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, remove_favorito,  detalles_compra, pago, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo, lista_reclamos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('compras/', ver_compras, name='ver_compras'),
     path('perfil/opiniones/',lista_opiniones, name='lista_opiniones'),
     path('crear_reclamo/<int:compra_id>/', crear_reclamo, name='crear_reclamo'),
+    path('reclamos/', lista_reclamos, name='lista_reclamos'),
     path('editar/', editar_perfil, name='editar'),
     path('cambiar/', cambiar_contraseña, name='cambiar'),
     path('carrito/', carrito,  name='carrito'),

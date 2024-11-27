@@ -218,6 +218,24 @@ def crear_reclamo(request, compra_id):
         'compra': compra
     })
 
+def lista_reclamos(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para acceder a tus reclamos.")
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    # Obtener los dos reclamos más recientes
+    reclamos_recientes = Reclamo.objects.filter(usuario=usuario).order_by('-id')[:2]
+    # Obtener todos los reclamos para la vista "ver más"
+    todos_reclamos = Reclamo.objects.filter(usuario=usuario).order_by('-id')
+
+    return render(request, 'lista_reclamos.html', {
+        'reclamos_recientes': reclamos_recientes,
+        'todos_reclamos': todos_reclamos,
+    })
+
+
 
 
 def cambiar_contraseña(request):

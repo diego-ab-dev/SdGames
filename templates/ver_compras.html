@@ -10,13 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'styles/styles_perfil_usuario.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/styles_ver_compras.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <title>Mis Compras</title>
 </head>
 <body>
     <div class="container"> 
-        <h1 class="fs-4">Historial de Compras</h1>
+        <h1 class="fs-2 fst-italic fw-bold">Historial de Compras</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -25,7 +25,7 @@
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Productos</th>
-                    <th>Acciones</th> <!-- Nueva columna para acciones -->
+                    <th class="text-center">Acciones</th> 
                 </tr>
             </thead>
             <tbody>
@@ -43,8 +43,11 @@
                             </ul>
                         </td>
                         <td>
-                            <a href="{% url 'crear_reclamo' compra.id %}" class="btn btn-primary btn-sm">
-                                Agregar Reclamo
+                            <a href="{% url 'crear_reclamo' compra.id %}">
+                                <button type="button" class="button">
+                                    <span class="button__text">Agregar Reclamo</span>
+                                    <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+                                </button>
                             </a>
                         </td>
                     </tr>
