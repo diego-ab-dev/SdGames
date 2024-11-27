@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.timezone import now
 # Todas las tablas se ven en mi azure SQL DataBase, agregue "imagen" en la clase producto
 # para que permita subir imagenes al momento de crear un nuevo producto desde el panel de admin
 
@@ -186,6 +186,8 @@ class Reclamo(models.Model):
     ]
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='reclamos')
     estado = models.CharField(max_length=20,choices=ESTADO_CHOICES, default='Abierto')
+    asunto = models.CharField(max_length=255, default='No especificado')
+    fecha = models.DateTimeField(default=now)
     descripcion = models.TextField(default='', verbose_name="Descripción")
 
     def visualizar_reclamo(self):

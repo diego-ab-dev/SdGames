@@ -1,111 +1,103 @@
-body{
-    height: 100%;
+/* Fondo del formulario */
+body {
+    height: 100vh;
     margin: 0;
-    color: #1a202c;
+    color: #333;
     text-align: left;
-    background-color: #d7ccc8;
+    background-color: #d7ccc8; /* Fondo beige */
     font-family: Arial, sans-serif;
-    overflow-x: hidden;   
-}
-
-.container {
-    height: 100vh; 
-    display: flex; 
-    flex-direction: column;
-}
-
-.main-body {
-    padding: 15px;
-}
-
-.card {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
-
-.card {
-    position: relative;
     display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-}
-
-.card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1rem;
-}
-
-.gutters-sm {
-    margin-right: -8px;
-    margin-left: -8px;
-}
-
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
-    padding-right: 8px;
-    padding-left: 8px;
-}
-.mb-3, .my-3 {
-    margin-bottom: 1rem!important;
-}
-
-.bg-gray-300 {
-    background-color: #e2e8f0;
-}
-.h-100 {
-    height: 100%!important;
-}
-.shadow-none {
-    box-shadow: none!important;
-}
-
-h3{
-    text-align: center;
-}
-
-.messages {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-.message {
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: #fff;
-    display: flex;
+    justify-content: center; /* Centrado horizontal */
     align-items: center;
-    font-size: 16px;
 }
 
-.message .icon {
-    margin-right: 10px;
-    font-size: 18px;
+/* Contenedor del formulario */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.message.error {
-    background-color: #e74c3c; /* Rojo */
-    border: 1px solid #c0392b;
-}
-
-.message.success {
-    background-color: #2ecc71; /* Verde */
-    border: 1px solid #27ae60;
-}
-
-.message.warning {
-    background-color: #f1c40f; /* Amarillo */
-    border: 1px solid #f39c12;
+/* Título del formulario */
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
     color: #333;
 }
 
-.message.info {
-    background-color: #3498db; /* Azul */
-    border: 1px solid #2980b9;
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.form-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Entradas */
+.form-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #a1887f;
+    outline: none;
+    background-color: #fff;
+}
+
+/* Botón */
+.form-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #a1887f; /* Marrón suave */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-button:hover {
+    background-color: #8d6e63; /* Marrón más oscuro */
+}
+
+/* Mensajes */
+#message-container {
+    margin-bottom: 15px;
+}
+
+.message {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.message.error {
+    background-color: #e57373; /* Rojo */
+    color: #fff;
+}
+
+.message.success {
+    background-color: #81c784; /* Verde */
+    color: #fff;
 }
 

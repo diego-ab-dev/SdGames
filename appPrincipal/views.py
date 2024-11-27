@@ -167,11 +167,13 @@ def perfil(request):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')[:3]
     opiniones = Opinion.objects.filter(usuario=usuario).order_by('-fecha_creacion')[:2]
+    reclamos_recientes = Reclamo.objects.filter(usuario=usuario).order_by('-fecha')[:2]
     
     return render(request, 'perfil_usuario.html', {
         'usuario': usuario,
         'compras': compras,
-        'opiniones': opiniones
+        'opiniones': opiniones,
+        'reclamos_recientes': reclamos_recientes,
     })
 
 def lista_opiniones(request):
@@ -206,13 +208,15 @@ def crear_reclamo(request, compra_id):
     compra = get_object_or_404(Venta, id=compra_id, usuario=usuario)
 
     if request.method == 'POST':
+        asunto = request.POST.get('asunto', '').strip()
         descripcion = request.POST.get('descripcion', '').strip()
-        if not descripcion:
-            messages.error(request, "La descripción del reclamo no puede estar vacía.")
+
+        if not asunto or not descripcion:
+            messages.error(request, "Todos los campos son obligatorios.")
         else:
-            Reclamo.objects.create(usuario=usuario, descripcion=descripcion)
+            Reclamo.objects.create(usuario=usuario, asunto=asunto, descripcion=descripcion)
             messages.success(request, "Reclamo creado con éxito.")
-            return redirect('ver_compras')  # Redirige a la vista de historial de compras
+            return redirect('ver_compras')
 
     return render(request, 'crear_reclamo.html', {
         'compra': compra
@@ -496,33 +500,27 @@ def detalles_compra(request):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     carrito = get_object_or_404(Carrito, usuario=usuario)
 
-    if request.method == 'POST':
-        metodo_envio = request.POST.get('metodo_envio')
-        if not metodo_envio:
-            messages.error(request, "Por favor selecciona un método de envío.")
-            return redirect('detalles_compra')
+    if not carrito.items.exists():
+        messages.error(request, "Tu carrito está vacío. Agrega productos antes de continuar.")
+        return redirect('ver_carrito')
 
-        direccion_envio = usuario.direccion if metodo_envio == 'domicilio' else "Retiro en tienda"
+    productos = carrito.items.all()
+    subtotal = sum(item.producto.precio * item.cantidad for item in productos)
+    metodo_envio = request.GET.get('metodo_envio', '')  # Método por GET desde el form
+    envio_costo = 6000 if metodo_envio == 'domicilio' else 0
+    total = subtotal + envio_costo
 
-        # Crear la venta
-        venta = Venta.objects.create(
-            usuario=usuario,
-            metodo_envio=metodo_envio,
-            direccion_envio=direccion_envio,
-            estado='Sin Enviar',
-            carrito=carrito
-        )
-        venta.productos.set(carrito.items.all())  # Asociar productos del carrito
-        venta.calcular_total()
-
-        return redirect('pago', total=venta.total)
-
-    return render(request, 'detalles_compra.html', {
+    context = {
         'usuario': usuario,
-        'carrito': carrito,
-        'productos': carrito.items.all(),
-        'total': carrito.total_carrito(),
-    })
+        'productos': productos,
+        'subtotal': subtotal,
+        'envio_costo': envio_costo,
+        'total': total,
+        'metodo_envio': metodo_envio,
+    }
+
+    return render(request, 'detalles_compra.html', context)
+
 
 
 def pago(request):

@@ -18,31 +18,29 @@
 <body>
     <div class="payment-success-container">
         <div class="payment-success-card">
-            <h1 class="fw-bold fst-italic">¡Gracias por tu compra, {{ usuario.nombre }}!</h1>
+            <h1>¡Gracias por tu compra, {{ usuario.nombre }}!</h1>
 
             <h3>Productos:</h3>
-            <p><strong>Ítems:</strong> {{ cantidad_total_items }}</p>
+            <p><strong>Ítems:</strong> {{ productos|length }}</p>
             <ul>
                 {% for producto in productos %}
                     <li>{{ producto.producto.nombre }} x{{ producto.cantidad }}</li>
                 {% endfor %}
             </ul>
 
-
-            <p><strong>Subtotal:</strong> ${{ venta.subtotal|formato_chileno }}</p>
+            <p><strong>Subtotal:</strong> ${{ subtotal|formato_chileno }}</p>
             <p><strong>Costo de envío:</strong> ${{ envio|formato_chileno }}</p>
             <p><strong>Total pagado:</strong> ${{ total|formato_chileno }}</p>
 
-    
             <h3>Método de envío seleccionado:</h3>
-            {% if venta.metodo_envio == 'domicilio' %}
+            <p>{{ metodo_envio|title }}</p>
+
+            {% if metodo_envio == 'domicilio' %}
                 <h3>Datos de envío:</h3>
                 <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
-                <p><strong>Región:</strong> {{ usuario.region }}</p>
-                <p><strong>Ciudad:</strong> {{ usuario.ciudad }}</p>
             {% else %}
-                <h3>Retiro en tienda:</h3>
-                <p><strong>Dirección de la tienda:</strong> Av. Simpson 3242</p>
+                <h3>Datos para retiro:</h3>
+                <p><strong>Dirección:</strong> Av. Simpson 3242</p>
                 <p><strong>Horarios:</strong> 9:00 AM - 7:00 PM</p>
             {% endif %}
 
