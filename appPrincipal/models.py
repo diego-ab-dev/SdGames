@@ -159,8 +159,6 @@ class Venta(models.Model):
         self.save()
 
 
-
-
 class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="opiniones")
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name="opiniones")
@@ -182,8 +180,12 @@ class Opinion(models.Model):
 
 
 class Reclamo(models.Model):
+    ESTADO_CHOICES = [
+        ('Abierto', 'Abierto'),
+        ('Respondido', 'Respondido'),
+    ]
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='reclamos')
-    estado = models.CharField(max_length=20, default='Abierto')
+    estado = models.CharField(max_length=20,choices=ESTADO_CHOICES, default='Abierto')
     descripcion = models.TextField(default='', verbose_name="Descripción")
 
     def visualizar_reclamo(self):

@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, ListaDeseados, Favorito
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, ListaDeseados, Favorito, Reclamo
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse
 from django.db.models import Avg
 from django.contrib.auth.hashers import make_password, check_password
 from django.conf import settings
@@ -11,6 +11,8 @@ import mercadopago
 import json
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
+from django.contrib.messages import get_messages
+
 # Create your views here.
 
 def password_reset_request(request):
@@ -194,12 +196,29 @@ def ver_compras(request):
 
     return render(request, 'ver_compras.html', {'usuario': usuario, 'compras': compras})
 
+def crear_reclamo(request, compra_id):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        messages.error(request, "Debes iniciar sesión para agregar un reclamo.")
+        return redirect('login')
 
-from django.contrib import messages
-from django.contrib.messages import get_messages
-from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import check_password, make_password
-import json
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    compra = get_object_or_404(Venta, id=compra_id, usuario=usuario)
+
+    if request.method == 'POST':
+        descripcion = request.POST.get('descripcion', '').strip()
+        if not descripcion:
+            messages.error(request, "La descripción del reclamo no puede estar vacía.")
+        else:
+            Reclamo.objects.create(usuario=usuario, descripcion=descripcion)
+            messages.success(request, "Reclamo creado con éxito.")
+            return redirect('ver_compras')  # Redirige a la vista de historial de compras
+
+    return render(request, 'crear_reclamo.html', {
+        'compra': compra
+    })
+
+
 
 def cambiar_contraseña(request):
     if request.method == 'POST':

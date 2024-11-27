@@ -15,7 +15,7 @@
     <title>Mis Compras</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container"> 
         <h1 class="fs-4">Historial de Compras</h1>
         <table class="table table-striped">
             <thead>
@@ -25,6 +25,7 @@
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Productos</th>
+                    <th>Acciones</th> <!-- Nueva columna para acciones -->
                 </tr>
             </thead>
             <tbody>
@@ -41,11 +42,17 @@
                                 {% endfor %}
                             </ul>
                         </td>
+                        <td>
+                            <a href="{% url 'crear_reclamo' compra.id %}" class="btn btn-primary btn-sm">
+                                Agregar Reclamo
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    
     
 </body>
 </html>

@@ -34,6 +34,7 @@ class VentaAdmin(admin.ModelAdmin):
 class ReclamoAdmin(admin.ModelAdmin):
     list_display=("usuario", "estado", "descripcion")
     list_filter=("estado",)
+    list_editable = ("estado",)
     list_per_page=20
 
 admin.site.register(Usuario, UsuarioAdmin)
