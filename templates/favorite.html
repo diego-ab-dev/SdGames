@@ -218,48 +218,48 @@
                         <thead>
                             <tr>
                                 <th>Nombre del Producto</th>
-                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista
-                                        de deseos</a></th>
+                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Vaciar lista de deseos</a></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in wishlist_items %}
-                            <tr>
-                                <td>
-                                    <div class="product-item">
-                                        <a class="product-thumb" href="{{ item.producto.get_absolute_url }}">
-                                            <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}">
-                                        </a>
-                                        <div class="product-info">
-                                            <h4 class="product-title"><a href="{{ item.producto.get_absolute_url }}">{{ item.producto.nombre }}</a></h4>
-                                            <div class="text-lg text-medium text-muted">${{ item.producto.price }}</div>
-                                            <div>Disponibilidad:
-                                                <div
-                                                    class="d-inline {% if item.producto.stock > 0 %}text-success{% else %}text-danger{% endif %}">
-                                                    {% if item.producto.stock > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                            {% if wishlist_items %}
+                                {% for item in wishlist_items %}
+                                    <tr>
+                                        <td>
+                                            <div class="product-item">
+                                                <a class="product-thumb" href="{{ item.producto.get_absolute_url }}">
+                                                    <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}">
+                                                </a>
+                                                <div class="product-info">
+                                                    <h4 class="product-title"><a href="{{ item.producto.get_absolute_url }}">{{ item.producto.nombre }}</a></h4>
+                                                    <div class="text-lg text-medium text-muted">${{ item.producto.price }}</div>
+                                                    <div>Disponibilidad:
+                                                        <div class="d-inline {% if item.producto.stock > 0 %}text-success{% else %}text-danger{% endif %}">
+                                                            {% if item.producto.stock > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <a class="remove-from-cart" href="{% url 'wishlist_remove' item.id %}"
-                                        data-toggle="tooltip" title="Eliminar">
-                                        <i class="icon-cross"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="2" class="text-center">Tu lista de deseados está vacía.</td>
-                            </tr>
-                            {% endfor %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btn btn-outline-danger remove-from-cart" href="{% url 'wishlist_remove' item.id %}" data-toggle="tooltip" title="Eliminar">
+                                                <i class="icon-cross"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="2" class="text-center">Tu lista de deseados está vacía.</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    
     
 
 

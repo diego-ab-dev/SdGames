@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, detalles_compra, pago, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, remove_favorito,  detalles_compra, pago, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,6 +45,7 @@ urlpatterns = [
     path('actualizar-cantidad/', actualizar_cantidad_carrito, name='actualizar_cantidad_carrito'),
     path('favorites/', lista_favoritos, name='lista_favorito'),
     path('agregar_favorito/<int:producto_id>/', agregar_favorito, name='agregar_favorito'),
+    path('remove_favorito/<int:id>/', remove_favorito, name='wishlist_remove'),
     path('obtener_ciudades/', obtener_ciudades, name='obtener_ciudades'),
     path('detalles_compra/', detalles_compra, name='detalles_compra'),
     path('pago/', pago, name='pago'),

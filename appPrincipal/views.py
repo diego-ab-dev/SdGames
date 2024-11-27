@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, ListaDeseados, Favorito, Reclamo
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, Favorito, Reclamo
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -441,7 +441,7 @@ def lista_favoritos(request):
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
 
-    wishlist_items = ListaDeseados.objects.filter(usuario=usuario)
+    wishlist_items = Favorito.objects.filter(usuario=usuario)
     return render(request, 'favorite.html', {'wishlist_items': wishlist_items})
 
 def agregar_favorito(request, producto_id):
@@ -460,6 +460,16 @@ def agregar_favorito(request, producto_id):
         messages.info(request, f"El producto {producto.nombre} ya está en tus favoritos.")
 
     return redirect('lista_favorito')
+
+def remove_favorito(request, item_id):
+    # Buscar el favorito por el id del artículo
+    favorito = get_object_or_404(Favorito, id=item_id)
+
+    # Eliminar el artículo de la lista de favoritos
+    favorito.delete()
+
+    # Redirigir a la lista de favoritos
+    return redirect('lista_favoritos')
 
 
 def detalles_compra(request):
