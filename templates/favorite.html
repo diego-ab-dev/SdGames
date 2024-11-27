@@ -15,6 +15,8 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_favorite.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <title>Lista de deseos - SD Games</title>
 </head>
 
@@ -232,7 +234,7 @@
                                                 </a>
                                                 <div class="product-info">
                                                     <h4 class="product-title"><a href="{{ item.producto.get_absolute_url }}">{{ item.producto.nombre }}</a></h4>
-                                                    <div class="text-lg text-medium text-muted">${{ item.producto.price }}</div>
+                                                    <div class="text-lg text-medium text-muted">$ {{ item.producto.precio }}</div>
                                                     <div>Disponibilidad:
                                                         <div class="d-inline {% if item.producto.stock > 0 %}text-success{% else %}text-danger{% endif %}">
                                                             {% if item.producto.stock > 0 %}In Stock{% else %}Out of Stock{% endif %}
@@ -242,9 +244,9 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-outline-danger remove-from-cart" href="{% url 'wishlist_remove' item.id %}" data-toggle="tooltip" title="Eliminar">
-                                                <i class="icon-cross"></i>
-                                            </a>
+                                            <a href="#" class="close" data-url="{% url 'eliminar_favorito' item.id %}" onclick="eliminarItem('{{ item.id }}', this)">
+                                                <i class="fas fa-trash"></i>
+                                            </a>                                            
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -294,6 +296,27 @@
         let jsArrow = document.querySelector(".js-arrow");
         jsArrow.onclick = function () {
             navLinks.classList.toggle("show3");
+        }
+
+        function eliminarItem(itemId, buttonElement) {
+            fetch(buttonElement.getAttribute('data-url'), {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    buttonElement.closest('tr').remove();
+                } else {
+                    alert('Hubo un error al eliminar el artículo.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al eliminar el artículo.');
+            });
         }
     </script>
 

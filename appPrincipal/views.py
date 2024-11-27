@@ -479,14 +479,12 @@ def agregar_favorito(request, producto_id):
 
     return redirect('lista_favorito')
 
-def remove_favorito(request, item_id):
-    # Buscar el favorito por el id del artículo
+def eliminar_favorito(request, item_id):
+
     favorito = get_object_or_404(Favorito, id=item_id)
 
-    # Eliminar el artículo de la lista de favoritos
     favorito.delete()
 
-    # Redirigir a la lista de favoritos
     return redirect('lista_favoritos')
 
 
