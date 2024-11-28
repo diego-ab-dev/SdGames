@@ -160,7 +160,6 @@ def register(request):
 def perfil(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
-        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
         return redirect('login')
     
     usuario = get_object_or_404(Usuario, id=usuario_id)
@@ -178,7 +177,6 @@ def perfil(request):
 def lista_opiniones(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
-        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
         return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
