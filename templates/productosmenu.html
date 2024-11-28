@@ -146,7 +146,6 @@
 
       <div class="d-flex login-desktop">
         {% if usuario %}
-        <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
         <div class="menu">
           <div class="item">
             <a href="/perfil" class="link">
@@ -167,7 +166,6 @@
           </div>
         </div>
         {% else %}
-        <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
         <button onclick="window.location.href='/login'">
           Iniciar Sesión
           <div class="arrow-wrapper">
@@ -295,7 +293,6 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-      <!--slide end-->
 
 
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -311,7 +308,6 @@
             </div>
           </div>
           <div class="row">
-            <!-- Single Product -->
             {% for producto in productos %}
             <div class="col-md-6 col-lg-4 col-xl-3">
               <div id="product-4" class="single-product"
@@ -358,7 +354,6 @@
         </div>
       </section>
       
-      <!--Boton para ir hacia arriba-->
       <div class="go-top-container">
         <div class="go-top-button">
           <img src="{% static 'images/navegar-flecha-hacia-arriba.png' %}" alt="">
@@ -408,7 +403,6 @@
 
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
-        // let searchBoxCancel = document.querySelector(".search-box .bx-x");
         searchBox.addEventListener("click", () => {
           navbar.classList.toggle("showInput");
           if (navbar.classList.contains("showInput")) {
@@ -417,7 +411,6 @@
             searchBox.classList.replace("bx-x", "bx-search");
           }
         });
-        // sidebar open close js code
         let navLinks = document.querySelector(".nav-links");
         let menuOpenBtn = document.querySelector(".navbar .bx-menu");
         let menuCloseBtn = document.querySelector(".nav-links .bx-x");
@@ -427,7 +420,6 @@
         menuCloseBtn.onclick = function () {
           navLinks.style.left = "-100%";
         }
-        // sidebar submenu open close js code
         let htmlcssArrow = document.querySelector(".htmlcss-arrow");
         htmlcssArrow.onclick = function () {
           navLinks.classList.toggle("show1");
@@ -442,8 +434,6 @@
         }
       </script>
 
-
-      <!--footer-->
       <footer class="text-center text-lg-start text-light">
         <section class="">
           <div class="container text-center text-md-start mt-5">

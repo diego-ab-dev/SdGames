@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    <!--Nav de la web-->
     <nav>
       <div class="navbar">
         <i class='bx bx-menu'></i>
@@ -116,7 +115,6 @@
   
           <div class="d-flex login-desktop">
             {% if usuario %}
-              <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
               <div class="menu">
                 <div class="item">
                   <a href="/perfil" class="link">
@@ -138,7 +136,6 @@
                 </div>
               </div>  
             {% else %}
-              <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
               <button onclick="window.location.href='/login'">
                 Iniciar Sesión
                 <div class="arrow-wrapper">
@@ -181,7 +178,6 @@
                       </div>
                   </div>
   
-                  <!-- Mostrar productos o mensaje si el carrito está vacío -->
                   <div class="row border-top border-bottom">
                       {% if productos %}
                           {% for item in productos %}
@@ -211,13 +207,11 @@
                       {% endif %}
                   </div>
   
-                  <!-- Botón de regreso -->
                   <div class="back-to-shop">
                       <a href="/menu">&leftarrow;</a><span class="text-muted">Regresar</span>
                   </div>
               </div>
   
-              <!-- Resumen del carrito -->
               <div class="col-md-4 summary">
                   <div><h5><b>Resumen</b></h5></div>
                   <hr>
@@ -245,12 +239,11 @@
 
 
     <script>
-      // Función para formatear números al formato chileno
     function formatoChileno(valor) {
         return new Intl.NumberFormat('es-CL', {
             style: 'currency',
             currency: 'CLP',
-            minimumFractionDigits: 0, // Sin decimales
+            minimumFractionDigits: 0,
         }).format(valor);
     }
 
@@ -268,14 +261,12 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Actualizar cantidad total de items y el total en el DOM
                 document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
 
-                // Formatear el total al estilo chileno
                 const totalFormateado = formatoChileno(data.total);
                 document.getElementById('total').textContent = totalFormateado;
             } else if (data.error) {
-                alert(data.error); // Mostrar el error si ocurre
+                alert(data.error);
             }
         })
         .catch(error => console.error('Error:', error));
@@ -293,23 +284,19 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Eliminar el elemento del DOM
                 document.getElementById(`item-${itemId}`).remove();
 
-                // Actualizar cantidad total de items y el total en el DOM
                 document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
 
-                // Formatear el total al estilo chileno
                 const totalFormateado = formatoChileno(data.total);
                 document.getElementById('total').textContent = totalFormateado;
 
-                // Si el carrito queda vacío, mostrar un mensaje
                 if (data.total_items === 0) {
                     const container = document.querySelector('.cart');
                     container.innerHTML = '<div class="text-center p-4"><h5 class="text-muted">Tu carrito está vacío.</h5></div>';
                 }
             } else if (data.error) {
-                alert(data.error); // Mostrar el error si ocurre
+                alert(data.error);
             }
         })
         .catch(error => console.error('Error:', error));
@@ -348,7 +335,6 @@
         }
     </script>
 
-    <!--footer-->
     <footer class="text-center text-lg-start text-light">
         <section class="">
             <div class="container text-center text-md-start mt-5">

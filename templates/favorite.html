@@ -22,7 +22,6 @@
 </head>
 
 <body>
-    <!--Nav de la web-->
     <nav>
         <div class="navbar">
             <i class='bx bx-menu'></i>
@@ -159,7 +158,6 @@
 
             <div class="d-flex login-desktop">
                 {% if usuario %}
-                <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
                 <div class="menu">
                     <div class="item">
                         <a href="/perfil" class="link">
@@ -180,7 +178,6 @@
                     </div>
                 </div>
                 {% else %}
-                <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
                 <button onclick="window.location.href='/login'">
                     Iniciar Sesión
                     <div class="arrow-wrapper">
@@ -341,7 +338,6 @@
     }
     </script>
 
-    <!--footer-->
     <footer class="text-center text-lg-start text-light">
         <section class="">
             <div class="container text-center text-md-start mt-5">

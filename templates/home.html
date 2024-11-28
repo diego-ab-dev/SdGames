@@ -19,7 +19,6 @@
 </head>
 
 <body>
-  <!--Nav de la web-->
   <nav>
     <div class="navbar">
       <i class='bx bx-menu'></i>
@@ -49,7 +48,6 @@
 
         <div class="d-flex login-desktop">
           {% if usuario %}
-            <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
             <div class="menu">
               <div class="item">
                 <a href="/perfil" class="link">
@@ -71,7 +69,6 @@
               </div>
             </div>  
           {% else %}
-            <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
             <button onclick="window.location.href='/login'">
               Iniciar Sesión
               <div class="arrow-wrapper">
@@ -99,7 +96,6 @@
     </div>
   </nav>
 
-  <!--Fondo Principal con nombre de la tienda y frase-->
   <div id="fondo">
     <div class="text container">
       <h1 class="fw-bold fst-italic text-center">SD Games</h1>
@@ -109,7 +105,6 @@
     </div>
   </div>
 
-  <!--Parrafos-->
   <a name="nosotros"></a>
   <div class="cont container">
     <section id="hero" class="paused">
@@ -140,7 +135,6 @@
     </section>
   </div>
 
-  <!--Cards-->
   <section id="hero" class="wrapper paused">
     <div class="container">
       <div class="row">
@@ -204,7 +198,6 @@
     </div>
   </section>
 
-  <!--Mapa del local-->
   <div class="localcont container">
     <section id="hero" class="paused">
       <a name="local"></a>
@@ -248,7 +241,6 @@
   </section>
 
 
-  <!--Boton para ir hacia arriba-->
   <div class="go-top-container">
     <div class="go-top-button">
       <img src="{% static 'images/navegar-flecha-hacia-arriba.png' %}" alt="">
@@ -292,7 +284,6 @@
 
   let navbar = document.querySelector(".navbar");
   let searchBox = document.querySelector(".search-box .bx-search");
-  // let searchBoxCancel = document.querySelector(".search-box .bx-x");
   searchBox.addEventListener("click", ()=>{
     navbar.classList.toggle("showInput");
     if(navbar.classList.contains("showInput")){
@@ -301,7 +292,6 @@
       searchBox.classList.replace("bx-x" ,"bx-search");
     }
   });
-  // sidebar open close js code
   let navLinks = document.querySelector(".nav-links");
   let menuOpenBtn = document.querySelector(".navbar .bx-menu");
   let menuCloseBtn = document.querySelector(".nav-links .bx-x");
@@ -311,7 +301,6 @@
   menuCloseBtn.onclick = function() {
   navLinks.style.left = "-100%";
   }
-  // sidebar submenu open close js code
   let htmlcssArrow = document.querySelector(".htmlcss-arrow");
   htmlcssArrow.onclick = function() {
   navLinks.classList.toggle("show1");

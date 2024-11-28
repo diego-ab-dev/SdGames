@@ -120,7 +120,6 @@
 
         <div class="d-flex login-desktop">
           {% if usuario %}
-            <!-- Mostrar perfil y cerrar sesión si el usuario ha iniciado sesión -->
             <div class="menu">
               <div class="item">
                 <a href="/perfil" class="link">
@@ -142,7 +141,6 @@
               </div>
             </div>  
           {% else %}
-            <!-- Mostrar iniciar sesión y registrarse si el usuario no está autenticado -->
             <button onclick="window.location.href='/login'">
               Iniciar Sesión
               <div class="arrow-wrapper">
@@ -174,12 +172,11 @@
     <section class="section-products">
         <div class="container">
             <div class="row">
-                <!-- Barra lateral de filtros -->
+
                 <div class="col-md-3">
                     <div class="filtros">
                         <h4 class="fw-bold">Filtrar</h4>
                         <form method="get">
-                            <!-- Filtrar por género -->
                             <div class="mb-3">
                                 <label for="genero" class="form-label">Género</label>
                                 <select name="genero" id="genero" class="form-select">
@@ -191,7 +188,6 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <!-- Filtrar por rango de precios -->
                             <div class="mb-3">
                               <label for="orden_precio" class="form-label">Ordenar por precio</label>
                               <select name="orden_precio" id="orden_precio" class="form-select">
@@ -204,8 +200,7 @@
                         </form>
                     </div>
                 </div>
-    
-                <!-- Productos -->
+
                 <div class="col-md-12">
                   <div class="row justify-content-center text-center">
                     <div class="col-md-8 col-lg-6">
@@ -260,7 +255,6 @@
         </div>
     </section>
 
-      <!--Boton para ir hacia arriba-->
       <div class="go-top-container">
         <div class="go-top-button">
           <img src="{% static 'images/navegar-flecha-hacia-arriba.png' %}" alt="">
@@ -303,7 +297,6 @@
         });
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
-        // let searchBoxCancel = document.querySelector(".search-box .bx-x");
         searchBox.addEventListener("click", ()=>{
             navbar.classList.toggle("showInput");
             if(navbar.classList.contains("showInput")){
@@ -312,7 +305,6 @@
             searchBox.classList.replace("bx-x" ,"bx-search");
             }
         });
-        // sidebar open close js code
         let navLinks = document.querySelector(".nav-links");
         let menuOpenBtn = document.querySelector(".navbar .bx-menu");
         let menuCloseBtn = document.querySelector(".nav-links .bx-x");
@@ -322,7 +314,6 @@
         menuCloseBtn.onclick = function() {
         navLinks.style.left = "-100%";
         }
-        // sidebar submenu open close js code
         let htmlcssArrow = document.querySelector(".htmlcss-arrow");
         htmlcssArrow.onclick = function() {
         navLinks.classList.toggle("show1");
@@ -337,7 +328,6 @@
         }
     </script>
     
-    <!--footer-->
   <footer class="text-center text-lg-start text-light">
     <section class="">
       <div class="container text-center text-md-start mt-5">

@@ -32,7 +32,6 @@
                 </select>
             </div>
 
-            <!-- Formulario de tarjeta -->
             <div id="form-tarjeta" class="hidden form-container">
                 <h4>Detalles de la tarjeta</h4>
                 <div class="mb-3">
@@ -55,8 +54,6 @@
                 </div>
             </div>
             
-
-            <!-- Formulario de transferencia -->
             <div id="form-transferencia" class="hidden form-container">
                 <h4>Datos de transferencia bancaria</h4>
                 <p><strong>Banco:</strong> Banco Ejemplo</p>
@@ -75,16 +72,28 @@
 
     <script>
         function mostrarFormulario() {
-            const metodo = document.getElementById("metodo_pago").value;
-            document.getElementById("form-tarjeta").classList.add("hidden");
-            document.getElementById("form-transferencia").classList.add("hidden");
+    const metodo = document.getElementById("metodo_pago").value;
 
-            if (metodo === "tarjeta") {
-                document.getElementById("form-tarjeta").classList.remove("hidden");
-            } else if (metodo === "transferencia") {
-                document.getElementById("form-transferencia").classList.remove("hidden");
-            } 
-        }
+    const formTarjeta = document.getElementById("form-tarjeta");
+    const formTransferencia = document.getElementById("form-transferencia");
+
+    formTarjeta.classList.add("hidden");
+    formTransferencia.classList.add("hidden");
+
+    Array.from(formTarjeta.querySelectorAll("input")).forEach(input => {
+        input.required = false;
+    });
+
+    if (metodo === "tarjeta") {
+        formTarjeta.classList.remove("hidden");
+        Array.from(formTarjeta.querySelectorAll("input")).forEach(input => {
+            input.required = true;
+        });
+    } else if (metodo === "transferencia") {
+        formTransferencia.classList.remove("hidden");
+    }
+}
+
 
         function formatearNumeroTarjeta() {
             const input = document.getElementById("numero_tarjeta");

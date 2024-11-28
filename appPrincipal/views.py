@@ -542,9 +542,9 @@ def seleccionar_pago(request, usuario_id):
     total = subtotal + costo_envio
 
     if request.method == 'POST':
-        metodo_pago = request.POST.get('metodo_pago', 'tarjeta')
+        metodo_pago = request.POST.get('metodo_pago')
 
-        if metodo_pago == "tarjeta":
+        if metodo_pago in ["tarjeta", "transferencia"]:
             return redirect('compra_exitosa', usuario_id=usuario_id)
 
         messages.error(request, "Método de pago no válido.")
@@ -554,6 +554,7 @@ def seleccionar_pago(request, usuario_id):
         'usuario': usuario,
         'total': total,
     })
+
 
 def compra_exitosa(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
