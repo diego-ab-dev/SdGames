@@ -244,10 +244,19 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
+                                            <div class="wishlist-item">
+                                                <form action="{% url 'agregar_al_carrito' item.producto.id %}" method="POST" class="mt-2">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-dark">Añadir al Carrito</button>
+                                                </form>
+                                            </div>
+                                            <br>
                                             <a href="#" class="close" data-url="{% url 'eliminar_favorito' item.id %}" onclick="eliminarItem('{{ item.id }}', this)">
                                                 <i class="fas fa-trash"></i>
+                                                
                                             </a>                                           
                                         </td>
+                                        
                                     </tr>
                                 {% endfor %}
                             {% else %}
