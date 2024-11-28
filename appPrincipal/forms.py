@@ -72,7 +72,7 @@ class Usuario(forms.Form):
         ('METROPOLITANA', 'Región Metropolitana de Santiago'),
         ('OHIGGINS', 'Región del Libertador General Bernardo O\'Higgins'),
         ('MAULE', 'Región del Maule'),
-        ('NUBLE', 'Región de Ñuble'),
+        ('ÑUBLE', 'Región de Ñuble'),
         ('BIOBIO', 'Región del Biobío'),
         ('ARAUCANIA', 'Región de La Araucanía'),
         ('LOS RIOS', 'Región de Los Ríos'),
