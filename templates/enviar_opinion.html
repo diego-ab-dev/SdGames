@@ -16,18 +16,15 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="fs-4 fst-italic fw-bold">Enviar Opinión</h1>
-        <p class="mb-3">Compra ID: {{ compra.id }}</p>
-        
-        <form method="post">
+        <h2 class="mb-4">Agregar Opinión para la Compra #{{ compra.id }}</h2>
+    
+        <form method="post" class="shadow p-4 rounded bg-light">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Enviar Opinión</button>
+            <button type="submit" class="btn btn-primary mt-3">Enviar Opinión</button>
         </form>
-        
-        <div class="mt-4">
-            <a href="{% url 'ver_compras' %}" class="btn btn-secondary">Volver al Historial</a>
-        </div>
+    
+        <a href="{% url 'ver_compras' %}" class="btn btn-link mt-3">Volver al Historial</a>
     </div>
 </body>
 </html>

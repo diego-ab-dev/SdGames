@@ -24,11 +24,19 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 class VentaAdmin(admin.ModelAdmin):
-    list_display = ("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio")
+    list_display = ("usuario", "total", "estado", "fecha", "metodo_envio", "direccion_envio", "productos_comprados")
     list_filter = ("estado", "fecha",)
     list_editable = ("estado",)
     date_hierarchy = "fecha"
     list_per_page = 20
+
+    def productos_comprados(self, obj):
+        # Obtener los productos relacionados a través de ProductoVenta
+        productos = obj.producto_venta.all()
+        return ", ".join([f"{pv.producto.nombre} (x{pv.cantidad})" for pv in productos])
+
+    productos_comprados.short_description = "Productos Comprados"
+
 
 
 class ReclamoAdmin(admin.ModelAdmin):
