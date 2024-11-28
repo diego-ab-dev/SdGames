@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, Favorito, Reclamo
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Avg
@@ -481,13 +482,11 @@ def agregar_favorito(request, producto_id):
 
     return redirect('lista_favorito')
 
+@require_http_methods(["DELETE"])
 def eliminar_favorito(request, item_id):
-
     favorito = get_object_or_404(Favorito, id=item_id)
-
     favorito.delete()
-
-    return redirect('lista_favoritos')
+    return JsonResponse({'message': 'Artículo eliminado correctamente'}, status=200)
 
 
 def detalles_compra(request):

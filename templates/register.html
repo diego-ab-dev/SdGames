@@ -109,7 +109,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
-        
+
         form.addEventListener('submit', function (event) {
             let isValid = true;
 
@@ -139,13 +139,21 @@
                 telefono.focus();
             }
 
+            // Validar confirmación de contraseña
+            const contraseña = document.getElementById('floatingPassword');
+            const confirmarContraseña = document.getElementById('floatingPasswordConfirm');
+            if (contraseña.value !== confirmarContraseña.value) {
+                isValid = false;
+                alert("Las contraseñas no coinciden. Por favor, verifique.");
+                confirmarContraseña.focus();
+            }
+
             // Si alguna validación falla, evitar envío del formulario
             if (!isValid) {
                 event.preventDefault(); // Detener el envío
             }
         });
     });
- 
   
 const regionSelect = document.getElementById('region');
 const ciudadSelect = document.getElementById('ciudad');
