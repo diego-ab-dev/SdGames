@@ -489,11 +489,6 @@ def agregar_favorito(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     favorito, created = Favorito.objects.get_or_create(usuario=usuario, producto=producto)
 
-    if created:
-        messages.success(request, f"El producto {producto.nombre} ha sido agregado a tus favoritos.")
-    else:
-        messages.info(request, f"El producto {producto.nombre} ya está en tus favoritos.")
-
     return redirect('lista_favorito')
 
 @require_http_methods(["DELETE"])
@@ -588,5 +583,4 @@ def compra_exitosa(request, usuario_id):
         'venta': venta,
         'metodo_pago': metodo_pago,
     })
-
 # fin de vistas relacionadas con pago y envio
