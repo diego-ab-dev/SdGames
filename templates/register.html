@@ -94,13 +94,6 @@
                                 Registrarse
                             </button>
                         </div>
-                        {% if messages %}
-                            <div>
-                                {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
                     </form>
                     <div class="text-center mt-4">
                         <a href="{% url 'home' %}" class="btn btn-minimal">Volver</a>
