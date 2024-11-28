@@ -17,7 +17,7 @@
 <body>
     <div class="container">  
         <h1 class="fs-2 fst-italic fw-bold">Historial de Compras</h1>
-        <div class="table-responsive"> <!-- Contenedor con scroll interno -->
+        <div class="table-responsive"> 
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -40,14 +40,10 @@
                                 <ul>
                                     {% for producto_venta in compra.producto_venta.all %}
                                         <li>{{ producto_venta.producto.nombre }} (x{{ producto_venta.cantidad }}) - Subtotal(Sin Envío): ${{ producto_venta.total_producto }}</li>
-                                        <a href="{% url 'enviar_opinion' compra.id %}">
-                                            <button class="btn btn-sm btn-outline-secondary ms-2">Opinar</button>
-                                        </a>
                                     {% endfor %}
                                 </ul>
                             </td>
                             <td>
-                                <!-- Botón para agregar un reclamo -->
                                 <a href="{% url 'crear_reclamo' compra.id %}">
                                     <button type="button" class="button">
                                         <span class="button__text">Agregar Reclamo</span>

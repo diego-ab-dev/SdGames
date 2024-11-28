@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, ProductoVenta ,Opinion, Favorito, Reclamo
 from appPrincipal import forms
-from .forms import OpinionForm 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
@@ -9,7 +8,6 @@ from django.http import JsonResponse
 from django.db.models import Avg
 from django.contrib.auth.hashers import make_password, check_password
 from django.conf import settings
-import mercadopago
 import json
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
@@ -199,30 +197,6 @@ def ver_compras(request):
 
 
 
-def enviar_opinion(request, compra_id):
-    # Obtener la compra específica
-    compra = get_object_or_404(Venta, id=compra_id, usuario=request.user)
-    productos = compra.productos.all()  # Productos comprados en esta transacción
-
-    if request.method == 'POST':
-        form = OpinionForm(request.POST, productos=productos)
-        if form.is_valid():
-            opinion = form.save(commit=False)
-            opinion.usuario = request.user
-            opinion.save()
-            messages.success(request, "¡Gracias por enviar tu opinión!")
-            return redirect('ver_compras')  # Redirige al historial de compras
-    else:
-        form = OpinionForm(productos=productos)
-
-    return render(request, 'enviar_opinion.html', {
-        'compra': compra,
-        'productos': productos,
-        'form': form,
-    })
-
-
-
 def crear_reclamo(request, compra_id):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -286,7 +260,6 @@ def cambiar_contraseña(request):
         else:
             messages.error(request, "Debes iniciar sesión para cambiar tu contraseña.")
 
-    # Convertir mensajes a una lista serializable
     storage = get_messages(request)
     mensajes = [{'tipo': message.tags, 'texto': message.message} for message in storage]
 
@@ -517,64 +490,20 @@ def eliminar_favorito(request, item_id):
 
 def seleccionar_envio(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito = usuario.carritos.last()  # Último carrito activo
+    carrito = usuario.carritos.last() 
 
     if not carrito or not carrito.items.exists():
-        return redirect('carrito_vacio')  # Redirige si el carrito está vacío
+        return redirect('carrito_vacio') 
 
     if request.method == 'POST':
-        # Guardar datos del método de envío en la sesión
         metodo_envio = request.POST.get('metodo_envio', 'tienda')
         direccion_envio = usuario.direccion if metodo_envio == 'domicilio' else None
-
-        # Guardar en la sesión para usar en la vista de "compra_exitosa"
         request.session['metodo_envio'] = metodo_envio
         request.session['direccion_envio'] = direccion_envio
 
         return redirect('seleccionar_pago', usuario_id=usuario_id)
 
     return render(request, 'seleccionar_envio.html', {'usuario': usuario, 'carrito': carrito})
-
-
-
-def iniciar_pago_mercadopago(request, usuario_id):
-    usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito = usuario.carritos.last()
-
-    if not carrito or not carrito.items.exists():
-        messages.error(request, "No hay productos en tu carrito.")
-        return redirect('ver_carrito')
-
-    sdk = mercadopago.SDK("APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885")
-
-    # Crear la preferencia
-    preference_data = {
-        "items": [
-            {
-                "title": item.producto.nombre,
-                "quantity": item.cantidad,
-                "unit_price": float(item.producto.precio),
-                "currency_id": "CLP"
-            }
-            for item in carrito.items.all()
-        ],
-        "payer": {
-            "name": usuario.nombre,
-            "email": usuario.email,
-        },
-        "back_urls": {
-            "success": request.build_absolute_uri(reverse('pago_exitoso')),
-            "failure": request.build_absolute_uri(reverse('pago_fallido')),
-            "pending": request.build_absolute_uri(reverse('pago_pendiente')),
-        },
-        "auto_return": "approved",
-    }
-
-    preference_response = sdk.preference().create(preference_data)
-
-    # Redirigir a la URL del Checkout Pro
-    checkout_url = preference_response["response"]["init_point"]
-    return redirect(checkout_url)
 
 
 def seleccionar_pago(request, usuario_id):
@@ -585,59 +514,29 @@ def seleccionar_pago(request, usuario_id):
         messages.error(request, "No hay productos en tu carrito.")
         return redirect('ver_carrito')
 
-    # Calcular el total del carrito
     subtotal = sum(item.cantidad * item.producto.precio for item in carrito.items.all())
 
-    # Obtener el costo del envío de la sesión
     metodo_envio = request.session.get('metodo_envio', 'tienda')
-    costo_envio = 0  # Define un costo base
+    costo_envio = 0
     if metodo_envio == 'domicilio':
-        costo_envio = 5000  # Ajusta este valor según tus reglas
+        costo_envio = 5000
 
     total = subtotal + costo_envio
 
-    # Generar preferencia de Mercado Pago
-    sdk = mercadopago.SDK("APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885")
-    preference_data = {
-        "items": [
-            {
-                "title": item.producto.nombre,
-                "quantity": item.cantidad,
-                "unit_price": float(item.producto.precio),
-                "currency_id": "CLP"
-            }
-            for item in carrito.items.all()
-        ],
-        "payer": {
-            "name": usuario.nombre,
-            "email": usuario.email,
-        },
-        "back_urls": {
-            "success": request.build_absolute_uri(reverse('pago_exitoso')),
-            "failure": request.build_absolute_uri(reverse('pago_fallido')),
-            "pending": request.build_absolute_uri(reverse('pago_pendiente')),
-        },
-        "auto_return": "approved",
-    }
-    preference_response = sdk.preference().create(preference_data)
-
-    # Obtener el preference_id para el frontend
-    preference_id = preference_response["response"]["id"]
-
     if request.method == 'POST':
         metodo_pago = request.POST.get('metodo_pago', 'tarjeta')
-        request.session['metodo_pago'] = metodo_pago
 
-        if metodo_pago == "mercado_pago":
-            return redirect('iniciar_pago_mercadopago', usuario_id=usuario_id)
+        if metodo_pago == "tarjeta":
+            return redirect('compra_exitosa', usuario_id=usuario_id)
 
-        return redirect('compra_exitosa', usuario_id=usuario_id)
+        messages.error(request, "Método de pago no válido.")
+        return redirect('seleccionar_pago', usuario_id=usuario_id)
 
     return render(request, 'seleccionar_pago.html', {
         'usuario': usuario,
         'total': total,
-        'preference_id': preference_id,  # Pasa el ID generado aquí
     })
+
 
 
 
@@ -653,18 +552,16 @@ def compra_exitosa(request, usuario_id):
         return redirect('ver_carrito')
 
     metodo_envio = request.session.get('metodo_envio', 'tienda')
-    direccion_envio = request.session.get('direccion_envio')  # Ya está asignada desde seleccionar_envio
+    direccion_envio = request.session.get('direccion_envio')  
     metodo_pago = request.session.get('metodo_pago', 'tarjeta')
 
-    # Crear la venta
     venta = Venta.objects.create(
         carrito=carrito,
         usuario=usuario,
         metodo_envio=metodo_envio,
-        direccion_envio=direccion_envio,  # Asignar dirección
+        direccion_envio=direccion_envio, 
     )
 
-    # Asociar productos con la venta
     for item in carrito.items.all():
         ProductoVenta.objects.create(
             venta=venta,
@@ -674,8 +571,6 @@ def compra_exitosa(request, usuario_id):
         )
 
     venta.calcular_total()
-
-    # Vaciar el carrito
     carrito.items.all().delete()
 
     return render(request, 'compra_exitosa.html', {
@@ -683,17 +578,6 @@ def compra_exitosa(request, usuario_id):
         'metodo_pago': metodo_pago,
     })
 
-
-
-
-def pago_exitoso(request):
-    return render(request, 'pago_exitoso.html')
-
-def pago_fallido(request):
-    return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})
-
-def pago_pendiente(request):
-    return render(request, 'pago_pendiente.html', {'mensaje': 'Tu pago está pendiente de aprobación. Recibirás una notificación cuando sea confirmado.'})
 
 
 

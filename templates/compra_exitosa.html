@@ -30,7 +30,6 @@
                         Valdivia, Av. Simpson 641 (Dirección de SD Games)
                     {% endif %}
                 </li>
-                <li><strong>Método de pago:</strong> {{ request.session.metodo_pago }}</li>
                 <li><strong>Subtotal:</strong> ${{ venta.subtotal|formato_chileno }}</li>
                 <li><strong>Costo de envío:</strong> ${{ venta.envio|formato_chileno }}</li>
                 <li><strong>Total:</strong> ${{ venta.total|formato_chileno }}</li>

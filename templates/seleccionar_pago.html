@@ -11,7 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_metodo.css' %}">
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <style>
         .hidden {
         display: none;
@@ -30,29 +29,23 @@
                     <option value="" selected disabled>Selecciona un método</option>
                     <option value="tarjeta">Tarjeta de crédito/débito</option>
                     <option value="transferencia">Transferencia bancaria</option>
-                    <option value="mercado_pago">Mercado Pago</option>
                 </select>
             </div>
 
             <!-- Formulario de tarjeta -->
             <div id="form-tarjeta" class="hidden form-container">
                 <h4>Detalles de la tarjeta</h4>
-                <!-- Número de tarjeta -->
                 <div class="mb-3">
                     <label for="numero_tarjeta" class="form-label">Número de tarjeta:</label>
                     <input type="text" class="form-control" id="numero_tarjeta" maxlength="19" 
                            placeholder="XXXX XXXX XXXX XXXX" oninput="formatearNumeroTarjeta()" required>
                     <img id="logo_tarjeta" class="tarjeta-logo hidden" src="" alt="Tarjeta">
                 </div>
-            
-                <!-- Fecha de expiración -->
                 <div class="mb-3">
                     <label for="expiracion" class="form-label">Fecha de expiración:</label>
                     <input type="text" class="form-control" id="expiracion" maxlength="5"
                            placeholder="MM/AA" oninput="formatearFechaExpiracion()" required>
                 </div>
-            
-                <!-- CVV -->
                 <div class="mb-3 position-relative">
                     <label for="cvv" class="form-label">CVV:</label>
                     <div class="input-group position-relative">
@@ -73,11 +66,6 @@
                 <p><strong>Email:</strong> contacto@ejemplo.com</p>
             </div>
 
-            <!-- Botón de Mercado Pago -->
-            <div id="form-mercado-pago" class="hidden form-container">
-                <h4>Mercado Pago</h4>
-            </div>
-
             <button type="submit" class="Btn">
                 Pagar
             <svg class="svgIcon" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
@@ -90,34 +78,28 @@
             const metodo = document.getElementById("metodo_pago").value;
             document.getElementById("form-tarjeta").classList.add("hidden");
             document.getElementById("form-transferencia").classList.add("hidden");
-            document.getElementById("form-mercado-pago").classList.add("hidden");
 
             if (metodo === "tarjeta") {
                 document.getElementById("form-tarjeta").classList.remove("hidden");
             } else if (metodo === "transferencia") {
                 document.getElementById("form-transferencia").classList.remove("hidden");
-            } else if (metodo === "mercado_pago") {
-                document.getElementById("form-mercado-pago").classList.remove("hidden");
-            }
+            } 
         }
 
-        // Formatear número de tarjeta con espacios
         function formatearNumeroTarjeta() {
             const input = document.getElementById("numero_tarjeta");
-            const valor = input.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-            const grupos = valor.match(/.{1,4}/g) || []; // Agrupar cada 4 dígitos
-            input.value = grupos.join(" "); // Unir con espacios
-            detectarTarjeta(); // Actualizar logo
+            const valor = input.value.replace(/\D/g, "");
+            input.value = grupos.join(" "); 
+            detectarTarjeta(); 
         }
 
-        // Formatear fecha de expiración con "/"
         function formatearFechaExpiracion() {
             const input = document.getElementById("expiracion");
-            const valor = input.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            const valor = input.value.replace(/\D/g, "");
             if (valor.length <= 2) {
-                input.value = valor; // Solo el mes
+                input.value = valor;
             } else {
-                input.value = valor.slice(0, 2) + "/" + valor.slice(2, 4); // MM/AA
+                input.value = valor.slice(0, 2) + "/" + valor.slice(2, 4);
             }
         }
 
@@ -126,7 +108,6 @@
             const numero = document.getElementById("numero_tarjeta").value.replace(/\s/g, '');
             const logo = document.getElementById("logo_tarjeta");
 
-            // Detectar tipo de tarjeta
             if (/^4/.test(numero)) {
                 logo.src = "https://1000marcas.net/wp-content/uploads/2019/12/VISA-emblema-1.jpg";
                 logo.classList.remove("hidden");
@@ -140,19 +121,6 @@
                 logo.classList.add("hidden");
             }
         }
-
-        const mp = new MercadoPago("APP_USR-988393a0-619d-4dab-99ea-fdfa6cc75ac1", { locale: "es-CL" });
-
-        mp.checkout({
-            preference: {
-                id: "{{ preference_id }}"  // Pasa el ID generado desde tu backend
-            },
-            render: {
-                container: "#form-mercado-pago", // El div donde se renderizará el botón
-                label: "Pagar con Mercado Pago", // Texto del botón
-            }
-        });
-
     </script>
 </body>
 </html>

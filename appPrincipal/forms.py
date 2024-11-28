@@ -98,19 +98,3 @@ class PasswordResetForm(forms.Form):
     }))
 
 
-
-class OpinionForm(forms.ModelForm):
-    class Meta:
-        model = Opinion
-        fields = ['producto', 'puntuacion', 'comentario']
-        widgets = {
-            'producto': forms.Select(attrs={'class': 'form-control'}),
-            'puntuacion': forms.Select(choices=[(i, f"{i} estrellas") for i in range(1, 6)], attrs={'class': 'form-control'}),
-            'comentario': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        productos = kwargs.pop('productos', None)  # Pasamos los productos comprados
-        super().__init__(*args, **kwargs)
-        if productos:
-            self.fields['producto'].queryset = productos

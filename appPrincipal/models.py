@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils.timezone import now
-# Todas las tablas se ven en mi azure SQL DataBase, agregue "imagen" en la clase producto
-# para que permita subir imagenes al momento de crear un nuevo producto desde el panel de admin
 
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)

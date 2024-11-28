@@ -31,7 +31,6 @@ class VentaAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     def productos_comprados(self, obj):
-        # Obtener los productos relacionados a través de ProductoVenta
         productos = obj.producto_venta.all()
         return ", ".join([f"{pv.producto.nombre} (x{pv.cantidad})" for pv in productos])
 
