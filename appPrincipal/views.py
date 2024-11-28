@@ -151,7 +151,6 @@ def register(request):
             return redirect('home')
         else:
             print(form.errors)
-            messages.error(request, "Hubo un error en el formulario.")
     data = {'form': form, 'regiones_ciudades': regiones_ciudades}
     return render(request, 'register.html', data)
 
@@ -233,7 +232,6 @@ def ver_compras(request):
 def crear_reclamo(request, compra_id):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
-        messages.error(request, "Debes iniciar sesión para agregar un reclamo.")
         return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)

@@ -148,9 +148,6 @@
           <a href="/favorites" style="color: #9c9592;">
               <i class="fas fa-heart"></i>
           </a>
-          <a href="{% url 'ver_carrito' %}" style="color: #9c9592;">
-              <i class="fas fa-shopping-cart"></i>
-          </a>
       </div>
         <div class="search-box">
           <i class='bx bx-search'></i>
@@ -247,6 +244,26 @@
         }).format(valor);
     }
 
+    document.querySelectorAll('form[id^="form-"]').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        });
+    });
+
+    document.querySelectorAll('input[name="cantidad"]').forEach(input => {
+    input.addEventListener('input', function() {
+        const itemId = this.closest('form').id.split('-')[1];
+        actualizarCantidad(itemId);
+    });
+
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+        }
+    });
+  });
+
+
     function actualizarCantidad(itemId) {
         const form = document.getElementById(`form-${itemId}`);
         const formData = new FormData(form);
@@ -262,7 +279,6 @@
         .then(data => {
             if (data.success) {
                 document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
-
                 const totalFormateado = formatoChileno(data.total);
                 document.getElementById('total').textContent = totalFormateado;
             } else if (data.error) {
@@ -285,9 +301,7 @@
         .then(data => {
             if (data.success) {
                 document.getElementById(`item-${itemId}`).remove();
-
                 document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
-
                 const totalFormateado = formatoChileno(data.total);
                 document.getElementById('total').textContent = totalFormateado;
 
@@ -296,7 +310,7 @@
                     container.innerHTML = '<div class="text-center p-4"><h5 class="text-muted">Tu carrito está vacío.</h5></div>';
                 }
             } else if (data.error) {
-                alert(data.error);
+                alert(data.error); 
             }
         })
         .catch(error => console.error('Error:', error));
@@ -304,6 +318,7 @@
 
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
+        // let searchBoxCancel = document.querySelector(".search-box .bx-x");
         searchBox.addEventListener("click", ()=>{
             navbar.classList.toggle("showInput");
             if(navbar.classList.contains("showInput")){
@@ -312,6 +327,7 @@
             searchBox.classList.replace("bx-x" ,"bx-search");
             }
         });
+        // sidebar open close js code
         let navLinks = document.querySelector(".nav-links");
         let menuOpenBtn = document.querySelector(".navbar .bx-menu");
         let menuCloseBtn = document.querySelector(".nav-links .bx-x");
@@ -321,6 +337,7 @@
         menuCloseBtn.onclick = function() {
         navLinks.style.left = "-100%";
         }
+        // sidebar submenu open close js code
         let htmlcssArrow = document.querySelector(".htmlcss-arrow");
         htmlcssArrow.onclick = function() {
         navLinks.classList.toggle("show1");
