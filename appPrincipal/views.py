@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, Opinion, Favorito, Reclamo
+from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, ProductoVenta ,Opinion, Favorito, Reclamo
 from appPrincipal import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -489,147 +489,93 @@ def eliminar_favorito(request, item_id):
     return JsonResponse({'message': 'Artículo eliminado correctamente'}, status=200)
 
 
-def detalles_compra(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login')
 
+
+
+
+def seleccionar_envio(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    carrito = get_object_or_404(Carrito, usuario=usuario)
+    carrito = usuario.carritos.last()  # Último carrito activo
 
-    if not carrito.items.exists():
-        messages.error(request, "Tu carrito está vacío. Agrega productos antes de continuar.")
+    if not carrito or not carrito.items.exists():
+        return redirect('carrito_vacio')  # Redirige si el carrito está vacío
+
+    if request.method == 'POST':
+        # Guardar datos del método de envío en la sesión
+        metodo_envio = request.POST.get('metodo_envio', 'tienda')
+        direccion_envio = usuario.direccion if metodo_envio == 'domicilio' else None
+
+        # Guardar en la sesión para usar en la vista de "compra_exitosa"
+        request.session['metodo_envio'] = metodo_envio
+        request.session['direccion_envio'] = direccion_envio
+
+        return redirect('seleccionar_pago', usuario_id=usuario_id)
+
+    return render(request, 'seleccionar_envio.html', {'usuario': usuario, 'carrito': carrito})
+
+
+
+def seleccionar_pago(request, usuario_id):
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+
+    if request.method == 'POST':
+        # Guardar el método de pago en la sesión
+        request.session['metodo_pago'] = request.POST.get('metodo_pago', 'tarjeta')
+        return redirect('compra_exitosa', usuario_id=usuario_id)
+
+    return render(request, 'seleccionar_pago.html', {'usuario': usuario})
+
+
+def compra_exitosa(request, usuario_id):
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    carrito = usuario.carritos.last()
+
+    if not carrito or not carrito.items.exists():
+        messages.error(request, "No hay productos en tu carrito.")
         return redirect('ver_carrito')
 
-    productos = carrito.items.all()
-    subtotal = sum(item.producto.precio * item.cantidad for item in productos)
-    metodo_envio = request.GET.get('metodo_envio', '')  # Método por GET desde el form
-    envio_costo = 6000 if metodo_envio == 'domicilio' else 0
-    total = subtotal + envio_costo
+    metodo_envio = request.session.get('metodo_envio', 'tienda')
+    direccion_envio = request.session.get('direccion_envio')  # Ya está asignada desde seleccionar_envio
+    metodo_pago = request.session.get('metodo_pago', 'tarjeta')
 
-    context = {
-        'usuario': usuario,
-        'productos': productos,
-        'subtotal': subtotal,
-        'envio_costo': envio_costo,
-        'total': total,
-        'metodo_envio': metodo_envio,
-    }
+    # Crear la venta
+    venta = Venta.objects.create(
+        carrito=carrito,
+        usuario=usuario,
+        metodo_envio=metodo_envio,
+        direccion_envio=direccion_envio,  # Asignar dirección
+    )
 
-    return render(request, 'detalles_compra.html', context)
+    # Asociar productos con la venta
+    for item in carrito.items.all():
+        ProductoVenta.objects.create(
+            venta=venta,
+            producto=item.producto,
+            cantidad=item.cantidad,
+            precio_unitario=item.producto.precio,
+        )
 
+    venta.calcular_total()
 
+    # Vaciar el carrito
+    carrito.items.all().delete()
 
-def pago(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            metodo = data.get('metodo_pago')
-            total = data.get('total')
-
-            usuario_id = request.session.get('usuario_id')
-            if not usuario_id:
-                return JsonResponse({'error': 'Usuario no autenticado'}, status=403)
-
-            usuario = get_object_or_404(Usuario, id=usuario_id)
-            carrito = get_object_or_404(Carrito, usuario=usuario)
-
-            if metodo == 'mercado_pago':
-                sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
-                preference_data = {
-                    "items": [
-                        {
-                            "title": "Compra en SD Games",
-                            "quantity": 1,
-                            "currency_id": "CLP",
-                            "unit_price": float(total),
-                        }
-                    ],
-                    "back_urls": {
-                        "success": request.build_absolute_uri('/pago-exitoso/'),
-                        "failure": request.build_absolute_uri('/pago-fallido/'),
-                        "pending": request.build_absolute_uri('/pago-pendiente/'),
-                    },
-                    "auto_return": "approved",
-                    "external_reference": str(carrito.id), 
-                }
-
-                preference_response = sdk.preference().create(preference_data)
-
-                return JsonResponse({
-                    'mensaje': 'Redirigiendo a Mercado Pago...',
-                    'redirect_url': preference_response["response"]["init_point"],
-                })
-            
-            if metodo == 'tarjeta':
-                numero_tarjeta = data.get('numero_tarjeta')
-                tipo_tarjeta = data.get('tipo_tarjeta')
-                fecha_vencimiento = data.get('fecha_vencimiento')
-                cvv = data.get('cvv')
-
-                if not numero_tarjeta or not fecha_vencimiento or not cvv:
-                    return JsonResponse({'mensaje': 'Faltan datos de la tarjeta'}, status=400)
-
-                if tipo_tarjeta == "Desconocida":
-                    return JsonResponse({'mensaje': 'Tipo de tarjeta no soportado'}, status=400)
-
-                metodo_envio = "tarjeta" 
-                direccion_envio = usuario.direccion 
-
-                venta = Venta.objects.create(
-                    usuario=usuario,
-                    carrito=carrito,
-                    metodo_envio=metodo_envio,
-                    direccion_envio=direccion_envio,
-                    estado='Sin Enviar'
-                )
-
-                venta.productos.set(carrito.items.all())
-                venta.calcular_total() 
-
-                carrito.items.all().delete()
-                carrito.save()
-
-                return JsonResponse({
-                    'mensaje': 'Pago ficticio realizado con éxito',
-                    'redirect_url': '/pago-exitoso/',
-                })
+    return render(request, 'compra_exitosa.html', {
+        'venta': venta,
+        'metodo_pago': metodo_pago,
+    })
 
 
-            return JsonResponse({'mensaje': 'Método de pago no soportado'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Datos mal formados'}, status=400)
 
-    elif request.method == 'GET':
-        total = float(request.GET.get('total', 0))
-        return render(request, 'pago.html', {'total': total})
 
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+
 
 
 
 def pago_exitoso(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login')
-
-    usuario = get_object_or_404(Usuario, id=usuario_id)
-    venta = Venta.objects.filter(usuario=usuario).last()
-
-    if not venta:
-        messages.error(request, "No se encontró una venta asociada.")
-        return redirect('carrito')
-
-    return render(request, 'pago_exitoso.html', {
-        'usuario': usuario,
-        'venta': venta,
-        'productos': venta.productos.all(),
-        'envio': venta.envio,
-        'subtotal': venta.subtotal,
-        'total': venta.total,
-    })
-
-
+    return render(request, 'pago_exitoso.html')
 
 def pago_fallido(request):
     return render(request, 'pago_fallido.html', {'mensaje': 'Hubo un problema con tu pago. Por favor, intenta nuevamente.'})

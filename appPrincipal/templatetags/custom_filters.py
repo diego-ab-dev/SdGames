@@ -12,3 +12,8 @@ def formato_chileno(valor):
     if not isinstance(valor, (int, float)):
         return valor  # Devolver el valor original si no es un número
     return f"{valor:,.0f}".replace(",", ".")
+
+
+@register.filter
+def multiply(value, arg):
+    return value * arg

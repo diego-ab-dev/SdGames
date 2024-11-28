@@ -227,13 +227,17 @@
                     </div>
                       <div class="col text-right" id="total">${{ total|formato_chileno }}</div>
                   </div>
-                  <form method="GET" action="{% url 'detalles_compra' %}">
-                    <button type="submit">
-                        <span class="transition"></span>
-                        <span class="gradient"></span>
-                        <span class="label">Proceder a la compra</span>
-                    </button>
+                  {% if productos %}
+                  <form method="GET" action="{% url 'seleccionar_envio' usuario.id %}">
+                      <button type="submit">
+                          <span class="transition"></span>
+                          <span class="gradient"></span>
+                          <span class="label">Proceder a la compra</span>
+                      </button>
                   </form>
+                  {% else %}
+                  <p class="text-muted">No puedes proceder a la compra porque tu carrito está vacío.</p>
+                  {% endif %}
               </div>
           </div>
       </div>
@@ -241,6 +245,76 @@
 
 
     <script>
+      // Función para formatear números al formato chileno
+    function formatoChileno(valor) {
+        return new Intl.NumberFormat('es-CL', {
+            style: 'currency',
+            currency: 'CLP',
+            minimumFractionDigits: 0, // Sin decimales
+        }).format(valor);
+    }
+
+    function actualizarCantidad(itemId) {
+        const form = document.getElementById(`form-${itemId}`);
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Actualizar cantidad total de items y el total en el DOM
+                document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
+
+                // Formatear el total al estilo chileno
+                const totalFormateado = formatoChileno(data.total);
+                document.getElementById('total').textContent = totalFormateado;
+            } else if (data.error) {
+                alert(data.error); // Mostrar el error si ocurre
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function eliminarItem(itemId, element) {
+        const url = element.getAttribute('data-url');
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Eliminar el elemento del DOM
+                document.getElementById(`item-${itemId}`).remove();
+
+                // Actualizar cantidad total de items y el total en el DOM
+                document.querySelectorAll('.total-items').forEach(el => el.textContent = data.total_items);
+
+                // Formatear el total al estilo chileno
+                const totalFormateado = formatoChileno(data.total);
+                document.getElementById('total').textContent = totalFormateado;
+
+                // Si el carrito queda vacío, mostrar un mensaje
+                if (data.total_items === 0) {
+                    const container = document.querySelector('.cart');
+                    container.innerHTML = '<div class="text-center p-4"><h5 class="text-muted">Tu carrito está vacío.</h5></div>';
+                }
+            } else if (data.error) {
+                alert(data.error); // Mostrar el error si ocurre
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
         searchBox.addEventListener("click", ()=>{
