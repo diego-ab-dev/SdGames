@@ -38,8 +38,11 @@
                             <td>{{ compra.estado }}</td>
                             <td>
                                 <ul>
-                                    {% for item in compra.productos.all %}
-                                        <li>{{ item.producto.nombre }} (x{{ item.cantidad }})</li>
+                                    {% for producto_venta in compra.producto_venta.all %}
+                                        <li>{{ producto_venta.producto.nombre }} (x{{ producto_venta.cantidad }}) - Subtotal(Sin Envío): ${{ producto_venta.total_producto }}</li>
+                                        <a href="{% url 'enviar_opinion' compra.id %}">
+                                            <button class="btn btn-sm btn-outline-secondary ms-2">Opinar</button>
+                                        </a>
                                     {% endfor %}
                                 </ul>
                             </td>
@@ -52,18 +55,6 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
                                                 <line y2="19" y1="5" x2="12" x1="12"></line>
                                                 <line y2="12" y1="12" x2="19" x1="5"></line>
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </a>
-                                
-                                <!-- Botón para enviar opinión -->
-                                <a href="{% url 'enviar_opinion' compra.id %}">
-                                    <button type="button" class="button mt-2">
-                                        <span class="button__text">Enviar Opinión</span>
-                                        <span class="button__icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
-                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                             </svg>
                                         </span>
                                     </button>

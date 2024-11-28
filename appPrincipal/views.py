@@ -124,8 +124,6 @@ def login(request):
     return render(request, 'login.html', {'errors': errors})
 
 
-
-
 def logout(request):
     request.session.flush()  
     return redirect('login')
@@ -193,34 +191,36 @@ def ver_compras(request):
         return redirect('login')
     
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')
+    compras = Venta.objects.filter(usuario=usuario).prefetch_related(
+        'producto_venta__producto'
+    ).order_by('-fecha')
 
     return render(request, 'ver_compras.html', {'usuario': usuario, 'compras': compras})
+
 
 
 def enviar_opinion(request, compra_id):
     # Obtener la compra específica
     compra = get_object_or_404(Venta, id=compra_id, usuario=request.user)
-    
-    # Filtrar los productos asociados a la compra
-    productos = compra.productos.all()
-    
+    productos = compra.productos.all()  # Productos comprados en esta transacción
+
     if request.method == 'POST':
-        form = OpinionForm(request.POST)
+        form = OpinionForm(request.POST, productos=productos)
         if form.is_valid():
             opinion = form.save(commit=False)
             opinion.usuario = request.user
             opinion.save()
             messages.success(request, "¡Gracias por enviar tu opinión!")
-            return redirect('ver_compras')  # Vuelve al historial de compras
+            return redirect('ver_compras')  # Redirige al historial de compras
     else:
-        form = OpinionForm()
+        form = OpinionForm(productos=productos)
 
     return render(request, 'enviar_opinion.html', {
         'compra': compra,
         'productos': productos,
         'form': form,
     })
+
 
 
 def crear_reclamo(request, compra_id):
