@@ -229,7 +229,11 @@
                                                 </form>
                                             </li>
                                             <li>
+                                              <form method="POST" action="{% url 'agregar_favorito' producto.id %}" style="display: inline;">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="cantidad" value="1">
                                                 <button type="submit" class="btn-icon"><i class="fas fa-heart"></i></button>
+                                              </form>
                                             </li>
                                             <li>
                                                 <form method="POST" action="{% url 'producto_detalle' producto.id %}" style="display: inline;">
