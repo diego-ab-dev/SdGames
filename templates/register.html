@@ -33,6 +33,7 @@
                                    title="Ingrese un RUT en el formato 12345678-9" 
                                    required autofocus>
                             <label for="floatingRut">RUT</label>
+                            <small class="text-muted">Formato: 12345678-9</small>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -107,13 +108,13 @@
 </div>
 
 <script>
+     
     document.addEventListener('DOMContentLoaded', function () {
+        
         const form = document.querySelector('form');
 
         form.addEventListener('submit', function (event) {
             let isValid = true;
-
-            // Validar nombre (solo letras)
             const nombre = document.getElementById('floatingInputUsername');
             const nombreRegex = /^[a-zA-Z\s]+$/;
             if (!nombreRegex.test(nombre.value.trim())) {
@@ -121,8 +122,6 @@
                 alert("El nombre solo debe contener letras.");
                 nombre.focus();
             }
-
-            // Validar correo electrónico
             const email = document.getElementById('floatingInputEmail');
             if (!email.value.includes('@')) {
                 isValid = false;
@@ -130,7 +129,6 @@
                 email.focus();
             }
 
-            // Validar teléfono (exactamente 9 dígitos)
             const telefono = document.getElementById('floatingInputNumber');
             const telefonoRegex = /^\d{9}$/;
             if (!telefonoRegex.test(telefono.value.trim())) {
@@ -139,7 +137,6 @@
                 telefono.focus();
             }
 
-            // Validar confirmación de contraseña
             const contraseña = document.getElementById('floatingPassword');
             const confirmarContraseña = document.getElementById('floatingPasswordConfirm');
             if (contraseña.value !== confirmarContraseña.value) {
@@ -147,10 +144,8 @@
                 alert("Las contraseñas no coinciden. Por favor, verifique.");
                 confirmarContraseña.focus();
             }
-
-            // Si alguna validación falla, evitar envío del formulario
             if (!isValid) {
-                event.preventDefault(); // Detener el envío
+                event.preventDefault(); 
             }
         });
     });

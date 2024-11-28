@@ -26,13 +26,15 @@
                         </div>
                         <p class="reclamo-asunto"><strong>Asunto:</strong> {{ reclamo.asunto }}</p>
                         <p class="reclamo-descripcion">{{ reclamo.descripcion }}</p>
+                        {% if reclamo.respuesta %}
+                            <p class="reclamo-respuesta"><strong>Respuesta del administrador:</strong> {{ reclamo.respuesta }}</p>
+                        {% endif %}
                     </li>
                 {% empty %}
-                    <li class="reclamo-item text-center">
-                        No hay reclamos disponibles.
-                    </li>
+                    <li class="reclamo-item text-center">No hay reclamos disponibles.</li>
                 {% endfor %}
             </ul>
+            
         </div>
         <div class="text-center mt-4">
             <a href="{% url 'perfil' %}" class="btn btn-minimal">Volver</a>

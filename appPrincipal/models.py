@@ -189,6 +189,10 @@ class Reclamo(models.Model):
     asunto = models.CharField(max_length=255, default='No especificado')
     fecha = models.DateTimeField(default=now)
     descripcion = models.TextField(default='', verbose_name="Descripción")
+    respuesta = models.TextField(blank=True, null=True, verbose_name="Respuesta del administrador")
+
+    def __str__(self):
+        return f"Reclamo {self.id} - {self.asunto}"
 
     def visualizar_reclamo(self):
         pass
