@@ -10,6 +10,7 @@
     <title>Selecciona el Método de Pago</title>
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_metodo.css' %}">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <style>
         .hidden {
         display: none;
@@ -19,6 +20,7 @@
 <body>
     <div class="container">
         <h1 class="my-4">Selecciona el método de pago</h1>
+        <h3>Total a pagar: ${{ total|formato_chileno }}</h3> 
         <form method="post" action="{% url 'compra_exitosa' usuario.id %}">
             {% csrf_token %}
             <div class="mb-3">
@@ -62,8 +64,8 @@
             <!-- Botón de Mercado Pago -->
             <div id="form-mercado-pago" class="hidden form-container">
                 <h4>Mercado Pago</h4>
-                <button type="button" class="btn btn-primary">Pagar con Mercado Pago</button>
             </div>
+            
 
             <button type="submit" class="btn btn-success mt-3">Pagar</button>
         </form>
@@ -103,6 +105,19 @@
                 logo.classList.add("hidden");
             }
         }
+
+        const mp = new MercadoPago("APP_USR-988393a0-619d-4dab-99ea-fdfa6cc75ac1", { locale: "es-CL" });
+
+        mp.checkout({
+            preference: {
+                id: "{{ preference_id }}"  // Pasa el ID generado desde tu backend
+            },
+            render: {
+                container: "#form-mercado-pago", // El div donde se renderizará el botón
+                label: "Pagar con Mercado Pago", // Texto del botón
+            }
+        });
+
     </script>
 </body>
 </html>

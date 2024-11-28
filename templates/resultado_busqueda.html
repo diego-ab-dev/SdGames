@@ -19,7 +19,7 @@
 
     <link rel="icon" type="image/png" href="{% static 'images/sdgameslogo.png' %}">
     <link rel="stylesheet" href="{% static 'styles/styles_busqueda.css' %}">
-    <title>Document</title>
+    <title>Resultados para "{{ query }}"</title>
 </head>
 <body>
     <!--Nav de la web-->
@@ -171,7 +171,7 @@
       </div>
     </nav>
 
-
+        <div class="main-container">
           <section class="section-products">
             <div class="container">
                 <div class="row justify-content-center text-center">
@@ -223,10 +223,49 @@
                     </div>
             </div>
         </section>
+      
 
+          <!--Boton para ir hacia arriba-->
+      <div class="go-top-container">
+        <div class="go-top-button">
+          <img src="{% static 'images/navegar-flecha-hacia-arriba.png' %}" alt="">
+        </div>
+      </div>
 
+    
+    <script>
+          window.onscroll = function () {
+            console.log(document.documentElement.scrollTop);
+            if (document.documentElement.scrollTop > 100) {
+              document.querySelector('.go-top-container').classList.add('show');
 
-        <script>
+            }
+            else {
+              document.querySelector('.go-top-container').classList.remove('show');
+            }
+          }
+
+          document.querySelector('.go-top-container').addEventListener('click', () => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
+
+          function isVisible(elm) {
+            var rect = elm.getBoundingClientRect();
+            var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+            return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+          }
+
+          window.addEventListener('DOMContentLoaded', (ev0) => {
+            window.addEventListener('scroll', (ev1) => {
+              document.querySelectorAll(".paused").forEach(elm => {
+                if (isVisible(elm))
+                  elm.classList.remove("paused");
+              })
+            });
+          });
           let navbar = document.querySelector(".navbar");
           let searchBox = document.querySelector(".search-box .bx-search");
           // let searchBoxCancel = document.querySelector(".search-box .bx-x");
@@ -318,5 +357,6 @@
       SD Games
     </div>
   </footer>
+</div>
 </body>
 </html>

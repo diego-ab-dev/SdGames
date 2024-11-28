@@ -170,6 +170,7 @@
     </div>
   </nav>
 
+  <div class="main-container">
     <section class="section-products">
         <div class="container">
             <div class="row justify-content-center text-center">
@@ -255,8 +256,48 @@
             </div>
         </div>
     </section>
+
+      <!--Boton para ir hacia arriba-->
+      <div class="go-top-container">
+        <div class="go-top-button">
+          <img src="{% static 'images/navegar-flecha-hacia-arriba.png' %}" alt="">
+        </div>
+      </div>
+
     
     <script>
+          window.onscroll = function () {
+          console.log(document.documentElement.scrollTop);
+          if (document.documentElement.scrollTop > 100) {
+            document.querySelector('.go-top-container').classList.add('show');
+
+          }
+          else {
+            document.querySelector('.go-top-container').classList.remove('show');
+          }
+        }
+
+        document.querySelector('.go-top-container').addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+
+        function isVisible(elm) {
+          var rect = elm.getBoundingClientRect();
+          var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+          return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+        }
+
+        window.addEventListener('DOMContentLoaded', (ev0) => {
+          window.addEventListener('scroll', (ev1) => {
+            document.querySelectorAll(".paused").forEach(elm => {
+              if (isVisible(elm))
+                elm.classList.remove("paused");
+            })
+          });
+        });
         let navbar = document.querySelector(".navbar");
         let searchBox = document.querySelector(".search-box .bx-search");
         // let searchBoxCancel = document.querySelector(".search-box .bx-x");
@@ -293,5 +334,60 @@
         }
     </script>
     
+    <!--footer-->
+  <footer class="text-center text-lg-start text-light">
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <div class="row mt-3">
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              <a href="">SD Games</a>
+            </h6>
+            <p>
+              SD Games es la tienda de videojuegos líder en Valdivia, que ofrece una amplia
+              selección de
+              títulos para todas las plataformas y edades. Desde los últimos lanzamientos hasta clásicos
+              retro,
+              SD Games tiene algo para cada tipo de jugador. La tienda se enorgullece de su equipo
+              experto, siempre
+              dispuesto a
+              recomendar juegos y a brindar un excelente servicio al cliente.
+            </p>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              Enlaces Rápidos:
+            </h6>
+            <p>
+              <a href="#home" class="footerli text-reset">Home</a>
+            </p>
+            <p>
+              <a href="" class="footerli text-reset">Productos</a>
+            </p>
+            <p>
+              <a href="" class="footerli text-reset">Sobre Nosotros</a>
+            </p>
+            <p>
+              <a href="" class="footerli text-reset">Local</a>
+            </p>
+          </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Contacto:</h6>
+            <p><i class="fas fa-home me-3"></i> Valdivia, Av. Simpson 641, Chile</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              sdgames@gmail.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> 9 2344 5674</p>
+            <p><i class="fas fa-print me-3"></i> 9 4234 5678</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="text-center p-4" style="background-color: #8e8f94;">
+      SD Games
+    </div>
+  </footer>
+</div>
 </body>
 </html>

@@ -2,7 +2,7 @@ from django import forms
 from django.core import validators
 from django.core.exceptions import ValidationError
 import re
-
+from .models import Opinion
 
 regiones_ciudades = {
     'ARICA Y PARINACOTA': ['Arica', 'Putre'],
@@ -98,3 +98,12 @@ class PasswordResetForm(forms.Form):
     }))
 
 
+
+class OpinionForm(forms.ModelForm):
+    class Meta:
+        model = Opinion
+        fields = ['producto', 'comentario', 'puntuacion']
+        widgets = {
+            'comentario': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'puntuacion': forms.Select(attrs={'class': 'form-control'}),
+        }

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto ,ItemCarritoProducto, Usuario, Carrito, Venta, ProductoVenta ,Opinion, Favorito, Reclamo
 from appPrincipal import forms
+from .forms import OpinionForm 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
@@ -13,6 +14,7 @@ import json
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.contrib.messages import get_messages
+from django.urls import reverse
 
 # Create your views here.
 
@@ -194,6 +196,32 @@ def ver_compras(request):
     compras = Venta.objects.filter(usuario=usuario).order_by('-fecha')
 
     return render(request, 'ver_compras.html', {'usuario': usuario, 'compras': compras})
+
+
+def enviar_opinion(request, compra_id):
+    # Obtener la compra específica
+    compra = get_object_or_404(Venta, id=compra_id, usuario=request.user)
+    
+    # Filtrar los productos asociados a la compra
+    productos = compra.productos.all()
+    
+    if request.method == 'POST':
+        form = OpinionForm(request.POST)
+        if form.is_valid():
+            opinion = form.save(commit=False)
+            opinion.usuario = request.user
+            opinion.save()
+            messages.success(request, "¡Gracias por enviar tu opinión!")
+            return redirect('ver_compras')  # Vuelve al historial de compras
+    else:
+        form = OpinionForm()
+
+    return render(request, 'enviar_opinion.html', {
+        'compra': compra,
+        'productos': productos,
+        'form': form,
+    })
+
 
 def crear_reclamo(request, compra_id):
     usuario_id = request.session.get('usuario_id')
@@ -509,15 +537,111 @@ def seleccionar_envio(request, usuario_id):
 
 
 
+def iniciar_pago_mercadopago(request, usuario_id):
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    carrito = usuario.carritos.last()
+
+    if not carrito or not carrito.items.exists():
+        messages.error(request, "No hay productos en tu carrito.")
+        return redirect('ver_carrito')
+
+    sdk = mercadopago.SDK("APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885")
+
+    # Crear la preferencia
+    preference_data = {
+        "items": [
+            {
+                "title": item.producto.nombre,
+                "quantity": item.cantidad,
+                "unit_price": float(item.producto.precio),
+                "currency_id": "CLP"
+            }
+            for item in carrito.items.all()
+        ],
+        "payer": {
+            "name": usuario.nombre,
+            "email": usuario.email,
+        },
+        "back_urls": {
+            "success": request.build_absolute_uri(reverse('pago_exitoso')),
+            "failure": request.build_absolute_uri(reverse('pago_fallido')),
+            "pending": request.build_absolute_uri(reverse('pago_pendiente')),
+        },
+        "auto_return": "approved",
+    }
+
+    preference_response = sdk.preference().create(preference_data)
+
+    # Redirigir a la URL del Checkout Pro
+    checkout_url = preference_response["response"]["init_point"]
+    return redirect(checkout_url)
+
+
 def seleccionar_pago(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
+    carrito = usuario.carritos.last()
+
+    if not carrito or not carrito.items.exists():
+        messages.error(request, "No hay productos en tu carrito.")
+        return redirect('ver_carrito')
+
+    # Calcular el total del carrito
+    subtotal = sum(item.cantidad * item.producto.precio for item in carrito.items.all())
+
+    # Obtener el costo del envío de la sesión
+    metodo_envio = request.session.get('metodo_envio', 'tienda')
+    costo_envio = 0  # Define un costo base
+    if metodo_envio == 'domicilio':
+        costo_envio = 5000  # Ajusta este valor según tus reglas
+
+    total = subtotal + costo_envio
+
+    # Generar preferencia de Mercado Pago
+    sdk = mercadopago.SDK("APP_USR-8127443764484352-112411-fe7281c535809d220c1d8969cdbfc79b-2113819885")
+    preference_data = {
+        "items": [
+            {
+                "title": item.producto.nombre,
+                "quantity": item.cantidad,
+                "unit_price": float(item.producto.precio),
+                "currency_id": "CLP"
+            }
+            for item in carrito.items.all()
+        ],
+        "payer": {
+            "name": usuario.nombre,
+            "email": usuario.email,
+        },
+        "back_urls": {
+            "success": request.build_absolute_uri(reverse('pago_exitoso')),
+            "failure": request.build_absolute_uri(reverse('pago_fallido')),
+            "pending": request.build_absolute_uri(reverse('pago_pendiente')),
+        },
+        "auto_return": "approved",
+    }
+    preference_response = sdk.preference().create(preference_data)
+
+    # Obtener el preference_id para el frontend
+    preference_id = preference_response["response"]["id"]
 
     if request.method == 'POST':
-        # Guardar el método de pago en la sesión
-        request.session['metodo_pago'] = request.POST.get('metodo_pago', 'tarjeta')
+        metodo_pago = request.POST.get('metodo_pago', 'tarjeta')
+        request.session['metodo_pago'] = metodo_pago
+
+        if metodo_pago == "mercado_pago":
+            return redirect('iniciar_pago_mercadopago', usuario_id=usuario_id)
+
         return redirect('compra_exitosa', usuario_id=usuario_id)
 
-    return render(request, 'seleccionar_pago.html', {'usuario': usuario})
+    return render(request, 'seleccionar_pago.html', {
+        'usuario': usuario,
+        'total': total,
+        'preference_id': preference_id,  # Pasa el ID generado aquí
+    })
+
+
+
+
 
 
 def compra_exitosa(request, usuario_id):
@@ -558,12 +682,6 @@ def compra_exitosa(request, usuario_id):
         'venta': venta,
         'metodo_pago': metodo_pago,
     })
-
-
-
-
-
-
 
 
 

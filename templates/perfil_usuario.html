@@ -151,13 +151,14 @@
                     <div class="card h-100">
                         <div class="card-body" style="background-color: #b8b8b9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
                             <h1 class="fs-4 fst-italic fw-bold text-center">Mis opiniones</h1>
-                            {% if opiniones %}
                                 <ul>
                                     {% for opinion in opiniones %}
                                         <li>
                                             <strong>{{ opinion.producto.nombre }}</strong>: 
                                             {{ opinion.comentario }} ({{ opinion.puntuacion }} estrellas)
                                         </li>
+                                    {% empty %}
+                                      <p>No tienes opiniones ingresadas.</p>
                                     {% endfor %}
                                 </ul>
                                 <div class="row">
@@ -172,10 +173,6 @@
                                   </a>
                                   </div>
                               </div>
-                            {% else %}
-                                <p>No tienes opiniones ingresadas.</p>
-                                <button class="btn btn-secondary" disabled>Ver más</button>
-                            {% endif %}
                         </div>
                     </div>
                 </div>                

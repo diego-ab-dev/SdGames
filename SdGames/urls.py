@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, eliminar_favorito, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo, lista_reclamos, seleccionar_envio, seleccionar_pago, compra_exitosa
+from appPrincipal.views import home, login, register, productos_menu, producto_detalle, carrito, vista_carrusel, logout, productos_por_categoria, perfil, editar_perfil, obtener_ciudades, cambiar_contraseña,  agregar_al_carrito, eliminar_del_carrito, actualizar_cantidad_carrito, ver_carrito, lista_favoritos, agregar_favorito, eliminar_favorito, pago_exitoso, pago_fallido, pago_pendiente, password_reset_request, ver_compras, lista_opiniones, crear_reclamo, lista_reclamos, seleccionar_envio, seleccionar_pago, compra_exitosa, iniciar_pago_mercadopago, enviar_opinion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +35,7 @@ urlpatterns = [
     path('perfil/', perfil, name='perfil'),
     path('compras/', ver_compras, name='ver_compras'),
     path('perfil/opiniones/',lista_opiniones, name='lista_opiniones'),
+    path('enviar-opinion/<int:compra_id>/', enviar_opinion, name='enviar_opinion'),
     path('crear_reclamo/<int:compra_id>/', crear_reclamo, name='crear_reclamo'),
     path('reclamos/', lista_reclamos, name='lista_reclamos'),
     path('editar/', editar_perfil, name='editar'),
@@ -55,6 +56,7 @@ urlpatterns = [
     path('seleccionar-envio/<int:usuario_id>/', seleccionar_envio, name='seleccionar_envio'),
     path('seleccionar-pago/<int:usuario_id>/', seleccionar_pago, name='seleccionar_pago'),
     path('compra-exitosa/<int:usuario_id>/', compra_exitosa, name='compra_exitosa'),
+    path('pago/mercadopago/<int:usuario_id>/', iniciar_pago_mercadopago, name='iniciar_pago_mercadopago'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #Esto se supone que permite subir imagenes aun no puedo probar si realmente funciona
 
 # esto es para editar titulos en el panel de administracion

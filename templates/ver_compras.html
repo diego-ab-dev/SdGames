@@ -15,49 +15,71 @@
     <title>Mis Compras</title>
 </head>
 <body>
-    <div class="container"> 
+    <div class="container">  
         <h1 class="fs-2 fst-italic fw-bold">Historial de Compras</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Productos</th>
-                    <th class="text-center">Acciones</th> 
-                </tr>
-            </thead>
-            <tbody>
-                {% for compra in compras %}
+        <div class="table-responsive"> <!-- Contenedor con scroll interno -->
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ compra.id }}</td>
-                        <td>${{ compra.total|formato_chileno }}</td>
-                        <td>{{ compra.fecha|date:"d/m/Y H:i" }}</td>
-                        <td>{{ compra.estado }}</td>
-                        <td>
-                            <ul>
-                                {% for item in compra.productos.all %}
-                                    <li>{{ item.producto.nombre }} (x{{ item.cantidad }})</li>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                        <td>
-                            <a href="{% url 'crear_reclamo' compra.id %}">
-                                <button type="button" class="button">
-                                    <span class="button__text">Agregar Reclamo</span>
-                                    <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-                                </button>
-                            </a>
-                        </td>
+                        <th>#</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Productos</th>
+                        <th class="text-center">Acciones</th> 
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for compra in compras %}
+                        <tr>
+                            <td>{{ compra.id }}</td>
+                            <td>${{ compra.total|formato_chileno }}</td>
+                            <td>{{ compra.fecha|date:"d/m/Y H:i" }}</td>
+                            <td>{{ compra.estado }}</td>
+                            <td>
+                                <ul>
+                                    {% for item in compra.productos.all %}
+                                        <li>{{ item.producto.nombre }} (x{{ item.cantidad }})</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <!-- Botón para agregar un reclamo -->
+                                <a href="{% url 'crear_reclamo' compra.id %}">
+                                    <button type="button" class="button">
+                                        <span class="button__text">Agregar Reclamo</span>
+                                        <span class="button__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                                                <line y2="19" y1="5" x2="12" x1="12"></line>
+                                                <line y2="12" y1="12" x2="19" x1="5"></line>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </a>
+                                
+                                <!-- Botón para enviar opinión -->
+                                <a href="{% url 'enviar_opinion' compra.id %}">
+                                    <button type="button" class="button mt-2">
+                                        <span class="button__text">Enviar Opinión</span>
+                                        <span class="button__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="text-center mt-4">
             <a href="{% url 'perfil' %}" class="btn btn-minimal">Volver</a>
         </div>
     </div>
+    
     
     
     

@@ -11,9 +11,10 @@ body{
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Cambiado a flex-start para evitar forzar centrado */
     align-items: center;
-    height: 100vh; /* Centra verticalmente toda la tabla */
+    padding: 20px;
+    min-height: 100vh;
 }
 
 
@@ -27,7 +28,7 @@ h1.fs-4 {
 
 /* Estilos minimalistas para la tabla */
 .table {
-    width: 90%; /* Ajusta el ancho para dispositivos móviles */
+    width: 100%; /* Ajusta el ancho para dispositivos móviles */
     max-width: 1200px; /* Máximo ancho en pantallas grandes */
     background-color: #ffffff;
     border-radius: 8px;
@@ -36,10 +37,22 @@ h1.fs-4 {
     text-align: left;
 }
 
+.table-responsive {
+  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+  max-width: 1200px; /* Máximo ancho */
+  overflow-x: auto; /* Scroll horizontal si es necesario */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+
+
 .table th, .table td {
     padding: 12px 15px;
     text-align: left;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .table thead {
@@ -61,15 +74,29 @@ h1.fs-4 {
     background-color: #f2f2f2;
 }
 
+.table ul {
+  margin: 0;
+  padding-left: 15px;
+  list-style-type: disc;
+}
+
 /* Responsividad */
 @media (max-width: 768px) {
-    .table {
-        font-size: 0.8rem;
-    }
+  .table th, .table td {
+      padding: 8px 10px;
+      font-size: 0.8rem;
+  }
+  .button {
+      width: 100%; /* Botones adaptados a pantallas pequeñas */
+  }
+}
 
-    .table th, .table td {
-        padding: 8px 10px;
-    }
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #34974d;
+  border-radius: 4px;
 }
 
 /* Botón centrado */
