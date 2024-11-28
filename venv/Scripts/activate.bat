@@ -8,11 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-<<<<<<< HEAD
-set VIRTUAL_ENV=C:\Users\diegu\OneDrive\Escritorio\SdGames\venv
-=======
-set VIRTUAL_ENV=E:\SdGames-main\SdGames-11\venv
->>>>>>> d68b3007df34e8c6a552335cf2bf674348fae6ea
+set VIRTUAL_ENV=C:\Users\Diego Alonso\Desktop\SdGames\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

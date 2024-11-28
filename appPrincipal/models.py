@@ -127,6 +127,7 @@ class ItemCarritoProducto(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1) 
 
+
 class Venta(models.Model):
     ESTADO_CHOICES = [
         ('Sin Enviar', 'Sin Enviar'),
@@ -138,9 +139,8 @@ class Venta(models.Model):
     ]
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, null=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas', default='')
-    productos = models.ManyToManyField(ItemCarritoProducto, related_name='ventas', verbose_name='Productos')
     envio = models.PositiveIntegerField(default=0)
-    subtotal = models.PositiveIntegerField(default=0) 
+    subtotal = models.PositiveIntegerField(default=0)
     total = models.PositiveIntegerField(default=0)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Sin Enviar')
     fecha = models.DateTimeField(auto_now_add=True)
@@ -148,15 +148,23 @@ class Venta(models.Model):
     direccion_envio = models.TextField(blank=True, null=True)
 
     def calcular_total(self):
-        # Calcular subtotal
         self.subtotal = sum(
-            item.producto.precio * item.cantidad for item in self.productos.all()
+            producto_venta.total_producto for producto_venta in self.producto_venta.all()
         )
-        # Agregar costo de envío
-        envio = 6000 if self.metodo_envio == 'domicilio' else 0
-        self.total = self.subtotal + envio
-        self.envio = envio
+        self.envio = 5000 if self.metodo_envio == 'domicilio' else 0
+        self.total = self.subtotal + self.envio
         self.save()
+
+
+class ProductoVenta(models.Model):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='producto_venta')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    precio_unitario = models.PositiveIntegerField() 
+
+    @property
+    def total_producto(self):
+        return self.cantidad * self.precio_unitario
 
 
 class Opinion(models.Model):
