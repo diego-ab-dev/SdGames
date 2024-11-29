@@ -6,6 +6,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Avg
+from django.db import IntegrityError
 from django.contrib.auth.hashers import make_password, check_password
 from django.conf import settings
 import json
@@ -137,18 +138,24 @@ def register(request):
         form.fields['ciudad'].choices = [(ciudad, ciudad) for ciudad in ciudades]
 
         if form.is_valid():
-            registro = Usuario(
-                rut=form.cleaned_data['rut'],
-                nombre=form.cleaned_data['nombre'],
-                telefono=form.cleaned_data['telefono'],
-                email=form.cleaned_data['email'],
-                contraseña=make_password(form.cleaned_data['contraseña']),
-                direccion=form.cleaned_data['direccion'],
-                ciudad=form.cleaned_data['ciudad'],
-                region=form.cleaned_data['region'],
-            )
-            registro.save()
-            return redirect('home')
+            try:
+                registro = Usuario(
+                    rut=form.cleaned_data['rut'],
+                    nombre=form.cleaned_data['nombre'],
+                    telefono=form.cleaned_data['telefono'],
+                    email=form.cleaned_data['email'],
+                    contraseña=make_password(form.cleaned_data['contraseña']),
+                    direccion=form.cleaned_data['direccion'],
+                    ciudad=form.cleaned_data['ciudad'],
+                    region=form.cleaned_data['region'],
+                )
+                registro.save()
+                return JsonResponse({'success': True, 'message': 'Usuario registrado exitosamente.'})
+            except IntegrityError as e:
+                if 'email' in str(e):
+                    return JsonResponse({'success': False, 'message': 'El correo ya está registrado.'})
+                elif 'rut' in str(e):
+                    return JsonResponse({'success': False, 'message': 'El RUT ya está registrado.'})
         else:
             print(form.errors)
     data = {'form': form, 'regiones_ciudades': regiones_ciudades}

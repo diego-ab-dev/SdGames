@@ -105,6 +105,34 @@
 </div>
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita el envío estándar del formulario
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = '/'; // Redirige al home o a la página deseada
+                    } else {
+                        alert(data.message); // Muestra el mensaje de error
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
      
     document.addEventListener('DOMContentLoaded', function () {
         
