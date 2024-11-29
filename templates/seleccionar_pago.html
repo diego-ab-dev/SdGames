@@ -72,32 +72,33 @@
 
     <script>
         function mostrarFormulario() {
-    const metodo = document.getElementById("metodo_pago").value;
+        const metodo = document.getElementById("metodo_pago").value;
 
-    const formTarjeta = document.getElementById("form-tarjeta");
-    const formTransferencia = document.getElementById("form-transferencia");
+        const formTarjeta = document.getElementById("form-tarjeta");
+        const formTransferencia = document.getElementById("form-transferencia");
 
-    formTarjeta.classList.add("hidden");
-    formTransferencia.classList.add("hidden");
+        formTarjeta.classList.add("hidden");
+        formTransferencia.classList.add("hidden");
 
-    Array.from(formTarjeta.querySelectorAll("input")).forEach(input => {
-        input.required = false;
-    });
-
-    if (metodo === "tarjeta") {
-        formTarjeta.classList.remove("hidden");
         Array.from(formTarjeta.querySelectorAll("input")).forEach(input => {
-            input.required = true;
+            input.required = false;
         });
-    } else if (metodo === "transferencia") {
-        formTransferencia.classList.remove("hidden");
+
+        if (metodo === "tarjeta") {
+            formTarjeta.classList.remove("hidden");
+            Array.from(formTarjeta.querySelectorAll("input")).forEach(input => {
+                input.required = true;
+            });
+        } else if (metodo === "transferencia") {
+            formTransferencia.classList.remove("hidden");
+        }
     }
-}
 
 
         function formatearNumeroTarjeta() {
             const input = document.getElementById("numero_tarjeta");
-            const valor = input.value.replace(/\D/g, "");
+            const valor = input.value.replace(/\D/g, ""); 
+            const grupos = valor.match(/.{1,4}/g) || [];
             input.value = grupos.join(" "); 
             detectarTarjeta(); 
         }
