@@ -478,7 +478,6 @@ def carrito(request):
 def lista_favoritos(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
-        messages.error(request, "Debes iniciar sesión para acceder al perfil.")
         return redirect('login')
 
     usuario = get_object_or_404(Usuario, id=usuario_id)
@@ -529,7 +528,6 @@ def seleccionar_pago(request, usuario_id):
     carrito = usuario.carritos.last()
 
     if not carrito or not carrito.items.exists():
-        messages.error(request, "No hay productos en tu carrito.")
         return redirect('ver_carrito')
 
     subtotal = sum(item.cantidad * item.producto.precio for item in carrito.items.all())
@@ -546,8 +544,7 @@ def seleccionar_pago(request, usuario_id):
 
         if metodo_pago in ["tarjeta", "transferencia"]:
             return redirect('compra_exitosa', usuario_id=usuario_id)
-
-        messages.error(request, "Método de pago no válido.")
+        
         return redirect('seleccionar_pago', usuario_id=usuario_id)
 
     return render(request, 'seleccionar_pago.html', {
@@ -561,7 +558,6 @@ def compra_exitosa(request, usuario_id):
     carrito = usuario.carritos.last()
 
     if not carrito or not carrito.items.exists():
-        messages.error(request, "No hay productos en tu carrito.")
         return redirect('ver_carrito')
 
     metodo_envio = request.session.get('metodo_envio', 'tienda')
