@@ -309,44 +309,46 @@
           </div>
           <div class="row">
             {% for producto in productos %}
-            <div class="col-md-6 col-lg-4 col-xl-3">
-              <div id="product-4" class="single-product"
-                style="background-color: white; border-radius: 20px; padding: 20px;">
-                <div class="part-1">
-                  <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                  <span class="new">Tendencia</span>
-                  <ul>
-                    <li>
-                      <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
-                      </form>
-                    </li>
-                    <li>
-                      <form method="POST" action="{% url 'agregar_favorito' producto.id %}" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" class="btn-icon"><i class="fas fa-heart"></i></button>
-                      </form>
-                      
-                    </li>
-                    <li>
-                      <form method="POST" action="{% url 'producto_detalle' producto.id %}" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" class="btn-icon"><i class="fas fa-expand"></i></button>
-                      </form>
-                    </li>
-                  </ul>
+              {% if producto.stock > 0 %}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                  <div id="product-4" class="single-product"
+                    style="background-color: white; border-radius: 20px; padding: 20px;">
+                    <div class="part-1">
+                      <img src="{{ producto.imagen_principal.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                      <span class="new">Tendencia</span>
+                      <ul>
+                        <li>
+                          <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" class="btn-icon"><i class="fas fa-shopping-cart"></i></button>
+                          </form>
+                        </li>
+                        <li>
+                          <form method="POST" action="{% url 'agregar_favorito' producto.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" class="btn-icon"><i class="fas fa-heart"></i></button>
+                          </form>
+                          
+                        </li>
+                        <li>
+                          <form method="POST" action="{% url 'producto_detalle' producto.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" class="btn-icon"><i class="fas fa-expand"></i></button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="part-2">
+                      <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
+                      <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|formato_chileno }}</h4>
+                    </div>
+                    <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
+                  </div>
                 </div>
-                <div class="part-2">
-                  <h3 class="product-title fw-bold fs-6">{{ producto.nombre }}</h3>
-                  <h4 class="precioprod product-price fw-bold fs-4">${{ producto.precio|formato_chileno }}</h4>
-                </div>
-                <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
-              </div>
-            </div>
+              {% endif %}
             {% empty %}
             <p>No hay productos disponibles en este momento.</p>
             {% endfor %}

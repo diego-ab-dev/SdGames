@@ -28,13 +28,13 @@ def home(request):
     return render(request, 'home.html', {'usuario': usuario})
 
 def productos_menu(request):
-    query=request.GET.get('buscar')
+    query = request.GET.get('buscar')
     if query:
-        productos=Producto.objects.filter(nombre__icontains=query)
-        return render(request, 'resultado_busqueda.html', {'productos': productos, 'query':query})
+        productos = Producto.objects.filter(nombre__icontains=query, stock__gt=0)
+        return render(request, 'resultado_busqueda.html', {'productos': productos, 'query': query})
     else:
-        productos = Producto.objects.all() 
-        productos_recientes = Producto.objects.order_by('-id')[:10] 
+        productos = Producto.objects.filter(stock__gt=0) 
+        productos_recientes = Producto.objects.filter(stock__gt=0).order_by('-id')[:10]
         return render(request, 'productosmenu.html', {
             'productos': productos,
             'productos_recientes': productos_recientes,
@@ -388,14 +388,10 @@ def agregar_al_carrito(request, producto_id):
         if cantidad <= producto.stock:
             item_carrito.cantidad = cantidad
             item_carrito.save()
-        else:
-            messages.error(request, f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}.")
     else:
         if item_carrito.cantidad + cantidad <= producto.stock:
             item_carrito.cantidad += cantidad
             item_carrito.save()
-        else:
-            messages.error(request, f"Solo hay {producto.stock} unidades disponibles de {producto.nombre}.")
 
     return redirect('ver_carrito')
 
