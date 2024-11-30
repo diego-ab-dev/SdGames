@@ -211,6 +211,7 @@
                   </div>
                     <div class="row">
                         {% for producto in productos %}
+                          {% if producto.stock > 0 %}
                             <div class="col-md-6 col-lg-4 col-xl-3">
                                 <div id="product-4" class="single-product" style="background-color: white; border-radius: 20px; padding: 20px;">
                                     <div class="part-1">
@@ -246,6 +247,7 @@
                                     <a href="{% url 'producto_detalle' producto.id %}" class="btn-detalles">Ver Detalles</a>
                                 </div>
                             </div>
+                          {% endif %}
                         {% empty %}
                             <p>No hay productos disponibles en este momento.</p>
                         {% endfor %}
